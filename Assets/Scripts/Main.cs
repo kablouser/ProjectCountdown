@@ -11,6 +11,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Awake()
     {
+        FindAnyObjectByType<Main>();
         if (inputSystem_Actions == null)
         {
             inputSystem_Actions = new InputSystem_Actions();
@@ -40,6 +41,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     void Update()
     {
         RaycastShootSystem.Update(ref player, shootLayerMask, raycastHitCache);
+        GunAnimationSystem.Update(ref player);
     }
 
     void FixedUpdate()

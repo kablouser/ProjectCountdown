@@ -6,6 +6,8 @@ public struct Character
     [Header("Must assign")]
     public GameObject gameObject;
     public Transform camera;
+    public Transform gunMagazine;
+    public Transform gunBody;
     [HideInInspector] public Transform transform;
     [HideInInspector] public Rigidbody rigidbody;
     [HideInInspector] public IsStandingTracker isStandingTracker;
@@ -25,6 +27,10 @@ public struct Character
     [HideInInspector] public Vector2 currentLook;
     [HideInInspector] public int currentAmmo;
     [HideInInspector] public float reloadCountdown;
+    [HideInInspector] public float lastShotTime;
+    [HideInInspector] public bool shotThisFrame;
+    [HideInInspector] public float recoilCountdown;
+    [HideInInspector] public float recoilCountdownStart;
 
     public static Character Default => new()
     {
@@ -42,6 +48,7 @@ public struct Character
         isStandingTracker = gameObject.GetComponent<IsStandingTracker>();
         currentLook = transform.rotation.eulerAngles.y * Vector2.up;
         currentAmmo = gunStat.ammoCapacity;
+        lastShotTime = -1000f;
     }
 }
 

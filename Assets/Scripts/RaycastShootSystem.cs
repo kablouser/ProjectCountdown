@@ -11,6 +11,7 @@ public static class RaycastShootSystem
             {
                 character.reloadCountdown = 0;
                 character.currentAmmo = character.gunStat.ammoCapacity;
+                character.lastShotTime = -1000f;
                 Debug.Log("Reloaded");
             }
         }
@@ -28,8 +29,18 @@ public static class RaycastShootSystem
         {
             if (0 < character.currentAmmo)
             {
+                // is RPM exceeded?
+                float minTimeBetweenShots = 60f / character.gunStat.roundsPerMin;
+                float timeBetweenLastShot = Time.time - character.lastShotTime;
+                if (timeBetweenLastShot < minTimeBetweenShots)
+                {
+                    goto updateEnd;
+                }
+
                 const float MaxDistance = 1000f;
                 character.currentAmmo--;
+                character.shotThisFrame = true;
+                character.lastShotTime = Time.time;
                 int hitCount;
                 if (0 < character.gunStat.penetrationCount)
                 {
@@ -73,6 +84,7 @@ public static class RaycastShootSystem
             }
         }
 
+    updateEnd:
         character.shootInput = false;
         character.reloadInput = false;
     }
