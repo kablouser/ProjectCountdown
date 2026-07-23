@@ -3,7 +3,8 @@ using UnityEngine.InputSystem;
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
-    public Player player;
+    public Character player = Character.Default;
+    public LayerMask shootLayerMask;
 
     InputSystem_Actions inputSystem_Actions;
 
@@ -33,6 +34,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
+        RaycastShootSystem.Update(ref player, shootLayerMask);
     }
 
     void FixedUpdate()
@@ -50,31 +52,18 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         player.lookInput = context.ReadValue<Vector2>();
     }
 
-    void InputSystem_Actions.IPlayerActions.OnAttack(InputAction.CallbackContext context)
+    void InputSystem_Actions.IPlayerActions.OnShoot(InputAction.CallbackContext context)
     {
+        player.shootInput = context.action.GetButtonDown();
     }
 
-    void InputSystem_Actions.IPlayerActions.OnInteract(InputAction.CallbackContext context)
+    void InputSystem_Actions.IPlayerActions.OnReload(InputAction.CallbackContext context)
     {
-    }
-
-    void InputSystem_Actions.IPlayerActions.OnCrouch(InputAction.CallbackContext context)
-    {
+        player.reloadInput = context.action.GetButtonDown();
     }
 
     void InputSystem_Actions.IPlayerActions.OnJump(InputAction.CallbackContext context)
     {
-    }
-
-    void InputSystem_Actions.IPlayerActions.OnPrevious(InputAction.CallbackContext context)
-    {
-    }
-
-    void InputSystem_Actions.IPlayerActions.OnNext(InputAction.CallbackContext context)
-    {
-    }
-
-    void InputSystem_Actions.IPlayerActions.OnSprint(InputAction.CallbackContext context)
-    {
+        player.jumpInput = context.action.GetButtonDown();
     }
 }
