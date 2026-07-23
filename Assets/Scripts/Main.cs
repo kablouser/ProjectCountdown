@@ -1,17 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
-    public Character player = Character.Default;
+    public static Main Singleton { get; private set; }
+
     public LayerMask shootLayerMask;
+    public PlayerCharacter playerCharacter = PlayerCharacter.Default;
+    public List<EnemyCharacter> enemyCharacters;
 
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
 
     void Awake()
     {
-        FindAnyObjectByType<Main>();
+        Singleton = this;
         if (inputSystem_Actions == null)
         {
             inputSystem_Actions = new InputSystem_Actions();
@@ -25,7 +29,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Start()
     {
-        player.Start();
     }
 
     void OnEnable()
@@ -40,37 +43,61 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
-        RaycastShootSystem.Update(ref player, shootLayerMask, raycastHitCache);
-        GunAnimationSystem.Update(ref player);
+        RaycastShootSystem.Update(ref playerCharacter.character, shootLayerMask, raycastHitCache);
+        GunAnimationSystem.Update(ref playerCharacter.character);
+
+        System.Span<EnemyCharacter> enemySpan = enemyCharacters.AsSpan();
+        for (int i = 0; i < enemySpan.Length; i++)
+        {
+            GunAnimationSystem.Update(ref enemySpan[i].character);
+        }
     }
 
     void FixedUpdate()
     {
-        WalkingSystem.FixedUpdate(ref player);
+        WalkingSystem.FixedUpdate(ref playerCharacter.character);
+
+        System.Span<EnemyCharacter> enemySpan = enemyCharacters.AsSpan();
+        for (int i = 0; i < enemySpan.Length; i++)
+        {
+            WalkingSystem.FixedUpdate(ref enemySpan[i].character);
+        }
     }
 
     void InputSystem_Actions.IPlayerActions.OnMove(InputAction.CallbackContext context)
     {
-        player.moveInput = context.ReadValue<Vector2>();
+        playerCharacter.character.moveInput = context.ReadValue<Vector2>();
     }
 
     void InputSystem_Actions.IPlayerActions.OnLook(InputAction.CallbackContext context)
     {
-        player.lookInput = context.ReadValue<Vector2>();
+        playerCharacter.character.lookInput = context.ReadValue<Vector2>();
     }
 
     void InputSystem_Actions.IPlayerActions.OnShoot(InputAction.CallbackContext context)
     {
-        player.shootInput = context.action.GetButtonDown();
+        playerCharacter.character.shootInput = context.action.GetButtonDown();
     }
 
     void InputSystem_Actions.IPlayerActions.OnReload(InputAction.CallbackContext context)
     {
-        player.reloadInput = context.action.GetButtonDown();
+        playerCharacter.character.reloadInput = context.action.GetButtonDown();
     }
 
     void InputSystem_Actions.IPlayerActions.OnJump(InputAction.CallbackContext context)
     {
-        player.jumpInput = context.action.GetButtonDown();
+        playerCharacter.character.jumpInput = context.action.GetButtonDown();
+    }
+
+    public void RegisterPlayer(PlayerCharacter player)
+    {
+        playerCharacter = player;
+        playerCharacter.Start();
+    }
+
+    public void RegisterEnemy(EnemyCharacter enemyCharacter)
+    {
+        enemyCharacter.Start();
+        enemyCharacters.Add(enemyCharacter);
     }
 }

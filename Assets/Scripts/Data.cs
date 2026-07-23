@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public struct Character
 {
-    [Header("Must assign")]
+    [Header("Character - Must assign")]
     public GameObject gameObject;
     public Transform camera;
     public Transform gunMagazine;
@@ -12,7 +12,7 @@ public struct Character
     [HideInInspector] public Rigidbody rigidbody;
     [HideInInspector] public IsStandingTracker isStandingTracker;
     [Header("Settings")]
-    public float health;
+    public float maxHealth;
     public float moveSpeed;
     public float turnSpeed;
     public float jumpHeight;
@@ -31,10 +31,11 @@ public struct Character
     [HideInInspector] public bool shotThisFrame;
     [HideInInspector] public float recoilCountdown;
     [HideInInspector] public float recoilCountdownStart;
+    [HideInInspector] public float currentHealth;
 
     public static Character Default => new()
     {
-        health = 1,
+        maxHealth = 1,
         moveSpeed = 3,
         turnSpeed = 1,
         jumpHeight = 1,
@@ -53,6 +54,38 @@ public struct Character
 }
 
 [System.Serializable]
+public struct PlayerCharacter
+{
+    public Character character;
+
+    public static PlayerCharacter Default => new()
+    {
+        character = Character.Default,
+    };
+
+    public void Start()
+    {
+        character.Start();
+    }
+}
+
+[System.Serializable]
+public struct EnemyCharacter
+{
+    public Character character;
+
+    public static EnemyCharacter Default => new()
+    {
+        character = Character.Default,
+    };
+
+    public void Start()
+    {
+        character.Start();
+    }
+}
+
+[System.Serializable]
 public struct GunStat
 {
     public int ammoCapacity;
@@ -64,8 +97,8 @@ public struct GunStat
     public static GunStat Default => new()
     {
         ammoCapacity = 5,
-        reloadTime = 2,
-        roundsPerMin = 60,
+        reloadTime = 1.5f,
+        roundsPerMin = 120,
         penetrationCount = 0,
     };
 }
