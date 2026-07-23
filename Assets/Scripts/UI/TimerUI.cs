@@ -17,7 +17,7 @@ public class TimerUI : MonoBehaviour
     [SerializeField] RectTransform rootRc;
     [SerializeField] Image frontImage;
     [SerializeField] Image rearImage;
-    [SerializeField] Image addedTimeVfxImage;
+    [SerializeField] Image addedTimeVfxImage; //Optional, used for VFX
 
     [SerializeField] TextMeshProUGUI timerTxt;
     [SerializeField] float moveSpeed = 2.5f;
@@ -27,8 +27,8 @@ public class TimerUI : MonoBehaviour
     [SerializeField] TimeAdjustmentReason timerTestMode = TimeAdjustmentReason.NONE;
 
     float maxWidth = 0.0f;
-    int currTime = -1;
-    int maxTime = -1;
+    float currTime = -1;
+    float maxTime = -1;
 
     Coroutine damageVfxCr = null;
 
@@ -43,9 +43,11 @@ public class TimerUI : MonoBehaviour
             StartCoroutine(TimerTest());
     }
 
-    public void SetRemainingTime(int time, int totalTime, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
+    //Call this when you want to change the current health/time
+    public void SetRemainingTime(float time, float totalTime, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
     {
-        timerTxt.SetText($"{time}");
+        if(timerTxt != null)
+            timerTxt.SetText($"{time}");
 
         if (time > currTime && optReason == TimeAdjustmentReason.PERK) //Gained health from a perk
         {
@@ -62,7 +64,8 @@ public class TimerUI : MonoBehaviour
         {
             //Shake the UI
 
-            addedTimeVfxImage.enabled = false;
+            if(addedTimeVfxImage)
+                addedTimeVfxImage.enabled = false;
 
             if (damageVfxCr == null)
             {
@@ -74,9 +77,9 @@ public class TimerUI : MonoBehaviour
         maxTime = totalTime;
     }
 
-    float GetWidthForTime(int time, int totalTime)
+    float GetWidthForTime(float time, float totalTime)
     {
-        float nrm = 1.0f - ((time * 1.0f) / (totalTime * 1.0f));
+        float nrm = 1.0f - (time / totalTime);
         return nrm * maxWidth;
     }
 
@@ -159,7 +162,7 @@ public class TimerUI : MonoBehaviour
 
         frontImage.rectTransform.sizeDelta = sizeDelta;
 
-        if (addedTimeVfxImage.enabled)
+        if (addedTimeVfxImage != null && addedTimeVfxImage.enabled)
         {
             if (Mathf.Approximately(sizeDelta.x, targetWidth))
             {
