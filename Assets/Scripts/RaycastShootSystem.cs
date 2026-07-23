@@ -10,7 +10,7 @@ public static class RaycastShootSystem
             if (character.reloadCountdown < 0)
             {
                 character.reloadCountdown = 0;
-                character.currentAmmo = character.gunStat.ammoCapacity;
+                character.ActiveGun.Reload();
                 character.lastShotTime = -1000f;
                 Debug.Log("Reloaded");
             }
@@ -20,17 +20,17 @@ public static class RaycastShootSystem
         {
             // if waiting on reload, don't allow shooting or more reloading
         }
-        else if (character.reloadInput && character.currentAmmo < character.gunStat.ammoCapacity)
+        else if (character.reloadInput && character.ActiveGun.currentAmmo < character.ActiveGun.ammoCapacity)
         {
-            character.reloadCountdown = character.gunStat.reloadTime;
+            character.reloadCountdown = character.ActiveGun.reloadTime;
             Debug.Log("Begin Reload");
         }
         else if (character.shootInput)
         {
-            if (0 < character.currentAmmo)
+            if (0 < character.ActiveGun.currentAmmo)
             {
                 // is RPM exceeded?
-                float minTimeBetweenShots = 60f / character.gunStat.roundsPerMin;
+                float minTimeBetweenShots = 60f / character.ActiveGun.roundsPerMin;
                 float timeBetweenLastShot = Time.time - character.lastShotTime;
                 if (timeBetweenLastShot < minTimeBetweenShots)
                 {
@@ -38,11 +38,11 @@ public static class RaycastShootSystem
                 }
 
                 const float MaxDistance = 1000f;
-                character.currentAmmo--;
+                character.ActiveGun.currentAmmo--;
                 character.shotThisFrame = true;
                 character.lastShotTime = Time.time;
                 int hitCount;
-                if (0 < character.gunStat.penetrationCount)
+                if (0 < character.ActiveGun.penetrationCount)
                 {
                      hitCount = Physics.RaycastNonAlloc(
                         character.camera.position,
@@ -50,9 +50,9 @@ public static class RaycastShootSystem
                         raycastHitCache,
                         MaxDistance,
                         layerMask);
-                    if (character.gunStat.penetrationCount + 1 < hitCount)
+                    if (character.ActiveGun.penetrationCount + 1 < hitCount)
                     {
-                        hitCount = character.gunStat.penetrationCount + 1;
+                        hitCount = character.ActiveGun.penetrationCount + 1;
                     }
                 }
                 else

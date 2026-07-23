@@ -104,24 +104,31 @@ MonoBehaviour:
       moveSpeed: 5
       turnSpeed: 1
       jumpHeight: 1
-      gunStat:
-        ammoCapacity: 5
+      gunStats:
+      - ammoCapacity: 5
         reloadTime: 1.5
         roundsPerMin: 120
-        penetrationCount: 1
+        penetrationCount: 0
+        currentAmmo: 0
+      - ammoCapacity: 30
+        reloadTime: 2
+        roundsPerMin: 240
+        penetrationCount: 0
+        currentAmmo: 0
       moveInput: {x: 0, y: 0}
       lookInput: {x: 0, y: 0}
       shootInput: 0
       reloadInput: 0
       jumpInput: 0
+      weaponSelectInput: 0
       currentLook: {x: 0, y: 0}
-      currentAmmo: 0
       reloadCountdown: 0
       lastShotTime: 0
       shotThisFrame: 0
       recoilCountdown: 0
       recoilCountdownStart: 0
       currentHealth: 0
+      currentSelectedWeapon: 0
 --- !u!1 &1917885872683053325
 GameObject:
   m_ObjectHideFlags: 0
