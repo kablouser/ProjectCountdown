@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
@@ -29,6 +30,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnEnable()

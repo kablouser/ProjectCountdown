@@ -93,6 +93,7 @@ public struct GunStat
     public float roundsPerMin;
     // number of colliders this rounds penetrate through
     public int penetrationCount;
+    public Sprite weaponImage;
 
     public static GunStat Default => new()
     {

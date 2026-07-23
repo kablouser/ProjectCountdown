@@ -87,5 +87,7 @@ public static class RaycastShootSystem
     updateEnd:
         character.shootInput = false;
         character.reloadInput = false;
+        PlayerUI.Instance.GetWeaponUI.SetAmmo(character.gunStat,
+            character.currentAmmo, character.gunStat.ammoCapacity);
     }
 }
