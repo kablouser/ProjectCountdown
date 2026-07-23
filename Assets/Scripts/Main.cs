@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
@@ -43,6 +43,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
+        WeaponSelectSystem.Update(ref playerCharacter.character);
         RaycastShootSystem.Update(ref playerCharacter.character, shootLayerMask, raycastHitCache);
         GunAnimationSystem.Update(ref playerCharacter.character);
 
@@ -51,6 +52,8 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             GunAnimationSystem.Update(ref enemySpan[i].character);
         }
+        
+        ResetOneTimeInputs();
     }
 
     void FixedUpdate()
@@ -99,5 +102,26 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         enemyCharacter.Start();
         enemyCharacters.Add(enemyCharacter);
+    }
+
+    void InputSystem_Actions.IPlayerActions.OnFirstWeapon(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            playerCharacter.character.weaponSelectInput = 0;
+        }
+    }
+
+    void InputSystem_Actions.IPlayerActions.OnSecondWeapon(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            playerCharacter.character.weaponSelectInput = 1;
+        }
+    }
+
+    private void ResetOneTimeInputs()
+    {
+        playerCharacter.character.weaponSelectInput = -1;
     }
 }

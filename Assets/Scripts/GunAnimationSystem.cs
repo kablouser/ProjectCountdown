@@ -4,11 +4,11 @@ public static class GunAnimationSystem
 {
     public static void Update(ref Character character)
     {
-        if (0f < character.reloadCountdown && 0 < character.gunStat.reloadTime)
+        if (0f < character.reloadCountdown && 0 < character.ActiveGun.reloadTime)
         {
             // reload animation
             // 0 to 1
-            float animationTime = 1f - character.reloadCountdown / character.gunStat.reloadTime;
+            float animationTime = 1f - character.reloadCountdown / character.ActiveGun.reloadTime;
             float lerpTime = animationTime < .5f ? animationTime * 2f : 2f - animationTime * 2f;
             character.gunMagazine.localPosition = Vector3.Lerp(Vector3.zero, Vector3.down * 1.5f, lerpTime);
         }
@@ -43,7 +43,7 @@ public static class GunAnimationSystem
             // recoil animation
             character.recoilCountdown = character.recoilCountdownStart = 0.3f *
                 // time between shots
-                60f / character.gunStat.roundsPerMin;
+                60f / character.ActiveGun.roundsPerMin;
         }
     }
 }

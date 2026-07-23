@@ -16,16 +16,22 @@ public struct Character
     public float moveSpeed;
     public float turnSpeed;
     public float jumpHeight;
-    public GunStat gunStat;
-    //input begin
+
+    public ref GunStat ActiveGun => ref gunStats[currentSelectedWeapon];
+
+    public GunStat[] gunStats;
+    
+    #region Input 
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public Vector2 lookInput;
     [HideInInspector] public bool shootInput;
     [HideInInspector] public bool reloadInput;
     [HideInInspector] public bool jumpInput;
-    //input end
+    /** -1 for no input this frame. */
+    [HideInInspector] public int weaponSelectInput;
+    #endregion
+    
     [HideInInspector] public Vector2 currentLook;
-    [HideInInspector] public int currentAmmo;
     [HideInInspector] public float reloadCountdown;
     [HideInInspector] public float lastShotTime;
     [HideInInspector] public bool shotThisFrame;
@@ -33,13 +39,15 @@ public struct Character
     [HideInInspector] public float recoilCountdownStart;
     [HideInInspector] public float currentHealth;
 
+    [HideInInspector] public int currentSelectedWeapon;
+
     public static Character Default => new()
     {
         maxHealth = 1,
         moveSpeed = 3,
         turnSpeed = 1,
         jumpHeight = 1,
-        gunStat = GunStat.Default,
+        currentSelectedWeapon = 0,
     };
 
     public void Start()
@@ -48,8 +56,13 @@ public struct Character
         rigidbody = gameObject.GetComponent<Rigidbody>();
         isStandingTracker = gameObject.GetComponent<IsStandingTracker>();
         currentLook = transform.rotation.eulerAngles.y * Vector2.up;
-        currentAmmo = gunStat.ammoCapacity;
         lastShotTime = -1000f;
+
+        // Start all guns with full ammo capacity
+        for (int i = 0; i < gunStats.Length; i ++)
+        {
+            gunStats[i].Reload();
+        }
     }
 }
 
@@ -93,6 +106,8 @@ public struct GunStat
     public float roundsPerMin;
     // number of colliders this rounds penetrate through
     public int penetrationCount;
+    
+    [HideInInspector] public int currentAmmo;
 
     public static GunStat Default => new()
     {
@@ -101,4 +116,9 @@ public struct GunStat
         roundsPerMin = 120,
         penetrationCount = 0,
     };
+
+    public void Reload()
+    {
+        currentAmmo = ammoCapacity;
+    } 
 }
