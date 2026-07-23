@@ -7,6 +7,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public LayerMask shootLayerMask;
 
     InputSystem_Actions inputSystem_Actions;
+    RaycastHit[] raycastHitCache;
 
     void Awake()
     {
@@ -14,6 +15,10 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             inputSystem_Actions = new InputSystem_Actions();
             inputSystem_Actions.Player.SetCallbacks(this);
+        }
+        if (raycastHitCache == null)
+        {
+            raycastHitCache = new RaycastHit[32];
         }
     }
 
@@ -34,7 +39,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
-        RaycastShootSystem.Update(ref player, shootLayerMask);
+        RaycastShootSystem.Update(ref player, shootLayerMask, raycastHitCache);
     }
 
     void FixedUpdate()

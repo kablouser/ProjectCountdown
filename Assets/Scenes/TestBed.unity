@@ -1203,12 +1203,19 @@ MonoBehaviour:
     moveSpeed: 10
     turnSpeed: 1
     jumpHeight: 2
+    gunStat:
+      ammoCapacity: 3
+      reloadTime: 2
+      roundsPerMin: 60
+      penetrationCount: 1
     moveInput: {x: 0, y: 0}
     lookInput: {x: 0, y: 0}
     shootInput: 0
     reloadInput: 0
     jumpInput: 0
     currentLook: {x: 0, y: 0}
+    currentAmmo: 0
+    reloadCountdown: 0
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
