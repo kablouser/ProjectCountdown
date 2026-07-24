@@ -7,7 +7,7 @@ public enum TimeAdjustmentReason
 {
     NONE,
     DAMAGE,
-    PERK,
+    HEAL,
     COUNTDOWN,
 }
 
@@ -73,7 +73,7 @@ public class BarUI : MonoBehaviour
             }
         }
 
-        if (time > currTime && optReason == TimeAdjustmentReason.PERK && addedTimeVfxImage != null) //Gained health from a perk
+        if (time > currTime && optReason == TimeAdjustmentReason.HEAL && addedTimeVfxImage != null) //Gained health from a perk
         {
             //Show a leading bar that the actual health bar catches up to
 
@@ -125,7 +125,7 @@ public class BarUI : MonoBehaviour
                     }
                     break;
                 }
-            case TimeAdjustmentReason.PERK:
+            case TimeAdjustmentReason.HEAL:
                 {
                     int time = 0;
                     while (time < debugMaxTime)

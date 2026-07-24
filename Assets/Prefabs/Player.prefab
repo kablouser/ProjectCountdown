@@ -107,7 +107,7 @@ MonoBehaviour:
       isStandingTracker: {fileID: 0}
       maxHealth: 30
       moveSpeed: 5
-      turnSpeed: 100
+      turnSpeed: 50
       jumpHeight: 1
       gunStats:
       - ammoCapacity: 5
@@ -116,6 +116,7 @@ MonoBehaviour:
         penetrationCount: 0
         weaponImage: {fileID: 0}
         damage: 1
+        isMelee: 0
         currentAmmo: 0
         weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
       - ammoCapacity: 30
@@ -124,6 +125,7 @@ MonoBehaviour:
         penetrationCount: 0
         weaponImage: {fileID: 0}
         damage: 1
+        isMelee: 0
         currentAmmo: 0
         weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
       moveInput: {x: 0, y: 0}
@@ -143,7 +145,6 @@ MonoBehaviour:
       currentHealth: 0
       currentSelectedWeapon: 0
       timeToSwapCountdown: 0
-    accumulatedTime: 0
 --- !u!1 &1917885872683053325
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum IDType
@@ -13,6 +14,8 @@ public struct ID
     public IDType type;
     public int index;
     public int version;
+
+    public static ID Player => new ID { type = IDType.Player };
 }
 
 [System.Serializable]
@@ -122,10 +125,14 @@ public struct EnemyCharacter
 {
     public Character character;
     public BarUI healthBar;
+    public float dropExtraTime;
+    public float dropExtraTimeChance;
 
     public static EnemyCharacter Default => new()
     {
         character = Character.Default,
+        dropExtraTime = 1f,
+        dropExtraTimeChance = 0.5f,
     };
 
     public void Awake()

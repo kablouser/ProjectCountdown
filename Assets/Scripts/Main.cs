@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
 
 struct DrawArrowLifetime
 {
@@ -11,7 +10,7 @@ struct DrawArrowLifetime
 }
 
 // menu doesn't include pause menu
-public enum LevelState { Menu, Countdown };
+public enum LevelState { Menu, Countdown, LevelCleared };
 
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
@@ -19,6 +18,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public static Main Singleton { get; private set; }
 
     public LayerMask shootLayerMask;
+    public PickUp pickUpExtraTimePrefab;
     public bool isPlayerAlive;
     public PlayerCharacter playerCharacter = PlayerCharacter.Default;
     // decimal part of the countdown. we only countdown in ints

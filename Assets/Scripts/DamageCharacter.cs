@@ -1,3 +1,4 @@
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public static class DamageCharacter
@@ -9,11 +10,16 @@ public static class DamageCharacter
         switch (id.type)
         {
             case IDType.Player:
-                if (main.isPlayerAlive &&
-                    // once level is cleared, make player invulnerable in case of simulatenous shooting
-                    main.levelState == LevelState.Countdown)
+                if (main.isPlayerAlive)
                 {
-                    bool isDead = Damage(ref main.playerCharacter.character, damage);
+                    // once level is cleared, make player invulnerable in case of simulatenous shooting
+                    if (main.levelState == LevelState.Countdown && 0f < damage)
+                    {
+                        return false;
+                    }
+                    // allow healing to go through
+
+                    bool isDead = InternalDamage(ref main.playerCharacter.character, damage);
                     PlayerUI.Instance.GetTimer.SetRemainingTime(main.playerCharacter.character, reason);
                     return isDead;
                 }
@@ -22,8 +28,18 @@ public static class DamageCharacter
                 if (main.enemyCharacters.IsValidID(id))
                 {
                     ref EnemyCharacter enemy = ref main.enemyCharacters[id];
-                    bool isDead = Damage(ref enemy.character, damage);
+                    bool isDead = InternalDamage(ref enemy.character, damage);
                     enemy.healthBar.SetRemainingTime(enemy.character, reason);
+
+                    if (isDead)
+                    {
+                        if (Random.value <= enemy.dropExtraTimeChance)
+                        {
+                            PickUp pickup = GameObject.Instantiate(main.pickUpExtraTimePrefab, enemy.character.camera.position, Quaternion.identity);
+                            pickup.extraTime = enemy.dropExtraTime;
+                        }
+                    }
+
                     return isDead;
                 }
                 break;
@@ -32,7 +48,7 @@ public static class DamageCharacter
     }
 
     // true if dead
-    public static bool Damage(ref Character character, float damage)
+    public static bool InternalDamage(ref Character character, float damage)
     {
         character.currentHealth -= damage;
         if (character.currentHealth <= 0)

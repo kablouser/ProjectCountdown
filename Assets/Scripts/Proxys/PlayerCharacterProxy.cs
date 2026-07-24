@@ -15,6 +15,6 @@ public class PlayerCharacterProxy : MonoBehaviour, IProxy
 
     ID IProxy.GetID()
     {
-        return new ID { type = IDType.Player };
+        return ID.Player;
     }
 }
