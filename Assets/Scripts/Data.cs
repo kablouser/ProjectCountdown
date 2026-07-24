@@ -24,6 +24,7 @@ public struct Character
     public Transform camera;
     public Transform gunMagazine;
     public Transform gunBody;
+    [HideInInspector] public MeshRenderer gunMesh;
     [HideInInspector] public Transform transform;
     [HideInInspector] public Rigidbody rigidbody;
     [HideInInspector] public IsStandingTracker isStandingTracker;
@@ -59,6 +60,10 @@ public struct Character
     [HideInInspector] public float currentHealth;
 
     [HideInInspector] public int currentSelectedWeapon;
+    public const float TimeToSwap = 0.2f;
+    [HideInInspector] public float timeToSwapCountdown;
+        
+    
 
     public static Character Default => new()
     {
@@ -76,11 +81,17 @@ public struct Character
         isStandingTracker = gameObject.GetComponent<IsStandingTracker>();
         currentLook = transform.rotation.eulerAngles.y * Vector2.up;
         currentHealth = maxHealth;
+        gunMesh = gunBody.gameObject.GetComponent<MeshRenderer>();
 
         // Start all guns with full ammo capacity
         for (int i = 0; i < gunStats.Length; i++)
         {
             gunStats[i].Reload();
+        }
+
+        if (ActiveGun.weaponMaterial)
+        {
+            gunMesh.sharedMaterial = ActiveGun.weaponMaterial;
         }
     }
 }
@@ -137,6 +148,7 @@ public struct GunStat
     public Sprite weaponImage;
     public float damage;
     [HideInInspector] public int currentAmmo;
+    public Material weaponMaterial;
 
     public static GunStat Default => new()
     {

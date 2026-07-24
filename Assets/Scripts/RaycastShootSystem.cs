@@ -4,6 +4,12 @@ public static class RaycastShootSystem
 {
     public static void Update(ref Character character, in LayerMask layerMask, RaycastHit[] raycastHitCache)
     {
+        if (character.timeToSwapCountdown > 0)
+        {
+            // if swapping gun don't allow reload.
+            return;
+        }
+        
         if (0 < character.reloadCountdown)
         {
             character.reloadCountdown -= Time.deltaTime;

@@ -1,9 +1,29 @@
+using System;
 using UnityEngine;
 
 public static class GunAnimationSystem
 {
     public static void Update(ref Character character)
     {
+        if (character.timeToSwapCountdown > 0)
+        {
+            float prevLerpTime = 1 - (character.timeToSwapCountdown / Character.TimeToSwap);
+            
+            character.timeToSwapCountdown -= Time.deltaTime;
+            character.timeToSwapCountdown = Mathf.Max(character.timeToSwapCountdown, 0f);
+            
+            float newLerpTime = 1 - (character.timeToSwapCountdown / Character.TimeToSwap);
+            float offset = (float)Math.Sin(newLerpTime * Math.PI);
+            character.gunBody.localPosition = Vector3.Lerp(Vector3.zero, Vector3.down * 1.0f, offset);
+
+            if (prevLerpTime < 0.5f && newLerpTime >= 0.5f)
+            {
+                character.gunMesh.material = character.ActiveGun.weaponMaterial;
+            }
+            
+            return;
+        }
+        
         if (0f < character.reloadCountdown && 0 < character.ActiveGun.reloadTime)
         {
             // reload animation
