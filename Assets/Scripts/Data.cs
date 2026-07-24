@@ -121,7 +121,7 @@ public struct PlayerCharacter
 public struct EnemyCharacter
 {
     public Character character;
-    public TimerUI healthBar;
+    public BarUI healthBar;
 
     public static EnemyCharacter Default => new()
     {

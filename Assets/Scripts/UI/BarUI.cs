@@ -11,7 +11,7 @@ public enum TimeAdjustmentReason
     PERK
 }
 
-public class TimerUI : MonoBehaviour
+public class BarUI : MonoBehaviour
 {
     [SerializeField] RectTransform rootRc;
     [SerializeField] Image frontImage;

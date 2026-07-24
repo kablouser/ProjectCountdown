@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] TimerUI timer;
+    [SerializeField] BarUI timer;
     [SerializeField] WeaponUI weaponUI;
 
-    public TimerUI GetTimer
+    public BarUI GetTimer
     {
         get { return timer; }
     }
