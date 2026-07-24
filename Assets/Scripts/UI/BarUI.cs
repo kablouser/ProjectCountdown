@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -8,7 +7,8 @@ public enum TimeAdjustmentReason
 {
     NONE,
     DAMAGE,
-    PERK
+    PERK,
+    COUNTDOWN,
 }
 
 public class BarUI : MonoBehaviour
@@ -20,7 +20,8 @@ public class BarUI : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI timerTxt;
     [SerializeField] float moveSpeed = 2.5f;
-    [SerializeField] float damageAnimTime = 0.25f;
+    [SerializeField] float damageAnimTime = 0.2f;
+    [SerializeField] float damageAnimScale = 0.5f;
 
     [SerializeField] bool testTimer = false;
     [SerializeField] TimeAdjustmentReason timerTestMode = TimeAdjustmentReason.NONE;
@@ -45,16 +46,34 @@ public class BarUI : MonoBehaviour
     //Call this when you want to change the current health/time
     public void SetRemainingTime(in Character character, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
     {
-        SetRemainingTime(character.currentHealth, character.maxHealth);
+        SetRemainingTime(character.currentHealth, character.maxHealth, optReason);
     }
 
 
     public void SetRemainingTime(float time, float totalTime, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
     {
-        if(timerTxt != null)
-            timerTxt.SetText($"{time}");
+        if (timerTxt != null)
+        {
+            float seconds = time;
+            float hours = Mathf.Floor(seconds / 60f / 60f);
+            seconds -= hours * 60f * 60f;
+            float minutes = Mathf.Floor(seconds / 60f);
+            seconds -= minutes * 60f;
+            if (0 < hours)
+            {
+                timerTxt.SetText($"{hours}h:{minutes}m:{seconds:0.##}s");
+            }
+            else if (0 < minutes)
+            {
+                timerTxt.SetText($"{minutes}m:{seconds:0.##}s");
+            }
+            else
+            {
+                timerTxt.SetText($"{seconds:0.##}s");
+            }
+        }
 
-        if (time > currTime && optReason == TimeAdjustmentReason.PERK) //Gained health from a perk
+        if (time > currTime && optReason == TimeAdjustmentReason.PERK && addedTimeVfxImage != null) //Gained health from a perk
         {
             //Show a leading bar that the actual health bar catches up to
 
@@ -143,11 +162,12 @@ public class BarUI : MonoBehaviour
 
         while (vfxTime >= 0.0f)
         {
-            pivot.y += (UnityEngine.Random.Range(-1.0f, 1.0f));
-            pivot.x += (UnityEngine.Random.Range(-1.0f, 1.0f));
+            pivot.y += damageAnimScale * Random.Range(-1.0f, 1.0f) * Time.deltaTime;
+            pivot.x += damageAnimScale * Random.Range(-1.0f, 1.0f) * Time.deltaTime;
             rootRc.pivot = pivot;
             vfxTime -= Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+
+            yield return null;
         }
 
         rootRc.pivot = startPivot;

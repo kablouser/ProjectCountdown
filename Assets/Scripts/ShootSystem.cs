@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public static class RaycastShootSystem
+public static class ShootSystem
 {
+    public static float ShootRange = 1000f;
+    public static float MeleeRange = 2.0f;
+
     public static void Update(ref Character character, in LayerMask layerMask, RaycastHit[] raycastHitCache)
     {
         if (character.timeToSwapCountdown > 0)
@@ -44,10 +47,10 @@ public static class RaycastShootSystem
                 // is roundsPerMin exceeded?
                 if (0 < character.shotCooldown)
                 {
-                    goto updateEnd;
+                    return;
                 }
 
-                const float MaxDistance = 1000f;
+                float raycastDistance = character.ActiveGun.isMelee ? MeleeRange : ShootRange;
                 character.ActiveGun.currentAmmo--;
                 character.shotThisFrame = true;
                 character.shotCooldown = 60f / character.ActiveGun.roundsPerMin;
@@ -58,7 +61,7 @@ public static class RaycastShootSystem
                         character.camera.position,
                         character.camera.forward,
                         raycastHitCache,
-                        MaxDistance,
+                        raycastDistance,
                         layerMask);
                     if (character.ActiveGun.penetrationCount + 1 < hitCount)
                     {
@@ -71,7 +74,7 @@ public static class RaycastShootSystem
                         character.camera.position,
                         character.camera.forward,
                         out RaycastHit raycastHit,
-                        MaxDistance,
+                        raycastDistance,
                         layerMask))
                     {
                         raycastHitCache[0] = raycastHit;
@@ -90,7 +93,7 @@ public static class RaycastShootSystem
                         IProxy iproxy = raycastHitCache[hitI].rigidbody.GetComponent<IProxy>();
                         if (iproxy != null)
                         {
-                            DamageCharacter.Damage(iproxy.GetID(), character.ActiveGun.damage);
+                            DamageCharacter.Damage(iproxy.GetID(), character.ActiveGun.damage, TimeAdjustmentReason.DAMAGE);
                         }
                     }
                 }
@@ -100,9 +103,5 @@ public static class RaycastShootSystem
                 // play out of ammo SFX here
             }
         }
-
-    updateEnd:
-        character.shootInput = false;
-        character.reloadInput = false;
     }
 }

@@ -48,7 +48,7 @@ MonoBehaviour:
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  isPlayerValid: 0
+  isPlayerAlive: 0
   playerCharacter:
     character:
       id:
@@ -59,6 +59,7 @@ MonoBehaviour:
       camera: {fileID: 0}
       gunMagazine: {fileID: 0}
       gunBody: {fileID: 0}
+      gunMesh: {fileID: 0}
       transform: {fileID: 0}
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
@@ -83,6 +84,9 @@ MonoBehaviour:
       recoilCountdownStart: 0
       currentHealth: 0
       currentSelectedWeapon: 0
+      timeToSwapCountdown: 0
+  accumulatedCountdown: 0
+  levelState: 0
   enemyCharacters:
     type: 0
     list: []

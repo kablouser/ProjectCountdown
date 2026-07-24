@@ -147,6 +147,8 @@ public struct GunStat
     public int penetrationCount;
     public Sprite weaponImage;
     public float damage;
+    // melee is effectively very short ranged gun
+    public bool isMelee;
     [HideInInspector] public int currentAmmo;
     public Material weaponMaterial;
 

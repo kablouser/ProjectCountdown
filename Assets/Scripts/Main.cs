@@ -10,14 +10,20 @@ struct DrawArrowLifetime
     public float lifeEnd;
 }
 
+// menu doesn't include pause menu
+public enum LevelState { Menu, Countdown };
+
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public static Main Singleton { get; private set; }
 
     public LayerMask shootLayerMask;
-    public bool isPlayerValid;
+    public bool isPlayerAlive;
     public PlayerCharacter playerCharacter = PlayerCharacter.Default;
+    // decimal part of the countdown. we only countdown in ints
+    public float accumulatedCountdown;
+    public LevelState levelState;
     public VersionedList<EnemyCharacter> enemyCharacters;
 
     InputSystem_Actions inputSystem_Actions;
@@ -44,6 +50,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        CountdownSystem.StartLevel(this);
     }
 
     void OnEnable()
@@ -58,29 +65,29 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
-        if (isPlayerValid)
+        if (isPlayerAlive)
         {
             WeaponSelectSystem.Update(ref playerCharacter.character);
             PlayerUI.Instance.GetWeaponUI.SetAmmo(playerCharacter.character.ActiveGun);
-            RaycastShootSystem.Update(ref playerCharacter.character, shootLayerMask, raycastHitCache);
+            ShootSystem.Update(ref playerCharacter.character, shootLayerMask, raycastHitCache);
             GunAnimationSystem.Update(ref playerCharacter.character);
             WalkingSystem.Update(ref playerCharacter.character);
         }
+        // update countdown before enemies. so in case of simulatenous shoot out, player won't lose
+        CountdownSystem.Update(this);
 
         foreach (ref EnemyCharacter enemy in enemyCharacters)
         {
             EnemyAI_System.Update(ref enemy);
-            RaycastShootSystem.Update(ref enemy.character, shootLayerMask, raycastHitCache);
+            ShootSystem.Update(ref enemy.character, shootLayerMask, raycastHitCache);
             GunAnimationSystem.Update(ref enemy.character);
             WalkingSystem.Update(ref enemy.character);
         }
-        
-        ResetOneTimeInputs();
     }
 
     void FixedUpdate()
     {
-        if (isPlayerValid)
+        if (isPlayerAlive)
         {
             WalkingSystem.FixedUpdate(ref playerCharacter.character);
         }
@@ -89,6 +96,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             WalkingSystem.FixedUpdate(ref enemy.character);
         }
+        ResetOneTimeInputs();
     }
     private void OnDrawGizmos()
     {
@@ -130,34 +138,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         playerCharacter.character.jumpInput = context.action.GetButtonDown();
     }
 
-    public void AwakePlayer(PlayerCharacter player)
-    {
-        isPlayerValid = true;
-        playerCharacter = player;
-        playerCharacter.Awake();
-    }
-
-    public ID AwakeEnemy(EnemyCharacter enemyCharacter)
-    {
-        enemyCharacter.Awake();
-        return enemyCharacters.Add(enemyCharacter);
-    }
-
-    public void DestroyPlayer()
-    {
-        isPlayerValid = false;
-    }
-
-    public bool DestroyEnemy(ID id)
-    {
-        return enemyCharacters.Remove(id);
-    }
-
-    public void DrawArrowGizmo(Vector3 from, Vector3 to, float duration)
-    {
-        drawArrows.Add(new DrawArrowLifetime { from = from, to = to, lifeEnd = Time.time + duration });
-    }
-
     void InputSystem_Actions.IPlayerActions.OnFirstWeapon(InputAction.CallbackContext context)
     {
         if (context.action.WasPerformedThisFrame())
@@ -174,8 +154,39 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         }
     }
 
+    public void AwakePlayer(PlayerCharacter player)
+    {
+        isPlayerAlive = true;
+        playerCharacter = player;
+        playerCharacter.Awake();
+    }
+
+    public ID AwakeEnemy(EnemyCharacter enemyCharacter)
+    {
+        enemyCharacter.Awake();
+        return enemyCharacters.Add(enemyCharacter);
+    }
+
+    public void DestroyPlayer()
+    {
+        isPlayerAlive = false;
+    }
+
+    public bool DestroyEnemy(ID id)
+    {
+        return enemyCharacters.Remove(id);
+    }
+
+    public void DrawArrowGizmo(Vector3 from, Vector3 to, float duration)
+    {
+        drawArrows.Add(new DrawArrowLifetime { from = from, to = to, lifeEnd = Time.time + duration });
+    }
+
     private void ResetOneTimeInputs()
     {
+        playerCharacter.character.shootInput = false;
+        playerCharacter.character.reloadInput = false;
+        playerCharacter.character.jumpInput = false;
         playerCharacter.character.weaponSelectInput = -1;
     }
 }

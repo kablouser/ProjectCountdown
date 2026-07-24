@@ -215,10 +215,10 @@ RectTransform:
   - {fileID: 1779823736806235337}
   m_Father: {fileID: 101126619725285002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00001001358, y: 0.000000059604645}
-  m_SizeDelta: {x: 0.000020027, y: 0.00000023842}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 3, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4042526012965346862
 MonoBehaviour:
@@ -238,7 +238,8 @@ MonoBehaviour:
   addedTimeVfxImage: {fileID: 0}
   timerTxt: {fileID: 0}
   moveSpeed: 2.5
-  damageAnimTime: 0.25
+  damageAnimTime: 0.2
+  damageAnimScale: 5
   testTimer: 0
   timerTestMode: 1
 --- !u!1 &4784804128120652204
@@ -343,6 +344,7 @@ MonoBehaviour:
       camera: {fileID: 1017065831459649340}
       gunMagazine: {fileID: 1986121331469394013}
       gunBody: {fileID: 4127435200712979814}
+      gunMesh: {fileID: 0}
       transform: {fileID: 0}
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
@@ -351,13 +353,15 @@ MonoBehaviour:
       turnSpeed: 2
       jumpHeight: 1
       gunStats:
-      - ammoCapacity: 5
-        reloadTime: 1.5
+      - ammoCapacity: 1
+        reloadTime: 1
         roundsPerMin: 120
         penetrationCount: 0
         weaponImage: {fileID: 0}
         damage: 1
+        isMelee: 1
         currentAmmo: 0
+        weaponMaterial: {fileID: 0}
       moveInput: {x: 0, y: 0}
       isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
@@ -368,12 +372,13 @@ MonoBehaviour:
       weaponSelectInput: 0
       currentLook: {x: 0, y: 0}
       reloadCountdown: 0
-      lastShotTime: 0
+      shotCooldown: 0
       shotThisFrame: 0
       recoilCountdown: 0
       recoilCountdownStart: 0
       currentHealth: 0
       currentSelectedWeapon: 0
+      timeToSwapCountdown: 0
     healthBar: {fileID: 4042526012965346862}
   id:
     type: 0

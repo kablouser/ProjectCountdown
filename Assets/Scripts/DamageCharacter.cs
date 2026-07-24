@@ -2,32 +2,36 @@ using UnityEngine;
 
 public static class DamageCharacter
 {
-    public static bool Damage(in ID id, float damage)
+    // true if dead
+    public static bool Damage(in ID id, float damage, TimeAdjustmentReason reason)
     {
         Main main = Main.Singleton;
         switch (id.type)
         {
             case IDType.Player:
-                if (main.isPlayerValid)
+                if (main.isPlayerAlive &&
+                    // once level is cleared, make player invulnerable in case of simulatenous shooting
+                    main.levelState == LevelState.Countdown)
                 {
-                    Damage(ref main.playerCharacter.character, damage);
-                    PlayerUI.Instance.GetTimer.SetRemainingTime(main.playerCharacter.character, TimeAdjustmentReason.DAMAGE);
-                    return true;
+                    bool isDead = Damage(ref main.playerCharacter.character, damage);
+                    PlayerUI.Instance.GetTimer.SetRemainingTime(main.playerCharacter.character, reason);
+                    return isDead;
                 }
                 break;
             case IDType.Enemy:
                 if (main.enemyCharacters.IsValidID(id))
                 {
                     ref EnemyCharacter enemy = ref main.enemyCharacters[id];
-                    Damage(ref enemy.character, damage);
-                    enemy.healthBar.SetRemainingTime(enemy.character, TimeAdjustmentReason.DAMAGE);
-                    return true;
+                    bool isDead = Damage(ref enemy.character, damage);
+                    enemy.healthBar.SetRemainingTime(enemy.character, reason);
+                    return isDead;
                 }
                 break;
         }
         return false;
     }
 
+    // true if dead
     public static bool Damage(ref Character character, float damage)
     {
         character.currentHealth -= damage;

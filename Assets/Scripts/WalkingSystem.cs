@@ -43,6 +43,5 @@ public static class WalkingSystem
             float jumpVelocity = Mathf.Sqrt(2 * 9.81f * character.jumpHeight);
             character.rigidbody.AddForce(0, jumpVelocity - velocity.y, 0, ForceMode.VelocityChange);
         }
-        character.jumpInput = false;
     }
 }
