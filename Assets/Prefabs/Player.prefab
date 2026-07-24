@@ -102,6 +102,7 @@ MonoBehaviour:
       camera: {fileID: 7187302775721753333}
       gunMagazine: {fileID: 5172639525800666140}
       gunBody: {fileID: 6510696683329859563}
+      gunMesh: {fileID: 4782438089786004045}
       transform: {fileID: 0}
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
@@ -117,6 +118,7 @@ MonoBehaviour:
         weaponImage: {fileID: 0}
         damage: 1
         currentAmmo: 0
+        weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
       - ammoCapacity: 30
         reloadTime: 2
         roundsPerMin: 240
@@ -124,6 +126,7 @@ MonoBehaviour:
         weaponImage: {fileID: 0}
         damage: 1
         currentAmmo: 0
+        weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
       moveInput: {x: 0, y: 0}
       isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
@@ -134,12 +137,13 @@ MonoBehaviour:
       weaponSelectInput: 0
       currentLook: {x: 0, y: 0}
       reloadCountdown: 0
-      lastShotTime: 0
+      shotCooldown: 0
       shotThisFrame: 0
       recoilCountdown: 0
       recoilCountdownStart: 0
       currentHealth: 0
       currentSelectedWeapon: 0
+      timeToSwapCountdown: 0
 --- !u!1 &1917885872683053325
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6431217399187080683, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 47.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
