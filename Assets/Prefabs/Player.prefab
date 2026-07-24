@@ -94,6 +94,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacterProxy
   player:
     character:
+      id:
+        type: 0
+        index: 0
+        version: 0
       gameObject: {fileID: 1232070126226312745}
       camera: {fileID: 7187302775721753333}
       gunMagazine: {fileID: 5172639525800666140}
@@ -101,9 +105,9 @@ MonoBehaviour:
       transform: {fileID: 0}
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
-      maxHealth: 1
+      maxHealth: 99
       moveSpeed: 5
-      turnSpeed: 1
+      turnSpeed: 100
       jumpHeight: 1
       gunStats:
       - ammoCapacity: 5
@@ -111,15 +115,19 @@ MonoBehaviour:
         roundsPerMin: 120
         penetrationCount: 0
         weaponImage: {fileID: 0}
+        damage: 1
         currentAmmo: 0
       - ammoCapacity: 30
         reloadTime: 2
         roundsPerMin: 240
         penetrationCount: 0
         weaponImage: {fileID: 0}
+        damage: 1
         currentAmmo: 0
       moveInput: {x: 0, y: 0}
+      isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
+      lookPositionInput: {x: 0, y: 0, z: 0}
       shootInput: 0
       reloadInput: 0
       jumpInput: 0
@@ -347,7 +355,6 @@ GameObject:
   - component: {fileID: 5172639525800666140}
   - component: {fileID: 4170331549774867470}
   - component: {fileID: 8892043369642272673}
-  - component: {fileID: 6921858223142137458}
   m_Layer: 0
   m_Name: GunMagazine
   m_TagString: Untagged
@@ -427,27 +434,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6921858223142137458
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970401174173476640}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5075203327280248112
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +477,6 @@ GameObject:
   - component: {fileID: 6510696683329859563}
   - component: {fileID: 2457925852544527392}
   - component: {fileID: 4782438089786004045}
-  - component: {fileID: 7878609282961464192}
   m_Layer: 0
   m_Name: GunBody
   m_TagString: Untagged
@@ -572,27 +557,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7878609282961464192
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5179685681955721110}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5624734028461875041
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,6 +786,10 @@ PrefabInstance:
     - target: {fileID: 4138793087489864953, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
       propertyPath: m_Name
       value: PlayerUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431217399187080683, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
+      propertyPath: m_fontSize
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

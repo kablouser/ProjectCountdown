@@ -11,8 +11,15 @@ public static class RaycastShootSystem
             {
                 character.reloadCountdown = 0;
                 character.ActiveGun.Reload();
-                character.lastShotTime = -1000f;
-                Debug.Log("Reloaded");
+                character.shotCooldown = 0;
+            }
+        }
+        if (0 < character.shotCooldown)
+        {
+            character.shotCooldown -= Time.deltaTime;
+            if (character.shotCooldown < 0)
+            {
+                character.shotCooldown = 0;
             }
         }
 
@@ -23,16 +30,13 @@ public static class RaycastShootSystem
         else if (character.reloadInput && character.ActiveGun.currentAmmo < character.ActiveGun.ammoCapacity)
         {
             character.reloadCountdown = character.ActiveGun.reloadTime;
-            Debug.Log("Begin Reload");
         }
         else if (character.shootInput)
         {
             if (0 < character.ActiveGun.currentAmmo)
             {
-                // is RPM exceeded?
-                float minTimeBetweenShots = 60f / character.ActiveGun.roundsPerMin;
-                float timeBetweenLastShot = Time.time - character.lastShotTime;
-                if (timeBetweenLastShot < minTimeBetweenShots)
+                // is roundsPerMin exceeded?
+                if (0 < character.shotCooldown)
                 {
                     goto updateEnd;
                 }
@@ -40,7 +44,7 @@ public static class RaycastShootSystem
                 const float MaxDistance = 1000f;
                 character.ActiveGun.currentAmmo--;
                 character.shotThisFrame = true;
-                character.lastShotTime = Time.time;
+                character.shotCooldown = 60f / character.ActiveGun.roundsPerMin;
                 int hitCount;
                 if (0 < character.ActiveGun.penetrationCount)
                 {
@@ -75,7 +79,14 @@ public static class RaycastShootSystem
 
                 for (int hitI = 0; hitI < hitCount; hitI++)
                 {
-                    Debug.Log("Bang " + raycastHitCache[hitI].collider.name);
+                    if (raycastHitCache[hitI].rigidbody != null)
+                    {
+                        IProxy iproxy = raycastHitCache[hitI].rigidbody.GetComponent<IProxy>();
+                        if (iproxy != null)
+                        {
+                            DamageCharacter.Damage(iproxy.GetID(), character.ActiveGun.damage);
+                        }
+                    }
                 }
             }
             else
@@ -87,7 +98,5 @@ public static class RaycastShootSystem
     updateEnd:
         character.shootInput = false;
         character.reloadInput = false;
-        PlayerUI.Instance.GetWeaponUI.SetAmmo(character.ActiveGun,
-            character.ActiveGun.currentAmmo, character.ActiveGun.ammoCapacity);
     }
 }

@@ -7,9 +7,9 @@ public class WeaponUI : MonoBehaviour
     [SerializeField] Image weaponImage;
     [SerializeField] TextMeshProUGUI ammoText;
 
-    public void SetAmmo(GunStat currGun, int currAmmo, int maxAmmo)
+    public void SetAmmo(GunStat currGun)
     {
         weaponImage.sprite = currGun.weaponImage;
-        ammoText.text = $"{currAmmo}/{maxAmmo}";
+        ammoText.text = $"{currGun.currentAmmo}/{currGun.ammoCapacity}";
     }
 }

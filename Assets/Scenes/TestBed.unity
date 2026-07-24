@@ -473,7 +473,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 761d8e1f988ed2345a28312145c79c6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 1409795927}
   - component: {fileID: 1409795926}
   - component: {fileID: 1409795925}
-  - component: {fileID: 1409795929}
   - component: {fileID: 1409795930}
   m_Layer: 0
   m_Name: Cube (1)
@@ -634,49 +633,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1409795929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409795924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83cdc7cdcb8b9443a465f6ca29693d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCharacter
-  enemyCharacter:
-    character:
-      gameObject: {fileID: 0}
-      camera: {fileID: 0}
-      gunMagazine: {fileID: 0}
-      gunBody: {fileID: 0}
-      transform: {fileID: 0}
-      rigidbody: {fileID: 0}
-      isStandingTracker: {fileID: 0}
-      maxHealth: 0
-      moveSpeed: 0
-      turnSpeed: 0
-      jumpHeight: 0
-      gunStat:
-        ammoCapacity: 0
-        reloadTime: 0
-        roundsPerMin: 0
-        penetrationCount: 0
-      moveInput: {x: 0, y: 0}
-      lookInput: {x: 0, y: 0}
-      shootInput: 0
-      reloadInput: 0
-      jumpInput: 0
-      currentLook: {x: 0, y: 0}
-      currentAmmo: 0
-      reloadCountdown: 0
-      lastShotTime: 0
-      shotThisFrame: 0
-      recoilCountdown: 0
-      recoilCountdownStart: 0
-      currentHealth: 0
 --- !u!54 &1409795930
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -736,8 +692,13 @@ MonoBehaviour:
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  isPlayerValid: 0
   playerCharacter:
     character:
+      id:
+        type: 0
+        index: 0
+        version: 0
       gameObject: {fileID: 0}
       camera: {fileID: 0}
       gunMagazine: {fileID: 0}
@@ -749,25 +710,28 @@ MonoBehaviour:
       moveSpeed: 3
       turnSpeed: 1
       jumpHeight: 1
-      gunStat:
-        ammoCapacity: 5
-        reloadTime: 1.5
-        roundsPerMin: 120
-        penetrationCount: 0
+      gunStats: []
       moveInput: {x: 0, y: 0}
+      isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
+      lookPositionInput: {x: 0, y: 0, z: 0}
       shootInput: 0
       reloadInput: 0
       jumpInput: 0
+      weaponSelectInput: 0
       currentLook: {x: 0, y: 0}
-      currentAmmo: 0
       reloadCountdown: 0
-      lastShotTime: 0
+      shotCooldown: 0
       shotThisFrame: 0
       recoilCountdown: 0
       recoilCountdownStart: 0
       currentHealth: 0
-  enemyCharacters: []
+      currentSelectedWeapon: 0
+  enemyCharacters:
+    type: 0
+    list: []
+    versions: 
+    isUsing: 
 --- !u!4 &1818045216
 Transform:
   m_ObjectHideFlags: 0
@@ -895,7 +859,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2956613356252630852
+--- !u!1001 &503840392378754803
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -905,15 +869,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 113757655597510053, guid: cde454fc143cb6846bf2ee59ff827c79, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.26
+      value: -6.7357264
       objectReference: {fileID: 0}
     - target: {fileID: 113757655597510053, guid: cde454fc143cb6846bf2ee59ff827c79, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.74
+      value: -0.0000005268288
       objectReference: {fileID: 0}
     - target: {fileID: 113757655597510053, guid: cde454fc143cb6846bf2ee59ff827c79, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.99
+      value: 7.591245
       objectReference: {fileID: 0}
     - target: {fileID: 113757655597510053, guid: cde454fc143cb6846bf2ee59ff827c79, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1018,7 +982,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1046260626}
   - {fileID: 9220011702656926268}
-  - {fileID: 2956613356252630852}
   - {fileID: 789156726}
   - {fileID: 1978835398}
   - {fileID: 1409795928}
+  - {fileID: 503840392378754803}

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,6 +43,12 @@ public class TimerUI : MonoBehaviour
     }
 
     //Call this when you want to change the current health/time
+    public void SetRemainingTime(in Character character, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
+    {
+        SetRemainingTime(character.currentHealth, character.maxHealth);
+    }
+
+
     public void SetRemainingTime(float time, float totalTime, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
     {
         if(timerTxt != null)

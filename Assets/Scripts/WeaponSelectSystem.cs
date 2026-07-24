@@ -4,14 +4,16 @@ public static class WeaponSelectSystem
 {
     public static void Update(ref Character character)
     {
-        if (character.weaponSelectInput < 0 || character.weaponSelectInput == character.currentSelectedWeapon)
+        if (character.weaponSelectInput < 0 || character.weaponSelectInput == character.currentSelectedWeapon ||
+            // cannot switch weapons whilst shooting
+            0 < character.shotCooldown)
         {
             return;
         }
-        
+
         // Need to switch weapons
         character.currentSelectedWeapon = character.weaponSelectInput;
-        Debug.Log("Switched to weapon " + character.currentSelectedWeapon);
+        // cancel reload
+        character.reloadCountdown = 0f;
     }
-        
 }

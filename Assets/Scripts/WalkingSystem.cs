@@ -2,12 +2,29 @@ using UnityEngine;
 
 public static class WalkingSystem
 {
-    public static void FixedUpdate(ref Character character)
+    public static void Update(ref Character character)
     {
-        character.currentLook += new Vector2(-character.lookInput.y, character.lookInput.x) * character.turnSpeed;
-        character.currentLook.x = Mathf.Clamp(character.currentLook.x, -90, 90);
+        if (character.isUsingLookPositionInput)
+        {
+            Quaternion desiredQuat = Quaternion.LookRotation(character.lookPositionInput - character.transform.position, Vector3.up);
+            Quaternion currentQuat = Quaternion.Euler(character.currentLook.x, character.currentLook.y, 0);
+            character.currentLook = Quaternion.Slerp(currentQuat, desiredQuat, character.turnSpeed * Time.deltaTime).eulerAngles;
+            character.isUsingLookPositionInput = false;
+        }
+        else
+        {
+            character.currentLook += new Vector2(-character.lookInput.y, character.lookInput.x) * character.turnSpeed * Time.deltaTime;
+            character.currentLook.x = Mathf.Clamp(character.currentLook.x, -90, 90);
+        }
         Quaternion yRotation = Quaternion.Euler(0, character.currentLook.y, 0);
         Quaternion xRotation = Quaternion.Euler(character.currentLook.x, 0, 0);
+        character.rigidbody.rotation = yRotation;
+        character.camera.transform.localRotation = xRotation;
+    }
+
+    public static void FixedUpdate(ref Character character)
+    {
+        Quaternion yRotation = Quaternion.Euler(0, character.currentLook.y, 0);
 
         Vector3 velocity = character.rigidbody.linearVelocity;
         Vector3 horizontalVelocity = velocity;
@@ -19,10 +36,6 @@ public static class WalkingSystem
             character.moveSpeed -
             horizontalVelocity;
         character.rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
-
-        character.rigidbody.rotation = yRotation;
-
-        character.camera.transform.localRotation = xRotation;
 
         if (character.jumpInput &&
             character.isStandingTracker.previousIsStanding)

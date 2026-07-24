@@ -1,9 +1,24 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+
+public enum IDType
+{
+    Invalid,
+    Player,
+    Enemy,
+}
+
+[System.Serializable]
+public struct ID
+{
+    public IDType type;
+    public int index;
+    public int version;
+}
 
 [System.Serializable]
 public struct Character
 {
+    public ID id;
     [Header("Character - Must assign")]
     public GameObject gameObject;
     public Transform camera;
@@ -24,7 +39,10 @@ public struct Character
 
     #region Input 
     [HideInInspector] public Vector2 moveInput;
+    // true => lookPositionInput, false => lookInput
+    [HideInInspector] public bool isUsingLookPositionInput;
     [HideInInspector] public Vector2 lookInput;
+    [HideInInspector] public Vector3 lookPositionInput;
     [HideInInspector] public bool shootInput;
     [HideInInspector] public bool reloadInput;
     [HideInInspector] public bool jumpInput;
@@ -34,7 +52,7 @@ public struct Character
 
     [HideInInspector] public Vector2 currentLook;
     [HideInInspector] public float reloadCountdown;
-    [HideInInspector] public float lastShotTime;
+    [HideInInspector] public float shotCooldown;
     [HideInInspector] public bool shotThisFrame;
     [HideInInspector] public float recoilCountdown;
     [HideInInspector] public float recoilCountdownStart;
@@ -51,13 +69,12 @@ public struct Character
         currentSelectedWeapon = 0,
     };
 
-    public void Start()
+    public void Awake()
     {
         transform = gameObject.transform;
         rigidbody = gameObject.GetComponent<Rigidbody>();
         isStandingTracker = gameObject.GetComponent<IsStandingTracker>();
         currentLook = transform.rotation.eulerAngles.y * Vector2.up;
-        lastShotTime = -1000f;
         currentHealth = maxHealth;
 
         // Start all guns with full ammo capacity
@@ -78,36 +95,15 @@ public struct PlayerCharacter
         character = Character.Default,
     };
 
-    public void Start()
+    public void Awake()
     {
-        character.Start();
-        PlayerUI.Instance.GetTimer.SetRemainingTime(
-            character.currentHealth, character.maxHealth);
-
+        character.id = new ID()
+        {
+            type = IDType.Player,
+        };
+        character.Awake();
+        PlayerUI.Instance.GetTimer.SetRemainingTime(character);
     }
-
-    //TODO call these
-    public void Damage()
-    {
-        PlayerUI.Instance.GetTimer.SetRemainingTime(
-            character.currentHealth, character.maxHealth,
-            TimeAdjustmentReason.DAMAGE);
-    }
-
-    public void UsePerk()
-    {
-        PlayerUI.Instance.GetTimer.SetRemainingTime(
-            character.currentHealth, character.maxHealth,
-            TimeAdjustmentReason.PERK);
-    }
-
-    public void Update()
-    {
-        character.currentHealth--;
-        PlayerUI.Instance.GetTimer.SetRemainingTime(
-            character.currentHealth, character.maxHealth);
-    }
-
 }
 
 [System.Serializable]
@@ -121,18 +117,12 @@ public struct EnemyCharacter
         character = Character.Default,
     };
 
-    public void Start()
+    public void Awake()
     {
-        character.Start();
+        character.Awake();
         healthBar.SetRemainingTime(
             character.currentHealth, character.maxHealth);
 
-    }
-
-    public void Damage(float damageAmount)
-    {
-        character.currentHealth -= damageAmount;
-        healthBar.SetRemainingTime(character.currentHealth, character.maxHealth);
     }
 }
 
@@ -145,7 +135,7 @@ public struct GunStat
     // number of colliders this rounds penetrate through
     public int penetrationCount;
     public Sprite weaponImage;
-
+    public float damage;
     [HideInInspector] public int currentAmmo;
 
     public static GunStat Default => new()
@@ -154,6 +144,7 @@ public struct GunStat
         reloadTime = 1.5f,
         roundsPerMin = 120,
         penetrationCount = 0,
+        damage = 1f,
     };
 
     public void Reload()

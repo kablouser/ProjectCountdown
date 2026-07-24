@@ -701,7 +701,6 @@ GameObject:
   - component: {fileID: 1767659095}
   - component: {fileID: 1767659094}
   - component: {fileID: 1767659093}
-  - component: {fileID: 1767659092}
   - component: {fileID: 1767659091}
   m_Layer: 0
   m_Name: Cube (2)
@@ -737,46 +736,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1767659092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767659090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83cdc7cdcb8b9443a465f6ca29693d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCharacter
-  enemyCharacter:
-    character:
-      gameObject: {fileID: 0}
-      camera: {fileID: 0}
-      gunMagazine: {fileID: 0}
-      gunBody: {fileID: 0}
-      transform: {fileID: 0}
-      rigidbody: {fileID: 0}
-      isStandingTracker: {fileID: 0}
-      maxHealth: 0
-      moveSpeed: 0
-      turnSpeed: 0
-      jumpHeight: 0
-      gunStats: []
-      moveInput: {x: 0, y: 0}
-      lookInput: {x: 0, y: 0}
-      shootInput: 0
-      reloadInput: 0
-      jumpInput: 0
-      weaponSelectInput: 0
-      currentLook: {x: 0, y: 0}
-      reloadCountdown: 0
-      lastShotTime: 0
-      shotThisFrame: 0
-      recoilCountdown: 0
-      recoilCountdownStart: 0
-      currentHealth: 0
-      currentSelectedWeapon: 0
 --- !u!65 &1767659093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -902,8 +861,13 @@ MonoBehaviour:
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  isPlayerValid: 0
   playerCharacter:
     character:
+      id:
+        type: 0
+        index: 0
+        version: 0
       gameObject: {fileID: 0}
       camera: {fileID: 0}
       gunMagazine: {fileID: 0}
@@ -917,7 +881,9 @@ MonoBehaviour:
       jumpHeight: 1
       gunStats: []
       moveInput: {x: 0, y: 0}
+      isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
+      lookPositionInput: {x: 0, y: 0, z: 0}
       shootInput: 0
       reloadInput: 0
       jumpInput: 0
@@ -930,7 +896,11 @@ MonoBehaviour:
       recoilCountdownStart: 0
       currentHealth: 0
       currentSelectedWeapon: 0
-  enemyCharacters: []
+  enemyCharacters:
+    type: 0
+    list: []
+    versions: 
+    isUsing: 
 --- !u!4 &2059977969
 Transform:
   m_ObjectHideFlags: 0
