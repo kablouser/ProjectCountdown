@@ -19,6 +19,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public LayerMask shootLayerMask;
     public PickUp pickUpExtraTimePrefab;
+
+    public AudioSource musicSource;
+    public AudioClip musicIntro;
+    public AudioClip musicLoop;
+
     public bool isPlayerAlive;
     public PlayerCharacter playerCharacter = PlayerCharacter.Default;
     // decimal part of the countdown. we only countdown in ints
@@ -51,6 +56,12 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         Cursor.lockState = CursorLockMode.Locked;
         CountdownSystem.StartLevel(this);
+
+        musicIntro.UnloadAudioData();
+        musicLoop.UnloadAudioData();
+        musicSource.clip = musicIntro;
+        musicSource.loop = false;
+        musicSource.Play();
     }
 
     void OnEnable()
@@ -82,6 +93,15 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
             ShootSystem.Update(ref enemy.character, shootLayerMask, raycastHitCache);
             GunAnimationSystem.Update(ref enemy.character);
             WalkingSystem.Update(ref enemy.character);
+        }
+
+        if (!musicSource.isPlaying)
+        {
+            musicSource.clip = musicLoop;
+            musicSource.loop = true;
+            musicSource.Play();
+
+            musicIntro.UnloadAudioData();
         }
     }
 
