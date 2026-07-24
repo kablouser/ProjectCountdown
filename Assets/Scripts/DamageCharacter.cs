@@ -28,12 +28,22 @@ public static class DamageCharacter
         return false;
     }
 
-    public static void Damage(ref Character character, float damage)
+    public static bool Damage(ref Character character, float damage)
     {
         character.currentHealth -= damage;
         if (character.currentHealth <= 0)
         {
+            if (character.id.type == IDType.Player)
+            {
+                for (int i = 0; i < character.camera.childCount; i++)
+                {
+                    GameObject.Destroy(character.camera.GetChild(i).gameObject);
+                }
+                character.camera.SetParent(null);
+            }
             GameObject.Destroy(character.gameObject);
+            return true;
         }
+        return false;
     }
 }
