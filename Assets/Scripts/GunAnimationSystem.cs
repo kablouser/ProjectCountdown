@@ -18,7 +18,10 @@ public static class GunAnimationSystem
 
             if (prevLerpTime < 0.5f && newLerpTime >= 0.5f)
             {
+                character.gunBodyMesh.mesh = character.ActiveGun.weaponBodyMesh;
+                character.gunAmmoMesh.mesh = character.ActiveGun.weaponAmmoMesh;
                 character.gunMesh.material = character.ActiveGun.weaponMaterial;
+                character.gunBody.localScale = Vector3.one * character.ActiveGun.uniformWeaponScale;
             }
             
             return;

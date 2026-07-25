@@ -28,6 +28,8 @@ public struct Character
     public Transform gunMagazine;
     public Transform gunBody;
     [HideInInspector] public MeshRenderer gunMesh;
+    [HideInInspector] public MeshFilter gunBodyMesh;
+    [HideInInspector] public MeshFilter gunAmmoMesh;
     [HideInInspector] public Transform transform;
     [HideInInspector] public Rigidbody rigidbody;
     [HideInInspector] public IsStandingTracker isStandingTracker;
@@ -86,6 +88,8 @@ public struct Character
         currentLook = transform.rotation.eulerAngles.y * Vector2.up;
         currentHealth = maxHealth;
         gunMesh = gunBody.gameObject.GetComponent<MeshRenderer>();
+        gunBodyMesh = gunBody.gameObject.GetComponent<MeshFilter>();
+        gunAmmoMesh = gunMagazine.gameObject.GetComponent<MeshFilter>();
 
         // Start all guns with full ammo capacity
         for (int i = 0; i < gunStats.Length; i++)
@@ -163,6 +167,9 @@ public struct GunStat
     public bool isMelee;
     [HideInInspector] public int currentAmmo;
     public Material weaponMaterial;
+    public Mesh weaponBodyMesh;
+    public Mesh weaponAmmoMesh;
+    public float uniformWeaponScale;
 
     public static GunStat Default => new()
     {

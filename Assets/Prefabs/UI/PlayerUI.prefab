@@ -111,6 +111,9 @@ MonoBehaviour:
       isMelee: 0
       currentAmmo: 0
       weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
+      weaponBodyMesh: {fileID: 2941274158721294118, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
+      weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
+      uniformWeaponScale: 1
     upgradables: -1
     upgradeCost: 8
     addDamage: 0
@@ -131,6 +134,9 @@ MonoBehaviour:
       isMelee: 0
       currentAmmo: 0
       weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
+      weaponBodyMesh: {fileID: 2959467708922500008, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
+      weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
+      uniformWeaponScale: 20
     upgradables: 20
     upgradeCost: 7
     addDamage: 0
@@ -151,6 +157,9 @@ MonoBehaviour:
       isMelee: 0
       currentAmmo: 0
       weaponMaterial: {fileID: 2100000, guid: c67f022d122e28b4cbeee84e1c4fa43f, type: 2}
+      weaponBodyMesh: {fileID: 2959467708922500008, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
+      weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
+      uniformWeaponScale: 20
     upgradables: 25
     upgradeCost: 7
     addDamage: 0
@@ -171,6 +180,9 @@ MonoBehaviour:
       isMelee: 0
       currentAmmo: 0
       weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
+      weaponBodyMesh: {fileID: 2941274158721294118, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
+      weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
+      uniformWeaponScale: 30
     upgradables: 5
     upgradeCost: 7
     addDamage: 0
