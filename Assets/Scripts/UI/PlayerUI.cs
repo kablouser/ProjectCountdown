@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -9,6 +11,11 @@ public class PlayerUI : MonoBehaviour
     public GameObject gameOverScreen;
     public ShopScreenUI shopScreen;
     public GameObject pauseScreen;
+    
+    public Image hitMarker;
+    private const float HitMarkerTime = 0.3f;
+    private float _hitMarkerTimer;
+    
 
     static PlayerUI instance;
     public static PlayerUI Instance
@@ -26,6 +33,22 @@ public class PlayerUI : MonoBehaviour
 
         instance = this;
         SetUI_Screen(LevelState.MainMenu, false);
+        _hitMarkerTimer = 0;
+    }
+
+    private void Update()
+    {
+        _hitMarkerTimer -= Time.deltaTime;
+        _hitMarkerTimer = Math.Max(_hitMarkerTimer, 0.0f);
+        
+        Color currentColor = hitMarker.color;
+        currentColor.a = _hitMarkerTimer / HitMarkerTime;
+        hitMarker.color = currentColor;
+    }
+
+    public void ShowHitMarker()
+    {
+        _hitMarkerTimer = HitMarkerTime;
     }
 
     public void SetUI_Screen(LevelState levelState, bool isPaused)

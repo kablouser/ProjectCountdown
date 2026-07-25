@@ -31,6 +31,8 @@ public static class DamageCharacter
                     bool isDead = InternalDamage(ref enemy.character, damage);
                     enemy.healthBar.SetRemainingTime(enemy.character, reason);
 
+                    PlayerUI.Instance.ShowHitMarker(); 
+
                     if (isDead)
                     {
                         if (Random.value <= enemy.dropExtraTimeChance)
