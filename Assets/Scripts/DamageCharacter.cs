@@ -21,6 +21,10 @@ public static class DamageCharacter
 
                     bool isDead = InternalDamage(ref main.playerCharacter.character, damage);
                     PlayerUI.Instance.healthBar.SetRemainingTime(main.playerCharacter.character, reason);
+                    if (isDead)
+                    {
+                        PlayerUI.Instance.gameOverScreen.SetGameOverReason(reason);
+                    }
                     return isDead;
                 }
                 break;

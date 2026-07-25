@@ -8,7 +8,7 @@ public class PlayerUI : MonoBehaviour
     public WeaponUI weaponUI;
     public GameObject mainMenuScreen;
     public LevelClearedUI levelClearedScreen;
-    public GameObject gameOverScreen;
+    public GameOverUI gameOverScreen;
     public ShopScreenUI shopScreen;
     public GameObject pauseScreen;
 
@@ -58,7 +58,7 @@ public class PlayerUI : MonoBehaviour
         weaponUI.gameObject.SetActive(false);
         mainMenuScreen.SetActive(false);
         levelClearedScreen.gameObject.SetActive(false);
-        gameOverScreen.SetActive(false);
+        gameOverScreen.gameObject.SetActive(false);
         shopScreen.gameObject.SetActive(false);
         pauseScreen.SetActive(false);
         crossHair.SetActive(false);
@@ -81,7 +81,7 @@ public class PlayerUI : MonoBehaviour
             case LevelState.GameOver:
                 healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
-                gameOverScreen.SetActive(true);
+                gameOverScreen.gameObject.SetActive(true);
                 break;
             case LevelState.Shop:
                 shopScreen.gameObject.SetActive(true);

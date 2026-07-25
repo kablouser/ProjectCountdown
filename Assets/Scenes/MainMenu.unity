@@ -256,6 +256,17 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &716797323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7306109872217233087, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
+  m_PrefabInstance: {fileID: 1823336075}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453e83ad7d88fd1449f4d1217825973e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1006970094
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +626,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1513945597409679047, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2762025935965050648, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -667,6 +682,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main
       objectReference: {fileID: 0}
+    - target: {fileID: 8779152742279804705, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
+      propertyPath: gameOverScreen
+      value: 
+      objectReference: {fileID: 716797323}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

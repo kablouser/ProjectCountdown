@@ -1316,7 +1316,7 @@ MonoBehaviour:
   weaponUI: {fileID: 4082999544199382856}
   mainMenuScreen: {fileID: 559398365006452831}
   levelClearedScreen: {fileID: 8830997649545402371}
-  gameOverScreen: {fileID: 5940203335160436814}
+  gameOverScreen: {fileID: 1251997095736596969}
   shopScreen: {fileID: 1048423139611290029}
   pauseScreen: {fileID: 3212764105770311326}
   crossHair: {fileID: 1077572018531693534}
