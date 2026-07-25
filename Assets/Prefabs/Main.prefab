@@ -100,11 +100,14 @@ MonoBehaviour:
     isUsing: 
   accumulatedCountdown: 0
   levelClearedCountdown: 0
+  enemyPool: {fileID: 0}
+  enemySpawnPoints: []
   levelStats:
     baseEnemyCount: 5
     enemyIncreaseMultiplier: 1.5
+    enemiesRemaining: 0
     playerStartHealth: 30
-    maxEnemiesAtOnce: 10
+    timeBetweenEnemySpawning: 0
 --- !u!82 &6441260904068122120
 AudioSource:
   m_ObjectHideFlags: 0
