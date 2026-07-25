@@ -46,14 +46,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26498223311f3eb429b3d0081845b26a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main
+  levelState: 4
+  settings:
+    music: 0.7
+    sfx: 0.7
+    mouseSensitivity: 0.5
+    invertLookY: 0
+  mainMenuSceneIndex: 0
+  playingSceneIndex: 1
+  shopSceneIndex: 2
+  levelClearedDuration: 5
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
   pickUpExtraTimePrefab: {fileID: 8040921844680277244, guid: ee2095657ad9f09479d559eb450b7144, type: 3}
+  masterMixer: {fileID: 24100000, guid: 023c92fb02a6268459cbb4fa01bc3633, type: 2}
   musicSource: {fileID: 6441260904068122120}
   musicIntro: {fileID: 8300000, guid: ba7f47d63b9e8d94b893f344a3583ff0, type: 3}
   musicLoop: {fileID: 8300000, guid: 379e3b3d4a854564e8359c42c0a85dfa, type: 3}
   isPlayerAlive: 0
+  playerTimeLeft: 100
   playerCharacter:
     character:
       id:
@@ -71,6 +83,7 @@ MonoBehaviour:
       maxHealth: 1
       moveSpeed: 3
       turnSpeed: 1
+      invertLookY: 0
       jumpHeight: 1
       gunStats: []
       moveInput: {x: 0, y: 0}
@@ -90,9 +103,7 @@ MonoBehaviour:
       currentHealth: 0
       currentSelectedWeapon: 0
       timeToSwapCountdown: 0
-  levelClearedDuration: 5
-  levelState: 1
-  playerTimeLeft: 100
+    pauseInput: 0
   enemyCharacters:
     type: 0
     list: []
@@ -100,11 +111,13 @@ MonoBehaviour:
     isUsing: 
   accumulatedCountdown: 0
   levelClearedCountdown: 0
+  enemyPool: {fileID: 0}
   levelStats:
     baseEnemyCount: 5
     enemyIncreaseMultiplier: 1.5
+    enemiesRemaining: 0
     playerStartHealth: 30
-    maxEnemiesAtOnce: 10
+    timeBetweenEnemySpawning: 0
 --- !u!82 &6441260904068122120
 AudioSource:
   m_ObjectHideFlags: 0
@@ -114,7 +127,7 @@ AudioSource:
   m_GameObject: {fileID: 7222421124179451156}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3328093979235211969, guid: 023c92fb02a6268459cbb4fa01bc3633, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -294,6 +307,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5128674907192479752, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5439010614343880144}
+    - target: {fileID: 5853206197553240162, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5439010614343880144}
+    - target: {fileID: 6413013654915721940, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5439010614343880144}
+    - target: {fileID: 7936348548421259956, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5439010614343880144}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

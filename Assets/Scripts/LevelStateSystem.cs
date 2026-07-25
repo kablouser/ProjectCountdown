@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class LevelStateSystem
 {
@@ -11,14 +12,15 @@ public static class LevelStateSystem
     {
         ref PlayerCharacter player = ref main.playerCharacter;
 
+        bool canPause = false;
         switch (main.levelState)
         {
             case LevelState.MainMenu:
                 break;
             case LevelState.Playing:
-                {
-                    InternalUpdatePlayingLevel(main, ref player);
-                }
+                InternalUpdatePlayingLevel(main, ref player);
+                // InternalUpdatePlayingLevel may change levelState
+                canPause = main.levelState == LevelState.Playing;
                 break;
             case LevelState.LevelCleared:
                 {
@@ -26,7 +28,7 @@ public static class LevelStateSystem
                     if (main.levelClearedCountdown <= 0f)
                     {
                         main.levelClearedCountdown = 0f;
-                        SetLevelState(main, LevelState.Shop);
+                        SceneManager.LoadScene(main.shopSceneIndex);
                     }
                     else
                     {
@@ -37,10 +39,20 @@ public static class LevelStateSystem
             case LevelState.GameOver:
                 break;
             case LevelState.Shop:
+                canPause = true;
                 break;
             default:
                 Debug.LogWarning("levelState not implemented " + main.levelState);
                 break;
+        }
+
+        if (canPause)
+        {
+            if (main.playerCharacter.pauseInput)
+            {
+                main.playerCharacter.pauseInput = false;
+                PlayerUI.Instance.SetUI_Screen(main.levelState, Time.timeScale != 0f);
+            }
         }
     }
 
@@ -71,30 +83,32 @@ public static class LevelStateSystem
                 main.levelStats.enemiesRemaining = main.levelStats.GetEnemyCount(0);
                 for (int i = 0; i < main.levelStats.enemiesRemaining; i++)
                 {
+                    if (main.enemyPool == null)
+                    {
+                        Debug.LogError("Playing level must contain enemy pool");
+                        break;
+                    }
+                    
                     GameObject enemy;
                     // We've reached the max enemies we allow.
                     if (!main.enemyPool.GetNext(out enemy))
                     {
                         break;
                     }
-                    
-                    int spawnPointIndex = i % main.enemySpawnPoints.Count;
-                    Transform spawnTransform = main.enemySpawnPoints[spawnPointIndex].transform;
+
+                    int spawnPointIndex = i % main.enemyPool.enemySpawnPoints.Count;
+                    Transform spawnTransform = main.enemyPool.enemySpawnPoints[spawnPointIndex];
                     enemy.transform.position = spawnTransform.position;
                     enemy.transform.rotation = spawnTransform.rotation;
                 }
                 
                 // TODO: Set up health here too.
                 main.accumulatedCountdown = 0f;
-                Cursor.lockState = CursorLockMode.Locked;
                 break;
             case LevelState.LevelCleared:
                 main.playerTimeLeft = main.playerCharacter.character.currentHealth;
                 main.levelClearedCountdown = main.levelClearedDuration;
                 PlayerUI.Instance.levelClearedScreen.SetLevelClearedCountdown(main.levelClearedCountdown);
-                break;
-            case LevelState.Shop:
-                Cursor.lockState = CursorLockMode.None;
                 break;
         }
 
@@ -109,6 +123,12 @@ public static class LevelStateSystem
             return;
         }
 
+        if (main.enemyPool == null)
+        {
+            Debug.LogError("Playing level must contain enemy pool");
+            return;
+        }
+
         var (activeEnemies, freeEnemies) = main.enemyPool.GetActiveAndFreeCount();
         // If we have more enemies we need to spawn and there are free enemies available then spawn them.
         if (activeEnemies < main.levelStats.enemiesRemaining && freeEnemies > 0)
@@ -116,8 +136,8 @@ public static class LevelStateSystem
             GameObject enemy;
             if (main.enemyPool.GetNext(out enemy))
             {
-                int randomIndex = Random.Range(0, main.enemySpawnPoints.Count);
-                Transform spawnTransform = main.enemySpawnPoints[randomIndex].transform;
+                int randomIndex = Random.Range(0, main.enemyPool.enemySpawnPoints.Count);     
+                Transform spawnTransform = main.enemyPool.enemySpawnPoints[randomIndex];
                 enemy.transform.position = spawnTransform.position;
                 enemy.transform.rotation = spawnTransform.rotation;
             }
