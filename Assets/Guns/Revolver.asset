@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d27fef81f004495bfb6055d1d187ce2, type: 3}
   m_Name: Revolver
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GunDataObject
+  unlockCost: 7
   stats:
     name: Revolver
+    isUnlocked: 0
+    automatic: 0
     ammoCapacity: 6
     reloadTime: 0.6
-    roundsPerMin: 240
+    roundsPerMin: 360
     penetrationCount: 1
     weaponImage: {fileID: 0}
     damage: 1
@@ -27,3 +30,5 @@ MonoBehaviour:
     weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
     uniformWeaponScale: 20
     kickbackAmount: 0.5
+  upgradables: 9
+  upgradeCost: 5

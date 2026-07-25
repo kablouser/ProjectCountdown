@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d27fef81f004495bfb6055d1d187ce2, type: 3}
   m_Name: AntiMatter
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GunDataObject
+  unlockCost: 10
   stats:
     name: Antimatter Rifle
     isUnlocked: 0
+    automatic: 0
     ammoCapacity: 4
     reloadTime: 2.3
     roundsPerMin: 30
@@ -28,3 +30,5 @@ MonoBehaviour:
     weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
     uniformWeaponScale: 30
     kickbackAmount: 2
+  upgradables: 17
+  upgradeCost: 5

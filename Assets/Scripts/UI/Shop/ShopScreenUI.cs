@@ -19,12 +19,9 @@ public class ShopScreenUI : MonoBehaviour
     [System.Serializable]
     public struct ShopWeapon
     {
-        public float unlockCost;
-        public bool isUnlocked;
+        public bool isUnlockedInShop;
         // Added to allow for guns to be stored in a separate file to make editing easier
         public GunDataObject gunData;
-        public WeaponUpgradeFlags upgradables;
-        public float upgradeCost;
         // upgrade stats
         public float addDamage;
         public int addAmmoCapacity;
@@ -48,6 +45,7 @@ public class ShopScreenUI : MonoBehaviour
         foreach (ref ShopWeapon weapon in shopWeapons.AsSpan())
         {
             weapon.multiplyReloadSpeed = weapon.multiplyRoundsPerMinute = 1f;
+            weapon.isUnlockedInShop = weapon.gunData.stats.isUnlocked;
 
             weapon.ui = Instantiate(weaponPrefab, shopWeaponUIParent);
             weapon.ui.SetName(weapon);
@@ -79,21 +77,21 @@ public class ShopScreenUI : MonoBehaviour
     {
         if (!isSetup)
         {
-            if (shopWeapons[weaponI].isUnlocked)
+            if (shopWeapons[weaponI].isUnlockedInShop)
             {
                 ShowHint("Already unlocked");
                 return;
             }
 
             ref float playerTimeLeft = ref Main.Singleton.playerTimeLeft;
-            if (playerTimeLeft < shopWeapons[weaponI].unlockCost)
+            if (playerTimeLeft < shopWeapons[weaponI].gunData.unlockCost)
             {
-                ShowHint($"Insufficient time! Need additional {shopWeapons[weaponI].unlockCost - playerTimeLeft:0.###}s");
+                ShowHint($"Insufficient time! Need additional {shopWeapons[weaponI].gunData.unlockCost - playerTimeLeft:0.###}s");
                 return;
             }
-            playerTimeLeft -= shopWeapons[weaponI].unlockCost;
+            playerTimeLeft -= shopWeapons[weaponI].gunData.unlockCost;
             UpdatePlayerTimeLeftText();
-            shopWeapons[weaponI].isUnlocked = true;
+            shopWeapons[weaponI].isUnlockedInShop = true;
         }
 
         shopWeapons[weaponI].ui.SetUnlocked(shopWeapons[weaponI]);
@@ -101,25 +99,25 @@ public class ShopScreenUI : MonoBehaviour
 
     public void TryUnlockWeaponUpgrade(int weaponI, WeaponUpgradeFlags upgradeType)
     {
-        if (!shopWeapons[weaponI].isUnlocked)
+        if (!shopWeapons[weaponI].isUnlockedInShop)
         {
             ShowHint("Weapon not unlocked");
             return;
         }
 
-        if ((upgradeType & shopWeapons[weaponI].upgradables) == WeaponUpgradeFlags.None)
+        if ((upgradeType & shopWeapons[weaponI].gunData.upgradables) == WeaponUpgradeFlags.None)
         {
             ShowHint("Cannot upgrade this attribute!");
             return;
         }
 
         ref float playerTimeLeft = ref Main.Singleton.playerTimeLeft;
-        if (playerTimeLeft < shopWeapons[weaponI].upgradeCost)
+        if (playerTimeLeft < shopWeapons[weaponI].gunData.upgradeCost)
         {
-            ShowHint($"Insufficient time! Need additional {shopWeapons[weaponI].upgradeCost - playerTimeLeft:0.###}s");
+            ShowHint($"Insufficient time! Need additional {shopWeapons[weaponI].gunData.upgradeCost - playerTimeLeft:0.###}s");
             return;
         }
-        playerTimeLeft -= shopWeapons[weaponI].upgradeCost;
+        playerTimeLeft -= shopWeapons[weaponI].gunData.upgradeCost;
         UpdatePlayerTimeLeftText();
 
         switch (upgradeType)
@@ -143,28 +141,17 @@ public class ShopScreenUI : MonoBehaviour
 
     public GunStat[] GetGunStats()
     {
+        GunStat[] gunStats = new GunStat[shopWeapons.Length];
         int i = 0;
         foreach (ShopWeapon weapon in shopWeapons)
         {
-            if (weapon.isUnlocked)
-            {
-                i += 1;
-            }
-        }
-        
-        GunStat[] gunStats = new GunStat[i];
-        i = 0;
-        foreach (ShopWeapon weapon in shopWeapons)
-        {
-            if (weapon.isUnlocked)
-            {
-                gunStats[i] = weapon.gunData.stats;
-                gunStats[i].damage += weapon.addDamage;
-                gunStats[i].ammoCapacity += weapon.addAmmoCapacity;
-                gunStats[i].reloadTime /= Mathf.Max(Mathf.Epsilon, weapon.multiplyReloadSpeed);
-                gunStats[i].roundsPerMin *= weapon.multiplyRoundsPerMinute;
-                i++;
-            }
+            gunStats[i] = weapon.gunData.stats;
+            gunStats[i].damage += weapon.addDamage;
+            gunStats[i].ammoCapacity += weapon.addAmmoCapacity;
+            gunStats[i].reloadTime /= Mathf.Max(Mathf.Epsilon, weapon.multiplyReloadSpeed);
+            gunStats[i].roundsPerMin *= weapon.multiplyRoundsPerMinute;
+            gunStats[i].isUnlocked = weapon.isUnlockedInShop;
+            i++;
         }
         return gunStats;
     }

@@ -159,6 +159,7 @@ public struct EnemyCharacter
 public struct GunStat
 {
     public string name;
+    public bool isUnlocked;
     public bool automatic;
     public int ammoCapacity;
     public float reloadTime;

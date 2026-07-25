@@ -1,4 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+public struct RaycastHitDistanceComparer : IComparer<RaycastHit>
+{
+    int IComparer<RaycastHit>.Compare(RaycastHit x, RaycastHit y)
+    {
+        return x.distance.CompareTo(y.distance);
+    }
+}
 
 public static class ShootSystem
 {
@@ -67,6 +76,7 @@ public static class ShootSystem
                         layerMask);
                     if (character.ActiveGun.penetrationCount + 1 < hitCount)
                     {
+                        System.Array.Sort(raycastHitCache, 0, hitCount, new RaycastHitDistanceComparer());
                         hitCount = character.ActiveGun.penetrationCount + 1;
                     }
                 }

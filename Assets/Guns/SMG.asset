@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d27fef81f004495bfb6055d1d187ce2, type: 3}
   m_Name: SMG
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GunDataObject
+  unlockCost: 7
   stats:
     name: SMG
+    isUnlocked: 0
     automatic: 1
     ammoCapacity: 20
     reloadTime: 1.5
@@ -28,3 +30,5 @@ MonoBehaviour:
     weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
     uniformWeaponScale: 20
     kickbackAmount: 0.5
+  upgradables: 20
+  upgradeCost: 5

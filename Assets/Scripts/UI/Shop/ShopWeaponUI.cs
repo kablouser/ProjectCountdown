@@ -26,42 +26,42 @@ public class ShopWeaponUI : MonoBehaviour
 
     public void SetUnlocked(in ShopScreenUI.ShopWeapon shopWeapon)
     {
-        if (shopWeapon.isUnlocked)
+        if (shopWeapon.isUnlockedInShop)
         {
             unlockCostText.gameObject.SetActive(false);
             unlockedPanel.SetActive(true);
 
-            if ((shopWeapon.upgradables & WeaponUpgradeFlags.Damage) != WeaponUpgradeFlags.None)
+            if ((shopWeapon.gunData.upgradables & WeaponUpgradeFlags.Damage) != WeaponUpgradeFlags.None)
             {
                 damageUpgrade.gameObject.SetActive(true);
-                damageUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.upgradeCost}s");
+                damageUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.gunData.upgradeCost}s");
             }
             else
             {
                 damageUpgrade.gameObject.SetActive(false);
             }
-            if ((shopWeapon.upgradables & WeaponUpgradeFlags.AmmoCapacity) != WeaponUpgradeFlags.None)
+            if ((shopWeapon.gunData.upgradables & WeaponUpgradeFlags.AmmoCapacity) != WeaponUpgradeFlags.None)
             {
                 ammoUpgrade.gameObject.SetActive(true);
-                ammoUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.upgradeCost}s");
+                ammoUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.gunData.upgradeCost}s");
             }
             else
             {
                 ammoUpgrade.gameObject.SetActive(false);
             }
-            if ((shopWeapon.upgradables & WeaponUpgradeFlags.ReloadSpeed) != WeaponUpgradeFlags.None)
+            if ((shopWeapon.gunData.upgradables & WeaponUpgradeFlags.ReloadSpeed) != WeaponUpgradeFlags.None)
             {
                 reloadUpgrade.gameObject.SetActive(true);
-                reloadUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.upgradeCost}s");
+                reloadUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.gunData.upgradeCost}s");
             }
             else
             {
                 reloadUpgrade.gameObject.SetActive(false);
             }
-            if ((shopWeapon.upgradables & WeaponUpgradeFlags.RoundsPerMinute) != WeaponUpgradeFlags.None)
+            if ((shopWeapon.gunData.upgradables & WeaponUpgradeFlags.RoundsPerMinute) != WeaponUpgradeFlags.None)
             {
                 roundsPerMinuteUpgrade.gameObject.SetActive(true);
-                roundsPerMinuteUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.upgradeCost}s");
+                roundsPerMinuteUpgrade.GetComponentInChildren<TextMeshProUGUI>().SetText($"Upgrade -{shopWeapon.gunData.upgradeCost}s");
             }
             else
             {
@@ -71,7 +71,7 @@ public class ShopWeaponUI : MonoBehaviour
         }
         else
         {
-            unlockCostText.SetText($"Unlock -{shopWeapon.unlockCost}s");
+            unlockCostText.SetText($"Unlock -{shopWeapon.gunData.unlockCost}s");
             unlockedPanel.SetActive(false);
         }
     }
