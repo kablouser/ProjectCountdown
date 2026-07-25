@@ -200,7 +200,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         playerCharacter.character.jumpInput = context.action.GetButtonDown();
     }
 
-    void InputSystem_Actions.IPlayerActions.OnFirstWeapon(InputAction.CallbackContext context)
+    void InputSystem_Actions.IPlayerActions.OnWeapon1(InputAction.CallbackContext context)
     {
         if (context.action.WasPerformedThisFrame())
         {
@@ -208,11 +208,27 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         }
     }
 
-    void InputSystem_Actions.IPlayerActions.OnSecondWeapon(InputAction.CallbackContext context)
+    void InputSystem_Actions.IPlayerActions.OnWeapon2(InputAction.CallbackContext context)
     {
         if (context.action.WasPerformedThisFrame())
         {
             playerCharacter.character.weaponSelectInput = 1;
+        }
+    }
+
+    void InputSystem_Actions.IPlayerActions.OnWeapon3(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            playerCharacter.character.weaponSelectInput = 2;
+        }
+    }
+
+    void InputSystem_Actions.IPlayerActions.OnWeapon4(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            playerCharacter.character.weaponSelectInput = 3;
         }
     }
 

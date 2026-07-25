@@ -52,7 +52,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "FirstWeapon",
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "514513e4-cd8f-46a8-ba9c-9b4ae134a4a6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Weapon1",
                     "type": "Button",
                     "id": "c6ea567f-0ac3-4737-9ff0-cf49323a54e1",
                     "expectedControlType": "",
@@ -61,7 +70,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SecondWeapon",
+                    "name": "Weapon2",
                     "type": "Button",
                     "id": "98435b3c-105f-4ad5-a6fc-7b54e0872c82",
                     "expectedControlType": "",
@@ -70,9 +79,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Weapon3",
                     "type": "Button",
-                    "id": "514513e4-cd8f-46a8-ba9c-9b4ae134a4a6",
+                    "id": "6b3fde25-6e69-4eb5-9928-d3a0aabe8820",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Weapon4",
+                    "type": "Button",
+                    "id": "62e31995-d5f9-4515-8057-fc93cd2d60a6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -285,7 +303,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "FirstWeapon",
+                    "action": "Weapon1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -296,7 +314,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FirstWeapon",
+                    "action": "Weapon1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -307,7 +325,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "SecondWeapon",
+                    "action": "Weapon2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -318,7 +336,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SecondWeapon",
+                    "action": "Weapon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "28fe9c94-1c12-40c1-8270-af2167ccf0c3",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Weapon3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88fba7ba-400f-44b7-8532-574141e48834",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Weapon3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd115ae1-0137-492e-a146-aa735252323b",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Weapon4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4282216-4789-430f-8be4-bba229373df7",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Weapon4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

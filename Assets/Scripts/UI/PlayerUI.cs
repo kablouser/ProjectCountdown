@@ -77,6 +77,7 @@ public class PlayerUI : MonoBehaviour
                 healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
                 levelClearedScreen.gameObject.SetActive(true);
+                crossHair.SetActive(true);
                 break;
             case LevelState.GameOver:
                 healthBar.gameObject.SetActive(true);

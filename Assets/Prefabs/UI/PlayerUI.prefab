@@ -100,7 +100,7 @@ MonoBehaviour:
   shopWeapons:
   - unlockCost: 0
     gunStat:
-      name: Rifle
+      name: Photon Blaster
       isUnlocked: 1
       ammoCapacity: 3
       reloadTime: 1
@@ -112,27 +112,67 @@ MonoBehaviour:
       currentAmmo: 0
       weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
     upgradables: -1
-    upgradeCost: 1
+    upgradeCost: 8
     addDamage: 0
     addAmmoCapacity: 0
     multiplyReloadSpeed: 1
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
-  - unlockCost: 5
+  - unlockCost: 10
     gunStat:
       name: SMG
       isUnlocked: 0
-      ammoCapacity: 30
+      ammoCapacity: 20
       reloadTime: 1.5
-      roundsPerMin: 120
+      roundsPerMin: 240
       penetrationCount: 0
       weaponImage: {fileID: 0}
       damage: 0.5
       isMelee: 0
       currentAmmo: 0
       weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
-    upgradables: 28
-    upgradeCost: 3
+    upgradables: 20
+    upgradeCost: 7
+    addDamage: 0
+    addAmmoCapacity: 0
+    multiplyReloadSpeed: 1
+    multiplyRoundsPerMinute: 1
+    ui: {fileID: 0}
+  - unlockCost: 10
+    gunStat:
+      name: Revolver
+      isUnlocked: 0
+      ammoCapacity: 6
+      reloadTime: 0.6
+      roundsPerMin: 240
+      penetrationCount: 1
+      weaponImage: {fileID: 0}
+      damage: 1
+      isMelee: 0
+      currentAmmo: 0
+      weaponMaterial: {fileID: 2100000, guid: c67f022d122e28b4cbeee84e1c4fa43f, type: 2}
+    upgradables: 25
+    upgradeCost: 7
+    addDamage: 0
+    addAmmoCapacity: 0
+    multiplyReloadSpeed: 1
+    multiplyRoundsPerMinute: 1
+    ui: {fileID: 0}
+  - unlockCost: 15
+    gunStat:
+      name: Antimatter Rifle
+      isUnlocked: 0
+      ammoCapacity: 4
+      reloadTime: 2.3
+      roundsPerMin: 30
+      penetrationCount: 5
+      weaponImage: {fileID: 0}
+      damage: 3
+      isMelee: 0
+      currentAmmo: 0
+      weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
+    upgradables: 5
+    upgradeCost: 7
     addDamage: 0
     addAmmoCapacity: 0
     multiplyReloadSpeed: 1
