@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public static class LevelStateSystem
@@ -110,6 +109,22 @@ public static class LevelStateSystem
             SetLevelState(main, LevelState.GameOver);
             return;
         }
+
+        var (activeEnemies, freeEnemies) = main.enemyPool.GetActiveAndFreeCount();
+        // If we have more enemies we need to spawn and there are free enemies available then spawn them.
+        if (activeEnemies < main.levelStats.enemiesRemaining && freeEnemies > 0)
+        {
+            GameObject enemy = main.enemyPool.GetNext();
+            // double check we good 🤓👍
+            if (enemy is not null)
+            {
+                int randomIndex = Random.Range(0, main.enemySpawnPoints.Count);     
+                Transform spawnTransform = main.enemySpawnPoints[randomIndex].transform;
+                enemy.transform.position = spawnTransform.position;
+                enemy.transform.rotation = spawnTransform.rotation;
+            }
+        }
+        
 
         bool isLevelCleared = main.levelStats.enemiesRemaining == 0;
         if (isLevelCleared)

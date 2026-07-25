@@ -4,7 +4,6 @@ using UnityEngine;
 public class EnemyCharacterProxy : MonoBehaviour, IProxy
 {
     public EnemyCharacter enemyCharacter = EnemyCharacter.Default;
-    public ID id;
 
 
     private void OnEnable()
@@ -14,7 +13,7 @@ public class EnemyCharacterProxy : MonoBehaviour, IProxy
 
     private void OnDisable()
     {
-        Main.Singleton.SleepEnemy(id);
+        Main.Singleton.SleepEnemy(enemyCharacter.character.id);
     }
 
 

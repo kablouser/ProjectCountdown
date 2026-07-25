@@ -33,5 +33,18 @@ public class EnemyPool : MonoBehaviour
              
         return null;
     }
-    
+
+    public (int, int) GetActiveAndFreeCount()
+    {
+        int activeCount = 0;
+        for (int i = 0; i < pool.Count; i++)
+        {
+            if (pool[i].activeInHierarchy)
+            {
+                activeCount++;
+            }
+        }
+        
+        return (activeCount, pool.Count - activeCount);
+    }
 }
