@@ -63,6 +63,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public EnemyPool enemyPool;
     public LevelStats levelStats;
+    [HideInInspector] public int level = 0;
 
     void Awake()
     {
@@ -303,6 +304,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnPlayPressed()
     {
+        level = 0;
         SceneManager.LoadScene(playingSceneIndex);
     }
 
@@ -321,6 +323,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnNextLevelPressed()
     {
+        level += 1;
         SceneManager.LoadScene(playingSceneIndex);
     }
 }
