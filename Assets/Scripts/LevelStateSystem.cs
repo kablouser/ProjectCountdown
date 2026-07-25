@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class LevelStateSystem
@@ -17,38 +18,7 @@ public static class LevelStateSystem
                 break;
             case LevelState.Playing:
                 {
-                    if (player.character.currentHealth <= 0)
-                    {
-                        SetLevelState(main, LevelState.GameOver);
-                        return;
-                    }
-
-                    bool isLevelCleared = true;
-                    foreach (ref EnemyCharacter enemy in main.enemyCharacters)
-                    {
-                        if (0 < enemy.character.currentHealth)
-                        {
-                            isLevelCleared = false;
-                        }
-                    }
-                    if (isLevelCleared)
-                    {
-                        SetLevelState(main, LevelState.LevelCleared);
-                        return;
-                    }
-
-                    main.accumulatedCountdown += Time.deltaTime;
-                    // tick down in int seconds
-                    float accumulatedInts = Mathf.Floor(main.accumulatedCountdown);
-                    if (0 < accumulatedInts)
-                    {
-                        main.accumulatedCountdown -= accumulatedInts;
-                        if (DamageCharacter.Damage(player.character.id, accumulatedInts, TimeAdjustmentReason.COUNTDOWN))
-                        {
-                            SetLevelState(main, LevelState.GameOver);
-                            return;
-                        }
-                    }
+                    InternalUpdatePlayingLevel(main, ref player);
                 }
                 break;
             case LevelState.LevelCleared:
@@ -98,6 +68,25 @@ public static class LevelStateSystem
         {
             default: break;
             case LevelState.Playing:
+                // Spawn enemies.
+                main.levelStats.enemiesRemaining = main.levelStats.GetEnemyCount(0);
+                for (int i = 0; i < main.levelStats.enemiesRemaining; i++)
+                {
+                    GameObject enemy = main.enemyPool.GetNext();
+                    
+                    // We've reached the max enemies we allow.
+                    if (enemy is null)
+                    {
+                        break;
+                    }
+
+                    int spawnPointIndex = i % main.enemySpawnPoints.Count;
+                    Transform spawnTransform = main.enemySpawnPoints[spawnPointIndex].transform;
+                    enemy.transform.position = spawnTransform.position;
+                    enemy.transform.rotation = spawnTransform.rotation;
+                }
+                
+                // TODO: Set up health here too.
                 main.accumulatedCountdown = 0f;
                 Cursor.lockState = CursorLockMode.Locked;
                 break;
@@ -112,5 +101,35 @@ public static class LevelStateSystem
         }
 
         PlayerUI.Instance.SetUI_Screen(state, false);
+    }
+
+    private static void InternalUpdatePlayingLevel(Main main, ref PlayerCharacter player)
+    {
+        if (player.character.currentHealth <= 0)
+        {
+            SetLevelState(main, LevelState.GameOver);
+            return;
+        }
+
+        bool isLevelCleared = main.levelStats.enemiesRemaining == 0;
+        if (isLevelCleared)
+        {
+            SetLevelState(main, LevelState.LevelCleared);
+            return;
+        }
+
+        main.accumulatedCountdown += Time.deltaTime;
+        // tick down in int seconds
+        float accumulatedInts = Mathf.Floor(main.accumulatedCountdown);
+        if (0 < accumulatedInts)
+        {
+            main.accumulatedCountdown -= accumulatedInts;
+            // Players health is the time remaining.
+            if (DamageCharacter.Damage(player.character.id, accumulatedInts, TimeAdjustmentReason.COUNTDOWN))
+            {
+                SetLevelState(main, LevelState.GameOver);
+                return;
+            }
+        }       
     }
 }

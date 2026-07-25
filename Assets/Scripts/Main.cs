@@ -41,6 +41,10 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     List<DrawArrowLifetime> drawArrows;
 
+    public EnemyPool enemyPool;
+    public List<EnemySpawnPoint> enemySpawnPoints;
+    public LevelStats levelStats;
+
     void Awake()
     {
         Singleton = this;
@@ -187,6 +191,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         enemyCharacter.Awake();
         return enemyCharacters.Add(enemyCharacter);
+    }
+
+    public void SleepEnemy(ID id)
+    {
+        enemyCharacters.Remove(id);
     }
 
     public void DestroyPlayer()

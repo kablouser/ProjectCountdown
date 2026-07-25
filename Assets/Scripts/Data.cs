@@ -176,3 +176,20 @@ public struct GunStat
         currentAmmo = ammoCapacity;
     }
 }
+
+[Serializable]
+public struct LevelStats
+{
+    public int GetEnemyCount(int level)
+    {
+        double doubleEnemyCount = baseEnemyCount * Math.Pow(enemyIncreaseMultiplier, level);
+        return (int)Math.Floor(doubleEnemyCount);
+    }
+    
+    [SerializeField] private int baseEnemyCount;
+    [SerializeField] private float enemyIncreaseMultiplier;
+    [HideInInspector] public int enemiesRemaining;
+    
+    public float playerStartHealth;
+    public float timeBetweenEnemySpawning;
+}

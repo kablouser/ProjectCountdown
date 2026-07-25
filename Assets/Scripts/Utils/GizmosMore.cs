@@ -7,8 +7,14 @@ public static class GizmosMore
     {
         Gizmos.DrawLine(from, to);
         Vector3 direction = to - from;
-        Vector3 right = (Quaternion.Euler(0, 0, 30f) * -direction) * 0.1f;
-        Vector3 left = (Quaternion.Euler(0, 0, -30f) * -direction) * 0.1f;
+        Vector3 perpendicular = Vector3.Cross(direction.normalized, Vector3.forward);
+        if (perpendicular.sqrMagnitude < 0.001f)
+        {
+            perpendicular = Vector3.up;
+        }
+        
+        Vector3 right = (Quaternion.AngleAxis(30f, perpendicular) * -direction) * 0.1f;
+        Vector3 left = (Quaternion.AngleAxis(-30f, perpendicular) * -direction) * 0.1f;
         Gizmos.DrawLine(to, right + to);
         Gizmos.DrawLine(to, left + to);
     }

@@ -29,7 +29,10 @@ public static class DamageCharacter
                 {
                     ref EnemyCharacter enemy = ref main.enemyCharacters[id];
                     bool isDead = InternalDamage(ref enemy.character, damage);
-                    enemy.healthBar.SetRemainingTime(enemy.character, reason);
+                    if (!isDead)
+                    {
+                        enemy.healthBar.SetRemainingTime(enemy.character, reason);
+                    }
 
                     PlayerUI.Instance.ShowHitMarker(); 
 
@@ -62,8 +65,14 @@ public static class DamageCharacter
                     GameObject.Destroy(character.camera.GetChild(i).gameObject);
                 }
                 character.camera.SetParent(null);
+                GameObject.Destroy(character.gameObject);
             }
-            GameObject.Destroy(character.gameObject);
+            else if (character.id.type == IDType.Enemy)
+            {
+                Main.Singleton.levelStats.enemiesRemaining -= 1;
+                // Allow for the pool to use it again.
+                character.gameObject.SetActive(false);
+            }
             return true;
         }
         return false;
