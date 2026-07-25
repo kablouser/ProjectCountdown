@@ -277,7 +277,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     private void ResetOneTimeInputs()
     {
-        playerCharacter.character.shootInput = false;
+        // Reset if not automatic.
+        if (playerCharacter.character.IsActiveGunValid() && !playerCharacter.character.ActiveGun.automatic)
+        {
+            playerCharacter.character.shootInput = false;
+        }
         playerCharacter.character.reloadInput = false;
         playerCharacter.character.jumpInput = false;
         playerCharacter.character.weaponSelectInput = -1;

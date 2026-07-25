@@ -40,6 +40,10 @@ public struct Character
     public bool invertLookY;
     public float jumpHeight;
 
+    public bool IsActiveGunValid()
+    {
+        return currentSelectedWeapon < gunStats.Length;
+    }
     public ref GunStat ActiveGun => ref gunStats[currentSelectedWeapon];
 
     [HideInInspector] public GunStat[] gunStats;
@@ -155,6 +159,7 @@ public struct EnemyCharacter
 public struct GunStat
 {
     public string name;
+    public bool automatic;
     public int ammoCapacity;
     public float reloadTime;
     public float roundsPerMin;
