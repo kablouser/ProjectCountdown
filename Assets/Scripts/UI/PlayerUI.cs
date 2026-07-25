@@ -2,27 +2,13 @@ using UnityEngine;
 
 public class PlayerUI : MonoBehaviour
 {
-    public enum UI_Screen { MainMenu, Playing, LevelCleared, GameOver, Shop, Pause };
-
-    [SerializeField] UI_Screen currentUI_Screen;
-    [SerializeField] BarUI timer;
-    [SerializeField] WeaponUI weaponUI;
-
-    [SerializeField] GameObject mainMenuScreen;
-    [SerializeField] GameObject levelClearedScreen;
-    [SerializeField] GameObject gameOverScreen;
-    [SerializeField] GameObject shopScreen;
-    [SerializeField] GameObject pauseScreen;
-
-    public BarUI GetTimer
-    {
-        get { return timer; }
-    }
-
-    public WeaponUI GetWeaponUI
-    {
-        get { return weaponUI; }
-    }
+    public BarUI healthBar;
+    public WeaponUI weaponUI;
+    public GameObject mainMenuScreen;
+    public LevelClearedUI levelClearedScreen;
+    public GameObject gameOverScreen;
+    public ShopScreenUI shopScreen;
+    public GameObject pauseScreen;
 
     static PlayerUI instance;
     public static PlayerUI Instance
@@ -38,53 +24,46 @@ public class PlayerUI : MonoBehaviour
             return;
         }
 
-        SetUI_Screen(currentUI_Screen, true);
         instance = this;
+        SetUI_Screen(LevelState.MainMenu, false);
     }
 
-    public void SetUI_Screen(UI_Screen uiScreen, bool force = false)
+    public void SetUI_Screen(LevelState levelState, bool isPaused)
     {
-        if (currentUI_Screen == uiScreen && !force) return;
-
-        timer.gameObject.SetActive(false);
+        healthBar.gameObject.SetActive(false);
         weaponUI.gameObject.SetActive(false);
-        mainMenuScreen.gameObject.SetActive(false);
+        mainMenuScreen.SetActive(false);
         levelClearedScreen.gameObject.SetActive(false);
-        gameOverScreen.gameObject.SetActive(false);
+        gameOverScreen.SetActive(false);
         shopScreen.gameObject.SetActive(false);
-        pauseScreen.gameObject.SetActive(false);
+        pauseScreen.SetActive(false);
 
-        currentUI_Screen = uiScreen;
-        switch (currentUI_Screen)
+        switch (levelState)
         {
-            case UI_Screen.MainMenu:
+            case LevelState.MainMenu:
                 mainMenuScreen.SetActive(true);
                 break;
-            case UI_Screen.Playing:
-                timer.gameObject.SetActive(true);
+            case LevelState.Playing:
+                healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
                 break;
-            case UI_Screen.LevelCleared:
-                timer.gameObject.SetActive(true);
+            case LevelState.LevelCleared:
+                healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
-                levelClearedScreen.SetActive(true);
+                levelClearedScreen.gameObject.SetActive(true);
                 break;
-            case UI_Screen.GameOver:
-                timer.gameObject.SetActive(true);
+            case LevelState.GameOver:
+                healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
                 gameOverScreen.SetActive(true);
                 break;
-            case UI_Screen.Shop:
-                shopScreen.SetActive(true);
-                break;
-            case UI_Screen.Pause:
-                timer.gameObject.SetActive(true);
-                weaponUI.gameObject.SetActive(true);
-                pauseScreen.SetActive(true);
+            case LevelState.Shop:
+                shopScreen.gameObject.SetActive(true);
                 break;
             default:
-                Debug.LogWarning("Screen not implemented "+currentUI_Screen);
+                Debug.LogWarning("Screen not implemented " + levelState);
                 break;
         }
+        pauseScreen.SetActive(isPaused);
     }
 }

@@ -54,24 +54,11 @@ public class BarUI : MonoBehaviour
     {
         if (timerTxt != null)
         {
-            float seconds = time;
-            float hours = Mathf.Floor(seconds / 60f / 60f);
-            seconds -= hours * 60f * 60f;
-            float minutes = Mathf.Floor(seconds / 60f);
-            seconds -= minutes * 60f;
-            if (0 < hours)
-            {
-                timerTxt.SetText($"{hours}h:{minutes}m:{seconds:0.##}s");
-            }
-            else if (0 < minutes)
-            {
-                timerTxt.SetText($"{minutes}m:{seconds:0.##}s");
-            }
-            else
-            {
-                timerTxt.SetText($"{seconds:0.##}s");
-            }
+            timerTxt.SetText(Main.FormatTime(time));
         }
+
+        if (time < currTime && addedTimeVfxImage != null)
+            addedTimeVfxImage.enabled = false;
 
         if (time > currTime && optReason == TimeAdjustmentReason.HEAL && addedTimeVfxImage != null) //Gained health from a perk
         {
@@ -87,10 +74,6 @@ public class BarUI : MonoBehaviour
         else if (time < currTime && optReason == TimeAdjustmentReason.DAMAGE) //Lost health from an enemy
         {
             //Shake the UI
-
-            if(addedTimeVfxImage)
-                addedTimeVfxImage.enabled = false;
-
             if (damageVfxCr == null)
             {
                 damageVfxCr = StartCoroutine(DamageVFX());

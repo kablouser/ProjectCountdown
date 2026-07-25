@@ -468,6 +468,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1232070126226312745, guid: 090dcf4f22066c24390c5a557a07fe13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863345670645022900, guid: 090dcf4f22066c24390c5a557a07fe13, type: 3}
+      propertyPath: m_Antialiasing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6576033047422530561, guid: 090dcf4f22066c24390c5a557a07fe13, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -507,6 +515,10 @@ PrefabInstance:
     - target: {fileID: 6576033047422530561, guid: 090dcf4f22066c24390c5a557a07fe13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783836431473046904, guid: 090dcf4f22066c24390c5a557a07fe13, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -740,6 +752,10 @@ PrefabInstance:
     - target: {fileID: 7222421124179451156, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: m_Name
       value: Main
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842756071993665275, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
+      propertyPath: shopWeapons.Array.data[1].upgradeCost
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

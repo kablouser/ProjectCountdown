@@ -39,7 +39,7 @@ public struct Character
 
     public ref GunStat ActiveGun => ref gunStats[currentSelectedWeapon];
 
-    public GunStat[] gunStats;
+    [HideInInspector] public GunStat[] gunStats;
 
     #region Input 
     [HideInInspector] public Vector2 moveInput;
@@ -115,8 +115,9 @@ public struct PlayerCharacter
         {
             type = IDType.Player,
         };
+        character.gunStats = PlayerUI.Instance.shopScreen.GetGunStats();
         character.Awake();
-        PlayerUI.Instance.GetTimer.SetRemainingTime(character);
+        PlayerUI.Instance.healthBar.SetRemainingTime(character);
     }
 }
 
@@ -147,6 +148,8 @@ public struct EnemyCharacter
 [System.Serializable]
 public struct GunStat
 {
+    public string name;
+    public bool isUnlocked;
     public int ammoCapacity;
     public float reloadTime;
     public float roundsPerMin;

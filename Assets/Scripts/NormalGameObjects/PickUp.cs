@@ -2,12 +2,29 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    public Transform visuals;
+    [Header("Resource Gain")]
     public float extraTime = 1f;
+    [Header("Visuals")]
+    public Transform visuals;
+    public float lifeTime = 5f;
+    public float fadeOutAnimationTime = 1f;
 
     private void Update()
     {
-        visuals.Rotate(0, Time.deltaTime * 100f, 0, Space.World);
+        lifeTime -= Time.deltaTime;
+        if (0 < lifeTime)
+        {
+            visuals.Rotate(0, Time.deltaTime * 100f, 0, Space.World);
+            if (lifeTime < fadeOutAnimationTime)
+            {
+                float animationTime = (fadeOutAnimationTime - lifeTime) / fadeOutAnimationTime;
+                visuals.localScale = Vector3.Lerp(visuals.localScale, Vector3.zero, animationTime);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

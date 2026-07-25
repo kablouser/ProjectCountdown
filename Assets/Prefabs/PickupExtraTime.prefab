@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c67f022d122e28b4cbeee84e1c4fa43f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,8 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3a975bbec9120428ad63c6e26a3e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickUpProxy
-  visuals: {fileID: 4418482304054019485}
   extraTime: 1
+  visuals: {fileID: 4418482304054019485}
+  lifeTime: 5
+  fadeOutAnimationTime: 1
 --- !u!54 &9126079503322432138
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -174,7 +176,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5664957238161812578}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 01469d739f52e10498daf20294c209af, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

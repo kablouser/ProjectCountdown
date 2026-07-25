@@ -90,13 +90,16 @@ MonoBehaviour:
       currentHealth: 0
       currentSelectedWeapon: 0
       timeToSwapCountdown: 0
-  accumulatedCountdown: 0
-  levelState: 0
+  levelClearedDuration: 5
+  levelState: 1
+  playerTimeLeft: 100
   enemyCharacters:
     type: 0
     list: []
     versions: 
     isUsing: 
+  accumulatedCountdown: 0
+  levelClearedCountdown: 0
 --- !u!82 &6441260904068122120
 AudioSource:
   m_ObjectHideFlags: 0

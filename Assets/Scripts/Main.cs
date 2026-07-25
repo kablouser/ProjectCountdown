@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,8 +11,7 @@ struct DrawArrowLifetime
 }
 
 // menu doesn't include pause menu
-public enum LevelState { Menu, Countdown, LevelCleared };
-
+public enum LevelState { MainMenu, Playing, LevelCleared, GameOver, Shop };
 
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
@@ -26,10 +26,15 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public bool isPlayerAlive;
     public PlayerCharacter playerCharacter = PlayerCharacter.Default;
-    // decimal part of the countdown. we only countdown in ints
-    public float accumulatedCountdown;
+    public float levelClearedDuration = 5f;
     public LevelState levelState;
+    // saved when level is cleared. used as currency in shop
+    public float playerTimeLeft;
     public VersionedList<EnemyCharacter> enemyCharacters;
+
+    // decimal part of the countdown. we only countdown in ints
+    [HideInInspector] public float accumulatedCountdown;
+    [HideInInspector] public float levelClearedCountdown;
 
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
@@ -54,14 +59,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        CountdownSystem.StartLevel(this);
-
-        musicIntro.UnloadAudioData();
-        musicLoop.UnloadAudioData();
         musicSource.clip = musicIntro;
         musicSource.loop = false;
         musicSource.Play();
+
+        LevelStateSystem.Start(this);
     }
 
     void OnEnable()
@@ -79,13 +81,13 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         if (isPlayerAlive)
         {
             WeaponSelectSystem.Update(ref playerCharacter.character);
-            PlayerUI.Instance.GetWeaponUI.SetAmmo(playerCharacter.character.ActiveGun);
+            PlayerUI.Instance.weaponUI.SetAmmo(playerCharacter.character.ActiveGun);
             ShootSystem.Update(ref playerCharacter.character, shootLayerMask, raycastHitCache);
             GunAnimationSystem.Update(ref playerCharacter.character);
             WalkingSystem.Update(ref playerCharacter.character);
         }
         // update countdown before enemies. so in case of simulatenous shoot out, player won't lose
-        CountdownSystem.Update(this);
+        LevelStateSystem.Update(this);
 
         foreach (ref EnemyCharacter enemy in enemyCharacters)
         {
@@ -208,5 +210,26 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         playerCharacter.character.reloadInput = false;
         playerCharacter.character.jumpInput = false;
         playerCharacter.character.weaponSelectInput = -1;
+    }
+
+    public static string FormatTime(float time)
+    {
+        float seconds = time;
+        float hours = Mathf.Floor(seconds / 60f / 60f);
+        seconds -= hours * 60f * 60f;
+        float minutes = Mathf.Floor(seconds / 60f);
+        seconds -= minutes * 60f;
+        if (0 < hours)
+        {
+            return $"{hours}h:{minutes}m:{seconds:0.##}s";
+        }
+        else if (0 < minutes)
+        {
+            return $"{minutes}m:{seconds:0.##}s";
+        }
+        else
+        {
+            return $"{seconds:0.##}s";
+        }
     }
 }

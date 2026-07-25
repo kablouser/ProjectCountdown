@@ -13,14 +13,14 @@ public static class DamageCharacter
                 if (main.isPlayerAlive)
                 {
                     // once level is cleared, make player invulnerable in case of simulatenous shooting
-                    if (main.levelState == LevelState.Countdown && 0f < damage)
+                    if (main.levelState == LevelState.LevelCleared && 0f < damage)
                     {
                         return false;
                     }
                     // allow healing to go through
 
                     bool isDead = InternalDamage(ref main.playerCharacter.character, damage);
-                    PlayerUI.Instance.GetTimer.SetRemainingTime(main.playerCharacter.character, reason);
+                    PlayerUI.Instance.healthBar.SetRemainingTime(main.playerCharacter.character, reason);
                     return isDead;
                 }
                 break;
