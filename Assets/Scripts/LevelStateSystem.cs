@@ -80,7 +80,7 @@ public static class LevelStateSystem
             default: break;
             case LevelState.Playing:
                 // Spawn enemies.
-                main.levelStats.enemiesRemaining = main.levelStats.GetEnemyCount(0);
+                main.levelStats.enemiesRemaining = main.levelStats.GetEnemyCount(main.level);
                 for (int i = 0; i < main.levelStats.enemiesRemaining; i++)
                 {
                     if (main.enemyPool == null)
