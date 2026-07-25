@@ -99,21 +99,8 @@ MonoBehaviour:
   playerTimeLeftText: {fileID: 5813818600102947581}
   shopWeapons:
   - unlockCost: 0
-    gunStat:
-      name: Photon Blaster
-      isUnlocked: 1
-      ammoCapacity: 3
-      reloadTime: 1
-      roundsPerMin: 120
-      penetrationCount: 0
-      weaponImage: {fileID: 0}
-      damage: 1
-      isMelee: 0
-      currentAmmo: 0
-      weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
-      weaponBodyMesh: {fileID: 2941274158721294118, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
-      weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
-      uniformWeaponScale: 1
+    isUnlocked: 1
+    gunData: {fileID: 11400000, guid: 3af49d5bead019440a09900dc1da538f, type: 2}
     upgradables: -1
     upgradeCost: 8
     addDamage: 0
@@ -122,21 +109,8 @@ MonoBehaviour:
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
   - unlockCost: 10
-    gunStat:
-      name: SMG
-      isUnlocked: 0
-      ammoCapacity: 20
-      reloadTime: 1.5
-      roundsPerMin: 240
-      penetrationCount: 0
-      weaponImage: {fileID: 0}
-      damage: 0.5
-      isMelee: 0
-      currentAmmo: 0
-      weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
-      weaponBodyMesh: {fileID: 2959467708922500008, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
-      weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
-      uniformWeaponScale: 20
+    isUnlocked: 0
+    gunData: {fileID: 11400000, guid: 2b7126e1dbb353f48a5ac408b5a57d4c, type: 2}
     upgradables: 20
     upgradeCost: 7
     addDamage: 0
@@ -145,21 +119,8 @@ MonoBehaviour:
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
   - unlockCost: 10
-    gunStat:
-      name: Revolver
-      isUnlocked: 0
-      ammoCapacity: 6
-      reloadTime: 0.6
-      roundsPerMin: 240
-      penetrationCount: 1
-      weaponImage: {fileID: 0}
-      damage: 1
-      isMelee: 0
-      currentAmmo: 0
-      weaponMaterial: {fileID: 2100000, guid: c67f022d122e28b4cbeee84e1c4fa43f, type: 2}
-      weaponBodyMesh: {fileID: 2959467708922500008, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
-      weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
-      uniformWeaponScale: 20
+    isUnlocked: 0
+    gunData: {fileID: 11400000, guid: cdae043a3e78b0945b9d387c2c223f01, type: 2}
     upgradables: 25
     upgradeCost: 7
     addDamage: 0
@@ -168,21 +129,8 @@ MonoBehaviour:
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
   - unlockCost: 15
-    gunStat:
-      name: Antimatter Rifle
-      isUnlocked: 0
-      ammoCapacity: 4
-      reloadTime: 2.3
-      roundsPerMin: 30
-      penetrationCount: 5
-      weaponImage: {fileID: 0}
-      damage: 3
-      isMelee: 0
-      currentAmmo: 0
-      weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
-      weaponBodyMesh: {fileID: 2941274158721294118, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
-      weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
-      uniformWeaponScale: 30
+    isUnlocked: 0
+    gunData: {fileID: 11400000, guid: a838ba6282fe82b4c87dcc2aa5324b3d, type: 2}
     upgradables: 5
     upgradeCost: 7
     addDamage: 0

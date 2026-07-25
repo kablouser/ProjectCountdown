@@ -155,7 +155,6 @@ public struct EnemyCharacter
 public struct GunStat
 {
     public string name;
-    public bool isUnlocked;
     public int ammoCapacity;
     public float reloadTime;
     public float roundsPerMin;
@@ -170,6 +169,7 @@ public struct GunStat
     public Mesh weaponBodyMesh;
     public Mesh weaponAmmoMesh;
     public float uniformWeaponScale;
+    public float kickbackAmount;
 
     public static GunStat Default => new()
     {

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d27fef81f004495bfb6055d1d187ce2, type: 3}
+  m_Name: PhotonBlaster
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GunDataObject
+  stats:
+    name: Photon Blaster
+    isUnlocked: 1
+    ammoCapacity: 3
+    reloadTime: 1
+    roundsPerMin: 120
+    penetrationCount: 0
+    weaponImage: {fileID: 0}
+    damage: 1
+    isMelee: 0
+    currentAmmo: 0
+    weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
+    weaponBodyMesh: {fileID: 2941274158721294118, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
+    weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
+    uniformWeaponScale: 1
+    kickbackAmount: 2

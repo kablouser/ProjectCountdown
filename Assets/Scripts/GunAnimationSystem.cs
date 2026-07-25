@@ -51,8 +51,8 @@ public static class GunAnimationSystem
             // 0 to 1
             if (0f < character.recoilCountdownStart)
             {
-                float animationTime = 1f - character.recoilCountdown / character.recoilCountdownStart;
-                float lerpTime = animationTime < .5f ? animationTime * 2f : 2f - animationTime * 2f;
+                float animationTime = 1f - (character.recoilCountdown / character.recoilCountdownStart);
+                float lerpTime = (float)Math.Sin(animationTime * Math.PI);
                 character.gunBody.localPosition = Vector3.Lerp(Vector3.zero, Vector3.back * 2f, lerpTime);
             }
         }

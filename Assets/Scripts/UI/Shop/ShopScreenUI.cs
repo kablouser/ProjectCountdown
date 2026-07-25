@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System;
+using DefaultNamespace;
 using TMPro;
 
 [System.Flags]
@@ -20,7 +21,9 @@ public class ShopScreenUI : MonoBehaviour
     public struct ShopWeapon
     {
         public float unlockCost;
-        public GunStat gunStat;
+        public bool isUnlocked;
+        // Added to allow for guns to be stored in a separate file to make editing easier
+        public GunDataObject gunData;
         public WeaponUpgradeFlags upgradables;
         public float upgradeCost;
         // upgrade stats
@@ -77,7 +80,7 @@ public class ShopScreenUI : MonoBehaviour
     {
         if (!isSetup)
         {
-            if (shopWeapons[weaponI].gunStat.isUnlocked)
+            if (shopWeapons[weaponI].isUnlocked)
             {
                 ShowHint("Already unlocked");
                 return;
@@ -91,7 +94,7 @@ public class ShopScreenUI : MonoBehaviour
             }
             playerTimeLeft -= shopWeapons[weaponI].unlockCost;
             UpdatePlayerTimeLeftText();
-            shopWeapons[weaponI].gunStat.isUnlocked = true;
+            shopWeapons[weaponI].isUnlocked = true;
         }
 
         shopWeapons[weaponI].ui.SetUnlocked(shopWeapons[weaponI]);
@@ -99,7 +102,7 @@ public class ShopScreenUI : MonoBehaviour
 
     public void TryUnlockWeaponUpgrade(int weaponI, WeaponUpgradeFlags upgradeType)
     {
-        if (!shopWeapons[weaponI].gunStat.isUnlocked)
+        if (!shopWeapons[weaponI].isUnlocked)
         {
             ShowHint("Weapon not unlocked");
             return;
@@ -141,16 +144,28 @@ public class ShopScreenUI : MonoBehaviour
 
     public GunStat[] GetGunStats()
     {
-        GunStat[] gunStats = new GunStat[shopWeapons.Length];
         int i = 0;
         foreach (ShopWeapon weapon in shopWeapons)
         {
-            gunStats[i] = weapon.gunStat;
-            gunStats[i].damage += weapon.addDamage;
-            gunStats[i].ammoCapacity += weapon.addAmmoCapacity;
-            gunStats[i].reloadTime /= Mathf.Max(Mathf.Epsilon, weapon.multiplyReloadSpeed);
-            gunStats[i].roundsPerMin *= weapon.multiplyRoundsPerMinute;
-            i++;
+            if (weapon.isUnlocked)
+            {
+                i += 1;
+            }
+        }
+        
+        GunStat[] gunStats = new GunStat[i];
+        i = 0;
+        foreach (ShopWeapon weapon in shopWeapons)
+        {
+            if (weapon.isUnlocked)
+            {
+                gunStats[i] = weapon.gunData.stats;
+                gunStats[i].damage += weapon.addDamage;
+                gunStats[i].ammoCapacity += weapon.addAmmoCapacity;
+                gunStats[i].reloadTime /= Mathf.Max(Mathf.Epsilon, weapon.multiplyReloadSpeed);
+                gunStats[i].roundsPerMin *= weapon.multiplyRoundsPerMinute;
+                i++;
+            }
         }
         return gunStats;
     }

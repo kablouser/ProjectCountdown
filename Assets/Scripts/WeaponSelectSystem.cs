@@ -12,8 +12,6 @@ public static class WeaponSelectSystem
             || character.timeToSwapCountdown > 0f
             // check index is in range
             || !(0 <= character.weaponSelectInput && character.weaponSelectInput < character.gunStats.Length)
-            // is unlocked?
-            || !character.gunStats[character.weaponSelectInput].isUnlocked
             )
         {
             return;

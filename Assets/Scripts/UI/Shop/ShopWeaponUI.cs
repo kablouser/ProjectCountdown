@@ -21,12 +21,12 @@ public class ShopWeaponUI : MonoBehaviour
 
     public void SetName(in ShopScreenUI.ShopWeapon shopWeapon)
     {
-        weaponName.SetText(shopWeapon.gunStat.name);
+        weaponName.SetText(shopWeapon.gunData.stats.name);
     }
 
     public void SetUnlocked(in ShopScreenUI.ShopWeapon shopWeapon)
     {
-        if (shopWeapon.gunStat.isUnlocked)
+        if (shopWeapon.isUnlocked)
         {
             unlockCostText.gameObject.SetActive(false);
             unlockedPanel.SetActive(true);
@@ -78,10 +78,10 @@ public class ShopWeaponUI : MonoBehaviour
 
     public void UpdateUpgradeTexts(in ShopScreenUI.ShopWeapon shopWeapon)
     {
-        UpdateSingleUpgradeText(damageText, "Damage", shopWeapon.gunStat.damage, shopWeapon.addDamage, 1f);
-        UpdateSingleUpgradeText(ammoCapacityText, "Magazine", shopWeapon.gunStat.ammoCapacity, shopWeapon.addAmmoCapacity, 1f);
-        UpdateSingleUpgradeText(reloadSpeedText, "Reload Speed", shopWeapon.gunStat.reloadTime, 0, shopWeapon.multiplyReloadSpeed);
-        UpdateSingleUpgradeText(roundsPerMinuteText, "Rounds Per Min.", shopWeapon.gunStat.roundsPerMin, 0, shopWeapon.multiplyRoundsPerMinute);
+        UpdateSingleUpgradeText(damageText, "Damage", shopWeapon.gunData.stats.damage, shopWeapon.addDamage, 1f);
+        UpdateSingleUpgradeText(ammoCapacityText, "Magazine", shopWeapon.gunData.stats.ammoCapacity, shopWeapon.addAmmoCapacity, 1f);
+        UpdateSingleUpgradeText(reloadSpeedText, "Reload Speed", shopWeapon.gunData.stats.reloadTime, 0, shopWeapon.multiplyReloadSpeed);
+        UpdateSingleUpgradeText(roundsPerMinuteText, "Rounds Per Min.", shopWeapon.gunData.stats.roundsPerMin, 0, shopWeapon.multiplyRoundsPerMinute);
     }
 
     public void UpdateSingleUpgradeText(TextMeshProUGUI text, string attributeName, float baseValue, float addValue, float multiplyValue)
