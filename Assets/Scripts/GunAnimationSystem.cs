@@ -53,7 +53,7 @@ public static class GunAnimationSystem
             {
                 float animationTime = 1f - (character.recoilCountdown / character.recoilCountdownStart);
                 float lerpTime = (float)Math.Sin(animationTime * Math.PI);
-                character.gunBody.localPosition = Vector3.Lerp(Vector3.zero, Vector3.back * 2f, lerpTime);
+                character.gunBody.localPosition = Vector3.Lerp(Vector3.zero, Vector3.back * character.ActiveGun.kickbackAmount, lerpTime);
             }
         }
         else

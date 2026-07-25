@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GunDataObject
   stats:
     name: SMG
-    isUnlocked: 0
     ammoCapacity: 20
     reloadTime: 1.5
     roundsPerMin: 240
@@ -27,4 +26,4 @@ MonoBehaviour:
     weaponBodyMesh: {fileID: 2959467708922500008, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
     weaponAmmoMesh: {fileID: -6700696047399303630, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
     uniformWeaponScale: 20
-    kickbackAmount: 1
+    kickbackAmount: 0.5

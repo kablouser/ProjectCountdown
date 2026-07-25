@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.GunDataObject
   stats:
     name: Photon Blaster
-    isUnlocked: 1
     ammoCapacity: 3
     reloadTime: 1
     roundsPerMin: 120
@@ -26,5 +25,5 @@ MonoBehaviour:
     weaponMaterial: {fileID: 2100000, guid: c1c26f5600b59c044bf98f3f183e98c6, type: 2}
     weaponBodyMesh: {fileID: 2941274158721294118, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
     weaponAmmoMesh: {fileID: -3049268309262956288, guid: c0e0fc5afcb966343a41926375f0c183, type: 3}
-    uniformWeaponScale: 1
+    uniformWeaponScale: 30
     kickbackAmount: 2
