@@ -226,6 +226,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public void AwakePlayer(PlayerCharacter player)
     {
         isPlayerAlive = true;
+        player.character.currentHealth = player.character.maxHealth = playerTimeLeft;
         playerCharacter = player;
         playerCharacter.Awake();
         ApplySettings();
@@ -268,6 +269,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public static string FormatTime(float time)
     {
+        if (time <= 0)
+        {
+            return "0s";
+        }
+
         float seconds = time;
         float hours = Mathf.Floor(seconds / 60f / 60f);
         seconds -= hours * 60f * 60f;
@@ -310,6 +316,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         // Reset main by destroying it
         Destroy(gameObject);
         // this will load a new main
+        SceneManager.LoadScene(playingSceneIndex);
+    }
+
+    public void OnNextLevelPressed()
+    {
         SceneManager.LoadScene(playingSceneIndex);
     }
 }

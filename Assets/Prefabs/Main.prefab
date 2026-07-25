@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26498223311f3eb429b3d0081845b26a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main
-  levelState: 0
+  levelState: 4
   settings:
     music: 0.7
     sfx: 0.7
@@ -112,7 +112,6 @@ MonoBehaviour:
   accumulatedCountdown: 0
   levelClearedCountdown: 0
   enemyPool: {fileID: 0}
-  enemySpawnPoints: []
   levelStats:
     baseEnemyCount: 5
     enemyIncreaseMultiplier: 1.5
@@ -309,6 +308,10 @@ PrefabInstance:
       value: PlayerUI
       objectReference: {fileID: 0}
     - target: {fileID: 5128674907192479752, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5439010614343880144}
+    - target: {fileID: 5853206197553240162, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5439010614343880144}
