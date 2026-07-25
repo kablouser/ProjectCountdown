@@ -20,18 +20,20 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    public GameObject GetNext()
+    public bool GetNext(out GameObject nextEnemy)
     {
         for (int i = 0; i < pool.Count; i++)
         {
             if (!pool[i].activeInHierarchy)
             {
                 pool[i].SetActive(true);
-                return pool[i];
+                nextEnemy = pool[i];
+                return true;
             }
         }
-             
-        return null;
+
+        nextEnemy = null;     
+        return false;
     }
 
     public (int, int) GetActiveAndFreeCount()

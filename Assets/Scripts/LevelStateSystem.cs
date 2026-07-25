@@ -71,14 +71,13 @@ public static class LevelStateSystem
                 main.levelStats.enemiesRemaining = main.levelStats.GetEnemyCount(0);
                 for (int i = 0; i < main.levelStats.enemiesRemaining; i++)
                 {
-                    GameObject enemy = main.enemyPool.GetNext();
-                    
+                    GameObject enemy;
                     // We've reached the max enemies we allow.
-                    if (enemy is null)
+                    if (!main.enemyPool.GetNext(out enemy))
                     {
                         break;
                     }
-
+                    
                     int spawnPointIndex = i % main.enemySpawnPoints.Count;
                     Transform spawnTransform = main.enemySpawnPoints[spawnPointIndex].transform;
                     enemy.transform.position = spawnTransform.position;
@@ -114,11 +113,10 @@ public static class LevelStateSystem
         // If we have more enemies we need to spawn and there are free enemies available then spawn them.
         if (activeEnemies < main.levelStats.enemiesRemaining && freeEnemies > 0)
         {
-            GameObject enemy = main.enemyPool.GetNext();
-            // double check we good 🤓👍
-            if (enemy is not null)
+            GameObject enemy;
+            if (main.enemyPool.GetNext(out enemy))
             {
-                int randomIndex = Random.Range(0, main.enemySpawnPoints.Count);     
+                int randomIndex = Random.Range(0, main.enemySpawnPoints.Count);
                 Transform spawnTransform = main.enemySpawnPoints[randomIndex].transform;
                 enemy.transform.position = spawnTransform.position;
                 enemy.transform.rotation = spawnTransform.rotation;
