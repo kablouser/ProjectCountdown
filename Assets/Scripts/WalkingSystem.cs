@@ -13,7 +13,8 @@ public static class WalkingSystem
         }
         else
         {
-            character.currentLook += new Vector2(-character.lookInput.y, character.lookInput.x) * character.turnSpeed * Time.deltaTime;
+            float lookY = character.invertLookY ? character.lookInput.y : -character.lookInput.y;
+            character.currentLook += new Vector2(lookY, character.lookInput.x) * character.turnSpeed * Time.deltaTime;
             character.currentLook.x = Mathf.Clamp(character.currentLook.x, -90, 90);
         }
         Quaternion yRotation = Quaternion.Euler(0, character.currentLook.y, 0);

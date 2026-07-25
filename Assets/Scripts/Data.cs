@@ -35,6 +35,7 @@ public struct Character
     public float maxHealth;
     public float moveSpeed;
     public float turnSpeed;
+    public bool invertLookY;
     public float jumpHeight;
 
     public ref GunStat ActiveGun => ref gunStats[currentSelectedWeapon];
@@ -103,6 +104,7 @@ public struct Character
 public struct PlayerCharacter
 {
     public Character character;
+    public bool pauseInput;
 
     public static PlayerCharacter Default => new()
     {

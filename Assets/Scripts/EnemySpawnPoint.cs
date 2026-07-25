@@ -5,7 +5,7 @@ public class EnemySpawnPoint : MonoBehaviour
 {
     private void Awake()
     {
-        Main.Singleton.enemySpawnPoints.Add(this);
+        //Main.Singleton.enemySpawnPoints.Add(this);
     }
     
     private void OnDrawGizmos()

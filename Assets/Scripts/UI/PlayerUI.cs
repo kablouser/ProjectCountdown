@@ -69,9 +69,9 @@ public class PlayerUI : MonoBehaviour
                 mainMenuScreen.SetActive(true);
                 break;
             case LevelState.Playing:
-                crossHair.SetActive(true);
                 healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
+                crossHair.SetActive(!isPaused);
                 break;
             case LevelState.LevelCleared:
                 healthBar.gameObject.SetActive(true);
@@ -91,5 +91,13 @@ public class PlayerUI : MonoBehaviour
                 break;
         }
         pauseScreen.SetActive(isPaused);
+        Time.timeScale = isPaused ? 0 : 1;
+
+        if (isPaused)
+            Cursor.lockState = CursorLockMode.None;
+        else if (levelState == LevelState.Playing || levelState == LevelState.LevelCleared)
+            Cursor.lockState = CursorLockMode.Locked;
+        else
+            Cursor.lockState = CursorLockMode.None;
     }
 }

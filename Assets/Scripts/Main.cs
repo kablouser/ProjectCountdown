@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 struct DrawArrowLifetime
 {
@@ -13,28 +15,46 @@ struct DrawArrowLifetime
 // menu doesn't include pause menu
 public enum LevelState { MainMenu, Playing, LevelCleared, GameOver, Shop };
 
+[Serializable]
+public struct Settings
+{
+    public float music;
+    public float sfx;
+    public float mouseSensitivity;
+    public bool invertLookY;
+}
+
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public static Main Singleton { get; private set; }
 
+    [Header("Settings")]
+    public LevelState levelState;
+    public Settings settings = new Settings { music = 0.7f, sfx = 0.7f, mouseSensitivity = 0.5f, invertLookY = false };
+    public int mainMenuSceneIndex = 0;
+    public int playingSceneIndex = 1;
+    public int shopSceneIndex = 2;
+    public float levelClearedDuration = 5f;
+
     public LayerMask shootLayerMask;
     public PickUp pickUpExtraTimePrefab;
 
+    [Header("Audio")]
+    public AudioMixer masterMixer;
     public AudioSource musicSource;
     public AudioClip musicIntro;
     public AudioClip musicLoop;
 
+    [Header("For Viewing Purposes")]
     public bool isPlayerAlive;
-    public PlayerCharacter playerCharacter = PlayerCharacter.Default;
-    public float levelClearedDuration = 5f;
-    public LevelState levelState;
-    // saved when level is cleared. used as currency in shop
     public float playerTimeLeft;
+    public PlayerCharacter playerCharacter = PlayerCharacter.Default;
+    // saved when level is cleared. used as currency in shop
     public VersionedList<EnemyCharacter> enemyCharacters;
 
     // decimal part of the countdown. we only countdown in ints
-    [HideInInspector] public float accumulatedCountdown;
-    [HideInInspector] public float levelClearedCountdown;
+    public float accumulatedCountdown;
+    public float levelClearedCountdown;
 
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
@@ -42,12 +62,21 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     List<DrawArrowLifetime> drawArrows;
 
     public EnemyPool enemyPool;
-    public List<EnemySpawnPoint> enemySpawnPoints;
     public LevelStats levelStats;
 
     void Awake()
     {
+        // keep first Singleton across loading levels
+        if (Singleton != null)
+        {
+            // use this levelState
+            LevelStateSystem.SetLevelState(Singleton, levelState);
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
         Singleton = this;
+
         if (inputSystem_Actions == null)
         {
             inputSystem_Actions = new InputSystem_Actions();
@@ -63,6 +92,8 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Start()
     {
+        ApplySettings();
+
         musicSource.clip = musicIntro;
         musicSource.loop = false;
         musicSource.Play();
@@ -77,7 +108,10 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     private void OnDisable()
     {
-        inputSystem_Actions.Player.Disable();
+        if (inputSystem_Actions != null)
+        {
+            inputSystem_Actions.Player.Disable();
+        }
     }
 
     void Update()
@@ -122,6 +156,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             WalkingSystem.FixedUpdate(ref enemy.character);
         }
+        // place this in FixedUpdate because Update() will clear it before FixedUpdate() can read it
         ResetOneTimeInputs();
     }
     private void OnDrawGizmos()
@@ -180,11 +215,20 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         }
     }
 
+    void InputSystem_Actions.IPlayerActions.OnPause(InputAction.CallbackContext context)
+    {
+        if (context.action.WasPerformedThisFrame())
+        {
+            playerCharacter.pauseInput = true;
+        }
+    }
+
     public void AwakePlayer(PlayerCharacter player)
     {
         isPlayerAlive = true;
         playerCharacter = player;
         playerCharacter.Awake();
+        ApplySettings();
     }
 
     public ID AwakeEnemy(EnemyCharacter enemyCharacter)
@@ -219,6 +263,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         playerCharacter.character.reloadInput = false;
         playerCharacter.character.jumpInput = false;
         playerCharacter.character.weaponSelectInput = -1;
+        playerCharacter.pauseInput = false;
     }
 
     public static string FormatTime(float time)
@@ -240,5 +285,31 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             return $"{seconds:0.##}s";
         }
+    }
+
+    public void ApplySettings()
+    {
+        masterMixer.SetFloat("MusicVolume", Mathf.Lerp(-80, -10, settings.music));
+        masterMixer.SetFloat("SFXVolume", Mathf.Lerp(-80, 0, settings.sfx));
+        playerCharacter.character.turnSpeed = Mathf.Lerp(0.1f, 100, settings.mouseSensitivity * settings.mouseSensitivity);
+        playerCharacter.character.invertLookY = settings.invertLookY;
+    }
+
+    public void OnPlayPressed()
+    {
+        SceneManager.LoadScene(playingSceneIndex);
+    }
+
+    public void OnResumePlayPressed()
+    {
+        PlayerUI.Instance.SetUI_Screen(levelState, false);
+    }
+
+    public void OnRestartPressed()
+    {
+        // Reset main by destroying it
+        Destroy(gameObject);
+        // this will load a new main
+        SceneManager.LoadScene(playingSceneIndex);
     }
 }
