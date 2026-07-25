@@ -11,7 +11,8 @@ public class PlayerUI : MonoBehaviour
     public GameObject gameOverScreen;
     public ShopScreenUI shopScreen;
     public GameObject pauseScreen;
-    
+
+    public GameObject crossHair;
     public Image hitMarker;
     private const float HitMarkerTime = 0.3f;
     private float _hitMarkerTimer;
@@ -60,6 +61,7 @@ public class PlayerUI : MonoBehaviour
         gameOverScreen.SetActive(false);
         shopScreen.gameObject.SetActive(false);
         pauseScreen.SetActive(false);
+        crossHair.SetActive(false);
 
         switch (levelState)
         {
@@ -67,6 +69,7 @@ public class PlayerUI : MonoBehaviour
                 mainMenuScreen.SetActive(true);
                 break;
             case LevelState.Playing:
+                crossHair.SetActive(true);
                 healthBar.gameObject.SetActive(true);
                 weaponUI.gameObject.SetActive(true);
                 break;

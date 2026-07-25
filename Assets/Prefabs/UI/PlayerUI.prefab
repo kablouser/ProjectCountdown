@@ -873,6 +873,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 5940203335160436814}
   shopScreen: {fileID: 1048423139611290029}
   pauseScreen: {fileID: 3212764105770311326}
+  crossHair: {fileID: 8055780944228463635}
   hitMarker: {fileID: 3283206242277558088}
 --- !u!1 &4410354893216458076
 GameObject:
