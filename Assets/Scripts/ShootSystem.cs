@@ -36,7 +36,9 @@ public static class ShootSystem
         {
             // if waiting on reload, don't allow shooting or more reloading
         }
-        else if (character.reloadInput && character.ActiveGun.currentAmmo < character.ActiveGun.ammoCapacity)
+        // Reload if we press reload or we have no bullets in the mag.
+        else if ((character.reloadInput || (character.ActiveGun.currentAmmo == 0 && character.shotCooldown == 0))
+                 && character.ActiveGun.currentAmmo < character.ActiveGun.ammoCapacity)
         {
             character.reloadCountdown = character.ActiveGun.reloadTime;
         }

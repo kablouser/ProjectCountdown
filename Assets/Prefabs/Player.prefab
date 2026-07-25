@@ -106,8 +106,9 @@ MonoBehaviour:
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
       maxHealth: 30
-      moveSpeed: 5
+      moveSpeed: 9
       turnSpeed: 50
+      invertLookY: 0
       jumpHeight: 1
       gunStats:
       - name: 
@@ -149,6 +150,7 @@ MonoBehaviour:
       currentHealth: 0
       currentSelectedWeapon: 0
       timeToSwapCountdown: 0
+    pauseInput: 0
 --- !u!1 &1917885872683053325
 GameObject:
   m_ObjectHideFlags: 0

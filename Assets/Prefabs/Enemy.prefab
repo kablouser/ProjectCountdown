@@ -351,9 +351,12 @@ MonoBehaviour:
       maxHealth: 3
       moveSpeed: 1.5
       turnSpeed: 2
+      invertLookY: 0
       jumpHeight: 1
       gunStats:
-      - ammoCapacity: 1
+      - name: 
+        isUnlocked: 0
+        ammoCapacity: 1
         reloadTime: 1
         roundsPerMin: 120
         penetrationCount: 0
@@ -380,10 +383,8 @@ MonoBehaviour:
       currentSelectedWeapon: 0
       timeToSwapCountdown: 0
     healthBar: {fileID: 4042526012965346862}
-  id:
-    type: 0
-    index: 0
-    version: 0
+    dropExtraTime: 3
+    dropExtraTimeChance: 0.5
 --- !u!1 &5026794375487723810
 GameObject:
   m_ObjectHideFlags: 0

@@ -113,11 +113,12 @@ MonoBehaviour:
   levelClearedCountdown: 0
   enemyPool: {fileID: 0}
   levelStats:
-    baseEnemyCount: 5
-    enemyIncreaseMultiplier: 1.5
+    baseEnemyCount: 4
+    enemyIncreaseMultiplier: 1.3
     enemiesRemaining: 0
     playerStartHealth: 30
     timeBetweenEnemySpawning: 0
+  level: 0
 --- !u!82 &6441260904068122120
 AudioSource:
   m_ObjectHideFlags: 0
