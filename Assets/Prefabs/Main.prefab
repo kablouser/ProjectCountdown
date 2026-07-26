@@ -47,11 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main
   levelState: 4
-  settings:
-    music: 0.7
-    sfx: 0.7
-    mouseSensitivity: 0.5
-    invertLookY: 0
+  settings: {fileID: 11400000, guid: 3867b6e12c97c6743ac3408619f37da9, type: 2}
   mainMenuSceneIndex: 0
   playingSceneIndex: 1
   shopSceneIndex: 2

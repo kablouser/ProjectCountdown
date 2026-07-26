@@ -17,22 +17,13 @@ struct DrawArrowLifetime
 // menu doesn't include pause menu
 public enum LevelState { MainMenu, Playing, LevelCleared, GameOver, Shop };
 
-[Serializable]
-public struct Settings
-{
-    public float music;
-    public float sfx;
-    public float mouseSensitivity;
-    public bool invertLookY;
-}
-
 public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
     public static Main Singleton { get; private set; }
 
     [Header("Settings")]
     public LevelState levelState;
-    public Settings settings = new Settings { music = 0.7f, sfx = 0.7f, mouseSensitivity = 0.5f, invertLookY = false };
+    public MenuSettings settings;
     public int mainMenuSceneIndex = 0;
     public int playingSceneIndex = 1;
     public int shopSceneIndex = 2;

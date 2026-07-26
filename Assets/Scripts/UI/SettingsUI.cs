@@ -37,7 +37,7 @@ public class SettingsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        Settings settings = Main.Singleton.settings;
+        MenuSettings settings = Main.Singleton.settings;
         music.value = settings.music;
         sfx.value = settings.sfx;
         mouseSensitivity.value = settings.mouseSensitivity;
