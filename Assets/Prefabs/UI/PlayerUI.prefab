@@ -1386,6 +1386,8 @@ MonoBehaviour:
   pauseScreen: {fileID: 3212764105770311326}
   crossHair: {fileID: 278796969665083115}
   hitMarker: {fileID: 1207949034777690939}
+  _normalHitMarkerColor: {r: 0.98039216, g: 0.21568628, b: 0.21568628, a: 0}
+  _headshotHitMarkerColor: {r: 0.8867924, g: 0.74306035, b: 0.037646834, a: 0}
 --- !u!1 &4410354893216458076
 GameObject:
   m_ObjectHideFlags: 0

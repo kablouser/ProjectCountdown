@@ -16,6 +16,9 @@ public class PlayerUI : MonoBehaviour
     public Image hitMarker;
     private const float HitMarkerTime = 0.3f;
     private float _hitMarkerTimer;
+
+    [SerializeField] private Color _normalHitMarkerColor;
+    [SerializeField] private Color _headshotHitMarkerColor;
     
 
     static PlayerUI instance;
@@ -47,9 +50,11 @@ public class PlayerUI : MonoBehaviour
         hitMarker.color = currentColor;
     }
 
-    public void ShowHitMarker()
+    public void ShowHitMarker(bool headshot)
     {
         _hitMarkerTimer = HitMarkerTime;
+        
+        hitMarker.color = headshot ? _headshotHitMarkerColor : _normalHitMarkerColor;
     }
 
     public void SetUI_Screen(LevelState levelState, bool isPaused)

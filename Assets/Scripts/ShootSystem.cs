@@ -116,11 +116,12 @@ public static class ShootSystem
                         if (iproxy != null)
                         {
                             float damageToApply = character.ActiveGun.damage;
-                            if (raycastHitCache[hitI].collider.name == "HeadCollider")
+                            bool headshot = raycastHitCache[hitI].collider.name == "HeadCollider";
+                            if (headshot)
                             {
                                 damageToApply *= 1.5f;
                             }
-                            DamageCharacter.Damage(iproxy.GetID(), damageToApply, TimeAdjustmentReason.DAMAGE);
+                            DamageCharacter.Damage(iproxy.GetID(), damageToApply, TimeAdjustmentReason.DAMAGE, headshot);
 
                             if (character.id.type == IDType.Player)
                             {

@@ -3,7 +3,7 @@ using UnityEngine;
 public static class DamageCharacter
 {
     // true if dead
-    public static bool Damage(in ID id, float damage, TimeAdjustmentReason reason)
+    public static bool Damage(in ID id, float damage, TimeAdjustmentReason reason, bool headshot = false)
     {
         Main main = Main.Singleton;
         switch (id.type)
@@ -42,7 +42,7 @@ public static class DamageCharacter
                         enemy.healthBar.SetRemainingTime(enemy.character, reason);
                     }
 
-                    PlayerUI.Instance.ShowHitMarker();
+                    PlayerUI.Instance.ShowHitMarker(headshot);
 
 
                     if (isDead)
