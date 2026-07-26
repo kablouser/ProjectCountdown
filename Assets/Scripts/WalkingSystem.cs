@@ -37,6 +37,10 @@ public static class WalkingSystem
             new Vector3(character.moveInput.x, 0, character.moveInput.y) *
             character.moveSpeed -
             horizontalVelocity;
+        if (1f < velocityChange.sqrMagnitude)
+        {
+            velocityChange = velocityChange.normalized * 1f;
+        }
         character.rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
         switch (character.movementType)
