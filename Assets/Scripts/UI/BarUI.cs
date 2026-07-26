@@ -52,6 +52,9 @@ public class BarUI : MonoBehaviour
 
     public void SetRemainingTime(float time, float totalTime, TimeAdjustmentReason optReason = TimeAdjustmentReason.NONE /*Used to show VFX on the bar*/)
     {
+        // prevent division by 0
+        totalTime = Mathf.Max(1.0f, totalTime);
+
         if (timerTxt != null)
         {
             timerTxt.SetText(Main.FormatTime(time));
