@@ -36,7 +36,7 @@ public class PickUp : MonoBehaviour
                 Main main = Main.Singleton;
                 if (main.isPlayerAlive)
                 {
-                    DamageCharacter.Damage(ID.Player, -extraTime, TimeAdjustmentReason.HEAL);
+                    DamageCharacter.Damage(ID.Player, -extraTime, TimeAdjustmentReason.HEAL, IDType.Player);
                     Destroy(gameObject);
                 }
             }

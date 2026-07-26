@@ -16,7 +16,16 @@ public struct ID
     public int version;
 
     public static ID Player => new ID { type = IDType.Player };
+
+    public bool IsEqual(ID other)
+    {
+        return type == other.type &&
+            index == other.index &&
+            version == other.version;
+    }
 }
+
+public enum MovementType { Walking, Flying }
 
 [System.Serializable]
 public struct Character
@@ -40,6 +49,8 @@ public struct Character
     public float turnSpeed;
     public bool invertLookY;
     public float jumpHeight;
+    public MovementType movementType;
+    public float flyHeight;
 
     public bool IsActiveGunValid()
     {
@@ -47,7 +58,7 @@ public struct Character
     }
     public ref GunStat ActiveGun => ref gunStats[currentSelectedWeapon];
 
-    [HideInInspector] public GunStat[] gunStats;
+    public GunStat[] gunStats;
 
     #region Input 
     [HideInInspector] public Vector2 moveInput;
@@ -83,6 +94,8 @@ public struct Character
         turnSpeed = 1,
         jumpHeight = 1,
         currentSelectedWeapon = 0,
+        movementType = MovementType.Walking,
+        flyHeight = 3f,
     };
 
     public void Awake()
@@ -137,6 +150,8 @@ public struct EnemyCharacter
     public BarUI healthBar;
     public float dropExtraTime;
     public float dropExtraTimeChance;
+    public bool isAvoidingObstacle;
+    public bool chosenObstacleAvoidanceDirection;
 
     public static EnemyCharacter Default => new()
     {
@@ -168,13 +183,16 @@ public struct GunStat
     public Sprite weaponImage;
     public float damage;
     // melee is effectively very short ranged gun
-    public bool isMelee;
+    public float range;
     [HideInInspector] public int currentAmmo;
     public Material weaponMaterial;
     public Mesh weaponBodyMesh;
     public Mesh weaponAmmoMesh;
     public float uniformWeaponScale;
     public float kickbackAmount;
+    // if null, we will use raycast
+    public Projectile projectilePrefab;
+    public bool isProjectileHoming;
 
     public static GunStat Default => new()
     {
@@ -183,6 +201,7 @@ public struct GunStat
         roundsPerMin = 120,
         penetrationCount = 0,
         damage = 1f,
+        range = 1000f,
     };
 
     public void Reload()

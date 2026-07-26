@@ -276,7 +276,6 @@ Transform:
   m_Children:
   - {fileID: 1017065831459649340}
   - {fileID: 8135908346925299171}
-  - {fileID: 29059612015700634}
   - {fileID: 101126619725285002}
   - {fileID: 7281158375849023874}
   - {fileID: 1217136902996708644}
@@ -358,6 +357,8 @@ MonoBehaviour:
       turnSpeed: 2
       invertLookY: 0
       jumpHeight: 1
+      movementType: 0
+      flyHeight: 3
       gunStats:
       - name: 
         isUnlocked: 0
@@ -368,7 +369,7 @@ MonoBehaviour:
         penetrationCount: 0
         weaponImage: {fileID: 0}
         damage: 1
-        isMelee: 1
+        range: 2
         currentAmmo: 0
         weaponMaterial: {fileID: 0}
         weaponBodyMesh: {fileID: 0}

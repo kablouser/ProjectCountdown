@@ -23,7 +23,7 @@ MonoBehaviour:
     penetrationCount: 0
     weaponImage: {fileID: 0}
     damage: 0.5
-    isMelee: 0
+    range: 1000
     currentAmmo: 0
     weaponMaterial: {fileID: 2100000, guid: b6c457907d3b6aa4a8483e3a86011342, type: 2}
     weaponBodyMesh: {fileID: 2959467708922500008, guid: 6b0164da2b0f091458502f46e3599242, type: 3}

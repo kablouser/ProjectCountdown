@@ -272,7 +272,9 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public ID AwakeEnemy(EnemyCharacter enemyCharacter)
     {
         enemyCharacter.Awake();
-        return enemyCharacters.Add(enemyCharacter);
+        ID newID = enemyCharacters.Add(enemyCharacter);
+        enemyCharacters[newID.index].character.id = newID;
+        return newID;
     }
 
     public void SleepEnemy(ID id)

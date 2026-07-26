@@ -59,6 +59,9 @@ MonoBehaviour:
   shootLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  flyRaycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
   pickUpExtraTimePrefab: {fileID: 8040921844680277244, guid: ee2095657ad9f09479d559eb450b7144, type: 3}
   oneShotSFXPrefab: {fileID: 4629654488811506976, guid: 898eeaba760f5ae49a658dafe8103eef, type: 3}
   masterMixer: {fileID: 24100000, guid: 023c92fb02a6268459cbb4fa01bc3633, type: 2}
@@ -107,6 +110,8 @@ MonoBehaviour:
       turnSpeed: 1
       invertLookY: 0
       jumpHeight: 1
+      movementType: 0
+      flyHeight: 3
       gunStats: []
       moveInput: {x: 0, y: 0}
       isUsingLookPositionInput: 0

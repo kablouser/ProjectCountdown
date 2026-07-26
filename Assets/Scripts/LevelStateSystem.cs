@@ -182,7 +182,7 @@ public static class LevelStateSystem
         {
             main.accumulatedCountdown -= accumulatedInts;
             // Players health is the time remaining.
-            if (DamageCharacter.Damage(player.character.id, accumulatedInts, TimeAdjustmentReason.COUNTDOWN))
+            if (DamageCharacter.Damage(player.character.id, accumulatedInts, TimeAdjustmentReason.COUNTDOWN, IDType.Enemy))
             {
                 SetLevelState(main, LevelState.GameOver);
                 return;

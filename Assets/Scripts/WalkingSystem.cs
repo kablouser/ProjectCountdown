@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public static class WalkingSystem
@@ -38,11 +39,27 @@ public static class WalkingSystem
             horizontalVelocity;
         character.rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
-        if (character.jumpInput &&
-            character.isStandingTracker.previousIsStanding)
+        switch (character.movementType)
         {
-            float jumpVelocity = Mathf.Sqrt(2 * 9.81f * character.jumpHeight);
-            character.rigidbody.AddForce(0, jumpVelocity - velocity.y, 0, ForceMode.VelocityChange);
+            case MovementType.Walking:
+                if (character.jumpInput &&
+                    character.isStandingTracker.previousIsStanding)
+                {
+                    float jumpVelocity = Mathf.Sqrt(2 * 9.81f * character.jumpHeight);
+                    character.rigidbody.AddForce(0, jumpVelocity - velocity.y, 0, ForceMode.VelocityChange);
+                }
+                break;
+            case MovementType.Flying:
+                // this will bob up and down
+                float velocityChangeY = character.flyHeight - character.transform.position.y;
+                if (character.moveSpeed < Mathf.Abs(velocityChangeY))
+                {
+                    velocityChangeY = Mathf.Sign(velocityChangeY) * character.moveSpeed;
+                }
+                velocityChangeY /= 4f;
+
+                character.rigidbody.AddForce(velocityChangeY * Vector2.up, ForceMode.VelocityChange);
+                break;
         }
     }
 }

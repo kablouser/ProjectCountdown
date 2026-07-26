@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public static class EnemyAI_System
@@ -13,19 +13,59 @@ public static class EnemyAI_System
         if (main.isPlayerAlive)
         {
             character.isUsingLookPositionInput = true;
-            character.lookPositionInput = main.playerCharacter.character.transform.position;
-            
-            RaycastHit hit;
-            if (Physics.SphereCast(character.transform.position, 0.5f, character.transform.forward, out hit, 1.0f))
+            Vector3 playerPosition = character.lookPositionInput = main.playerCharacter.character.transform.position;
+
+            if (Physics.SphereCast(character.transform.position, 0.5f,
+                playerPosition - character.transform.position,
+                out RaycastHit hit, 1.0f, main.shootLayerMask))
             {
-                Vector3 projection = Vector3.ProjectOnPlane(character.transform.forward, hit.normal).normalized;
-                character.lookPositionInput = character.transform.position + projection;
+                // rotate either clockwise or CCW until free of obstacle
+                if (!enemy.isAvoidingObstacle)
+                {
+                    enemy.isAvoidingObstacle = true;
+                    enemy.chosenObstacleAvoidanceDirection = Random.value < 0.5f;
+                }
+
+                //Vector3 projection = Vector3.ProjectOnPlane(character.transform.forward, hit.normal).normalized;
+                //character.lookPositionInput = character.transform.position + projection;
+                character.isUsingLookPositionInput = false;
+                character.lookInput = new Vector2(enemy.chosenObstacleAvoidanceDirection ? 100f : -100f, 0f);
             }
-            
-            character.moveInput = new Vector2(0, 1);
-            character.shootInput =
-                Vector3.Distance(character.transform.position, character.lookPositionInput) <=
-                (character.ActiveGun.isMelee ? ShootSystem.MeleeRange : ShootSystem.ShootRange);
+            else
+            {
+                enemy.isAvoidingObstacle = false;
+            }
+
+            bool isInRange =
+                    Vector3.Distance(character.transform.position, playerPosition) <=
+                    character.ActiveGun.range;
+            if (character.ActiveGun.range < 3f)
+            {
+                // probably melee don't need to check line of sight
+            }
+            else
+            {
+                // ranged
+                if (isInRange && Physics.Raycast(
+                    character.camera.position,
+                    playerPosition - character.camera.position,
+                    out RaycastHit hit2,
+                    character.ActiveGun.range,
+                    main.shootLayerMask))
+                {
+                    if (hit2.rigidbody == null ||
+                        hit2.rigidbody != main.playerCharacter.character.rigidbody)
+                    {
+                        isInRange = false;
+                    }
+                }
+                
+            }
+
+            // stop moving when in range
+            character.shootInput = isInRange;
+            character.moveInput = isInRange ?  Vector2.zero : new Vector2(0, 1);
+
             character.jumpInput = false;
             character.reloadInput = character.ActiveGun.currentAmmo == 0;
         }

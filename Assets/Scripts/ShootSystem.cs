@@ -12,9 +12,6 @@ public struct RaycastHitDistanceComparer : IComparer<RaycastHit>
 
 public static class ShootSystem
 {
-    public static float ShootRange = 1000f;
-    public static float MeleeRange = 2.0f;
-
     public static void Update(ref Character character, in LayerMask layerMask, RaycastHit[] raycastHitCache)
     {
         if (character.timeToSwapCountdown > 0)
@@ -32,7 +29,7 @@ public static class ShootSystem
                 character.ActiveGun.Reload();
                 character.shotCooldown = 0;
 
-                if (!character.ActiveGun.isMelee)
+                if (character.id.type == IDType.Player)
                 {
                     character.audioSource.PlayOneShot(Main.Singleton.weaponReloadEndSFX);
                 }
@@ -56,7 +53,7 @@ public static class ShootSystem
                  && character.ActiveGun.currentAmmo < character.ActiveGun.ammoCapacity)
         {
             character.reloadCountdown = character.ActiveGun.reloadTime;
-            if (!character.ActiveGun.isMelee)
+            if (character.id.type == IDType.Player)
             {
                 character.audioSource.PlayOneShot(Main.Singleton.weaponReloadStartSFX);
             }
@@ -71,66 +68,87 @@ public static class ShootSystem
                     return;
                 }
 
-                float raycastDistance = character.ActiveGun.isMelee ? MeleeRange : ShootRange;
+                float raycastDistance = character.ActiveGun.range;
                 character.ActiveGun.currentAmmo--;
                 character.shotThisFrame = true;
                 character.shotCooldown = 60f / character.ActiveGun.roundsPerMin;
-                int hitCount;
-                if (0 < character.ActiveGun.penetrationCount)
+
+                if (character.ActiveGun.projectilePrefab == null)
                 {
-                     hitCount = Physics.RaycastNonAlloc(
-                        character.camera.position,
-                        character.camera.forward,
-                        raycastHitCache,
-                        raycastDistance,
-                        layerMask);
-                    if (character.ActiveGun.penetrationCount + 1 < hitCount)
+                    int hitCount;
+                    if (0 < character.ActiveGun.penetrationCount)
                     {
-                        System.Array.Sort(raycastHitCache, 0, hitCount, new RaycastHitDistanceComparer());
-                        hitCount = character.ActiveGun.penetrationCount + 1;
-                    }
-                }
-                else
-                {
-                    if (Physics.Raycast(
-                        character.camera.position,
-                        character.camera.forward,
-                        out RaycastHit raycastHit,
-                        raycastDistance,
-                        layerMask))
-                    {
-                        raycastHitCache[0] = raycastHit;
-                        hitCount = 1;
+                        hitCount = Physics.RaycastNonAlloc(
+                           character.camera.position,
+                           character.camera.forward,
+                           raycastHitCache,
+                           raycastDistance,
+                           layerMask);
+                        if (character.ActiveGun.penetrationCount + 1 < hitCount)
+                        {
+                            System.Array.Sort(raycastHitCache, 0, hitCount, new RaycastHitDistanceComparer());
+                            hitCount = character.ActiveGun.penetrationCount + 1;
+                        }
                     }
                     else
                     {
-                        hitCount = 0;
-                    }
-                }
-
-                for (int hitI = 0; hitI < hitCount; hitI++)
-                {
-                    if (raycastHitCache[hitI].rigidbody != null)
-                    {
-                        IProxy iproxy = raycastHitCache[hitI].rigidbody.GetComponent<IProxy>();
-                        if (iproxy != null)
+                        if (Physics.Raycast(
+                            character.camera.position,
+                            character.camera.forward,
+                            out RaycastHit raycastHit,
+                            raycastDistance,
+                            layerMask))
                         {
-                            float damageToApply = character.ActiveGun.damage;
-                            bool headshot = raycastHitCache[hitI].collider.name == "HeadCollider";
-                            if (headshot)
-                            {
-                                damageToApply *= 1.5f;
-                            }
-                            DamageCharacter.Damage(iproxy.GetID(), damageToApply, TimeAdjustmentReason.DAMAGE, headshot);
+                            raycastHitCache[0] = raycastHit;
+                            hitCount = 1;
+                        }
+                        else
+                        {
+                            hitCount = 0;
+                        }
+                    }
 
-                            if (character.id.type == IDType.Player)
+                    for (int hitI = 0; hitI < hitCount; hitI++)
+                    {
+                        if (raycastHitCache[hitI].rigidbody != null)
+                        {
+                            IProxy iproxy = raycastHitCache[hitI].rigidbody.GetComponent<IProxy>();
+                            if (iproxy != null)
                             {
-                                character.audioSource.PlayOneShot(Main.Singleton.hitMarkerSFX);
+                                float damageToApply = character.ActiveGun.damage;
+                                bool headshot = raycastHitCache[hitI].collider.name == "HeadCollider";
+                                if (headshot)
+                                {
+                                    damageToApply *= 1.5f;
+                                }
+                                DamageCharacter.Damage(iproxy.GetID(), damageToApply, TimeAdjustmentReason.DAMAGE, character.id.type, headshot);
+
+                                if (character.id.type == IDType.Player)
+                                {
+                                    character.audioSource.PlayOneShot(Main.Singleton.hitMarkerSFX);
+                                }
                             }
                         }
                     }
                 }
+                else
+                {
+                    Projectile projectile = GameObject.Instantiate(character.ActiveGun.projectilePrefab,
+                        character.camera.transform.position,
+                        character.camera.rotation);
+                    projectile.damage = character.ActiveGun.damage;
+                    projectile.source = character.id;
+                    // step out of the collider of the firing character
+                    projectile.transform.Translate(character.transform.forward * (0.51f + projectile.radiusApproximate), Space.World);
 
+                    if (character.ActiveGun.isProjectileHoming &&
+                        character.id.type != IDType.Player &&
+                        Main.Singleton.isPlayerAlive &&
+                        Main.Singleton.playerCharacter.character.camera != null)
+                    {
+                        projectile.homingTarget = Main.Singleton.playerCharacter.character.camera;
+                    }
+                }
                 character.audioSource.PlayRandomOneShot(Main.Singleton.shootSFXs);
             }
             else
