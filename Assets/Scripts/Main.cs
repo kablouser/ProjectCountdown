@@ -324,6 +324,11 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
             return "0s";
         }
 
+        // Easier to just read the time. You pay for everything in seconds so just represent everything as seconds.
+        // 'S' looks like a 5 in the font so leaving it out.
+        return $"{time}";
+
+        /*
         float seconds = time;
         float hours = Mathf.Floor(seconds / 60f / 60f);
         seconds -= hours * 60f * 60f;
@@ -341,6 +346,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             return $"{seconds:0.##}s";
         }
+        */
     }
 
     public static float MapFastInSlowOut(float x)
