@@ -478,17 +478,19 @@ MonoBehaviour:
         automatic: 0
         ammoCapacity: 1
         reloadTime: 1
-        roundsPerMin: 120
+        roundsPerMin: 90
         penetrationCount: 0
         weaponImage: {fileID: 0}
         damage: 1
-        isMelee: 1
+        range: 20
         currentAmmo: 0
         weaponMaterial: {fileID: 0}
         weaponBodyMesh: {fileID: 0}
         weaponAmmoMesh: {fileID: 0}
         uniformWeaponScale: 0
         kickbackAmount: 0
+        projectilePrefab: {fileID: 759112897365929819, guid: 62bc2cfeaca16b144b820ba47cb57092, type: 3}
+        isProjectileHoming: 1
       moveInput: {x: 0, y: 0}
       isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
@@ -509,6 +511,10 @@ MonoBehaviour:
     healthBar: {fileID: 2972222687090567222}
     dropExtraTime: 3
     dropExtraTimeChance: 0.5
+    isAvoidingObstacle: 0
+    chosenObstacleAvoidanceDirection: 0
+    rareDropExtraTime: 5
+    rareDropExtraTimeChance: 0.2
 --- !u!1 &4194522808127167335
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +839,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: e3ba778182cbff44dbbcf5f435dd71f1, type: 3}
+  - {fileID: 2100000, guid: 7ea4cc2c405b48c4fac90016e922af53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

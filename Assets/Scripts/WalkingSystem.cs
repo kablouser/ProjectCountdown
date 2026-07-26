@@ -50,13 +50,14 @@ public static class WalkingSystem
                 }
                 break;
             case MovementType.Flying:
-                // this will bob up and down
-                float velocityChangeY = character.flyHeight - character.transform.position.y;
-                if (character.moveSpeed < Mathf.Abs(velocityChangeY))
+                float flyY = character.flyHeight - character.transform.position.y;
+                float velocityChangeY = flyY - velocity.y;
+
+                if (Mathf.Abs(velocity.y) < 2f)
                 {
-                    velocityChangeY = Mathf.Sign(velocityChangeY) * character.moveSpeed;
+                    // create a bobbing motion so its not perfectly still
+                    velocityChangeY = flyY;
                 }
-                velocityChangeY /= 4f;
 
                 character.rigidbody.AddForce(velocityChangeY * Vector2.up, ForceMode.VelocityChange);
                 break;

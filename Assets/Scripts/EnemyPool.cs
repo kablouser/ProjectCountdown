@@ -1,23 +1,30 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public int poolSize = 10;
+    [System.Serializable]
+    public struct EnemyType
+    {
+        public GameObject prefab;
+        public int poolSize;
+        public List<GameObject> pool;
+    }
 
+    public EnemyType[] enemyTypes;
     public List<Transform> enemySpawnPoints;
-
-    List<GameObject> pool;
 
     private void Awake()
     {
-        pool = new List<GameObject>();
-        for (int i = 0; i < poolSize; i++)
+        foreach (ref EnemyType enemyType in enemyTypes.AsSpan())
         {
-            GameObject enemy = Instantiate(enemyPrefab);
-            enemy.SetActive(false);
-            pool.Add(enemy);
+            for (int i = 0; i < enemyType.poolSize; i++)
+            {
+                GameObject enemy = Instantiate(enemyType.prefab);
+                enemy.SetActive(false);
+                enemyType.pool.Add(enemy);
+            }
         }
 
         Main.Singleton.enemyPool = this;
@@ -43,33 +50,45 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    public bool GetNext(out GameObject nextEnemy)
+    public bool GetNext(out GameObject nextEnemy, int enemyTypeI)
     {
-        for (int i = 0; i < pool.Count; i++)
+        if (!(0 <= enemyTypeI && enemyTypeI < enemyTypes.Length))
         {
-            if (!pool[i].activeInHierarchy)
+            nextEnemy = null;
+            return false;
+        }
+
+        ref EnemyType enemyType = ref enemyTypes[enemyTypeI];
+        for (int i = 0; i < enemyType.pool.Count; i++)
+        {
+            if (!enemyType.pool[i].activeInHierarchy)
             {
-                pool[i].SetActive(true);
-                nextEnemy = pool[i];
+                enemyType.pool[i].SetActive(true);
+                nextEnemy = enemyType.pool[i];
                 return true;
             }
         }
 
-        nextEnemy = null;     
+        nextEnemy = null;
         return false;
     }
 
     public (int, int) GetActiveAndFreeCount()
     {
         int activeCount = 0;
-        for (int i = 0; i < pool.Count; i++)
+        int poolCount = 0;
+        foreach (ref EnemyType enemyType in enemyTypes.AsSpan())
         {
-            if (pool[i].activeInHierarchy)
+            for (int i = 0; i < enemyType.pool.Count; i++)
             {
-                activeCount++;
+                if (enemyType.pool[i].activeInHierarchy)
+                {
+                    activeCount++;
+                }
             }
+            poolCount += enemyType.pool.Count;
         }
-        
-        return (activeCount, pool.Count - activeCount);
+
+        return (activeCount, poolCount - activeCount);
     }
 }

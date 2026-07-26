@@ -116,7 +116,7 @@ public static class LevelStateSystem
                     
                     GameObject enemy;
                     // We've reached the max enemies we allow.
-                    if (!main.enemyPool.GetNext(out enemy))
+                    if (!main.enemyPool.GetNext(out enemy, main.levelStats.GetRandomEnemyType(main.level)))
                     {
                         break;
                     }
@@ -158,7 +158,7 @@ public static class LevelStateSystem
         if (activeEnemies < main.levelStats.enemiesRemaining && freeEnemies > 0)
         {
             GameObject enemy;
-            if (main.enemyPool.GetNext(out enemy))
+            if (main.enemyPool.GetNext(out enemy, main.levelStats.GetRandomEnemyType(main.level)))
             {
                 int randomIndex = Random.Range(0, main.enemyPool.enemySpawnPoints.Count);     
                 Transform spawnTransform = main.enemyPool.enemySpawnPoints[randomIndex];

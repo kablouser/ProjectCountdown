@@ -232,6 +232,18 @@ public struct LevelStats
         
         return actualSpeed;
     }
+
+    public int GetRandomEnemyType(int level)
+    {
+        if (level < 1)
+        {
+            return 0;
+        }
+        else
+        {
+            return UnityEngine.Random.value < enemyType1SpawnRate ? 1 : 0;
+        }
+    }
     
     [SerializeField] private int baseEnemyCount;
     [SerializeField] private float enemyIncreaseMultiplier;
@@ -241,4 +253,6 @@ public struct LevelStats
     
     public float playerStartHealth;
     public float timeBetweenEnemySpawning;
+
+    [Range(0,1)] public float enemyType1SpawnRate;
 }
