@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public struct RaycastHitDistanceComparer : IComparer<RaycastHit>
@@ -115,7 +116,12 @@ public static class ShootSystem
                         IProxy iproxy = raycastHitCache[hitI].rigidbody.GetComponent<IProxy>();
                         if (iproxy != null)
                         {
-                            DamageCharacter.Damage(iproxy.GetID(), character.ActiveGun.damage, TimeAdjustmentReason.DAMAGE);
+                            float damageToApply = character.ActiveGun.damage;
+                            if (raycastHitCache[hitI].collider.name == "HeadCollider")
+                            {
+                                damageToApply *= 1.5f;
+                            }
+                            DamageCharacter.Damage(iproxy.GetID(), damageToApply, TimeAdjustmentReason.DAMAGE);
 
                             if (character.id.type == IDType.Player)
                             {
