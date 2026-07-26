@@ -150,6 +150,7 @@ MonoBehaviour:
     timeBetweenEnemySpawning: 0
     enemyType1SpawnRate: 0.2
   level: 0
+  setFontForEverything: {fileID: 11400000, guid: 15deb731bf55f0d44bf8d42e6d406451, type: 2}
 --- !u!82 &6441260904068122120
 AudioSource:
   m_ObjectHideFlags: 0
@@ -351,10 +352,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5439010614343880144}
-    - target: {fileID: 6431217399187080683, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
-      propertyPath: m_fontSize
-      value: 41.65
-      objectReference: {fileID: 0}
     - target: {fileID: 7936348548421259956, guid: bc002cfdf8c171e4887f3cd76e29a117, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

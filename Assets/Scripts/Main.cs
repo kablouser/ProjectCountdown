@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -410,5 +412,27 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
         oneShotSFX.transform.position = position;
         oneShotSFX.PlayOneShot(clip, volumeScale);
+    }
+
+    public TMP_FontAsset setFontForEverything;
+    [ContextMenu("SetFontForEverything")]
+    public void SetFontForEverything()
+    {
+        SetFontForEverythingRecursive(gameObject);
+    }
+
+    public void SetFontForEverythingRecursive(GameObject go)
+    {
+        TextMeshProUGUI text = go.GetComponent<TextMeshProUGUI>();
+        if (text != null)
+        {
+            Undo.RecordObject(go, "SetFontForEverything");
+            text.font = setFontForEverything;
+        }
+
+        for (int i = 0; i < go.transform.childCount; i++)
+        {
+            SetFontForEverythingRecursive(go.transform.GetChild(i).gameObject);
+        }
     }
 }
