@@ -21,7 +21,7 @@ MonoBehaviour:
     reloadTime: 0.6
     roundsPerMin: 360
     penetrationCount: 1
-    weaponImage: {fileID: 0}
+    weaponImage: {fileID: 21300000, guid: 2b503c72ae924464a883d77a5ac3a18e, type: 3}
     damage: 1
     range: 1000
     currentAmmo: 0
@@ -30,5 +30,7 @@ MonoBehaviour:
     weaponAmmoMesh: {fileID: 4993655953670948669, guid: 4ee1a2e9676bfc04685a3fb130b59dde, type: 3}
     uniformWeaponScale: 20
     kickbackAmount: 0.5
+    projectilePrefab: {fileID: 0}
+    isProjectileHoming: 0
   upgradables: 9
   upgradeCost: 5

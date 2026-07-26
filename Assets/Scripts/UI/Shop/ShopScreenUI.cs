@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 [System.Flags]
 public enum WeaponUpgradeFlags
@@ -51,6 +52,7 @@ public class ShopScreenUI : MonoBehaviour
             weapon.ui.SetName(weapon);
 
             int weaponI = i;
+            weapon.ui.unlock.GetComponent<Image>().sprite = weapon.gunData.stats.weaponImage;
             weapon.ui.unlock.onClick.AddListener(() => TryUnlockWeapon(weaponI));
             weapon.ui.damageUpgrade.onClick.AddListener(() => TryUnlockWeaponUpgrade(weaponI, WeaponUpgradeFlags.Damage));
             weapon.ui.ammoUpgrade.onClick.AddListener(() => TryUnlockWeaponUpgrade(weaponI, WeaponUpgradeFlags.AmmoCapacity));
