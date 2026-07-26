@@ -729,10 +729,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: setFontForEverything
-      value: 
-      objectReference: {fileID: 11400000, guid: 15deb731bf55f0d44bf8d42e6d406451, type: 2}
     - target: {fileID: 6476195204812529406, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -776,10 +772,6 @@ PrefabInstance:
     - target: {fileID: 7222421124179451156, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: m_Name
       value: Main
-      objectReference: {fileID: 0}
-    - target: {fileID: 8435390315533228961, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

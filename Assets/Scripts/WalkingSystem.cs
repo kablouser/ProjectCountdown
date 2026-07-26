@@ -20,7 +20,6 @@ public static class WalkingSystem
         }
         Quaternion yRotation = Quaternion.Euler(0, character.currentLook.y, 0);
         Quaternion xRotation = Quaternion.Euler(character.currentLook.x, 0, 0);
-        //character.rigidbody.rotation = yRotation;
         character.transform.rotation = yRotation;
         character.camera.transform.localRotation = xRotation;
     }

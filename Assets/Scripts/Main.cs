@@ -32,6 +32,8 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public LayerMask shootLayerMask;
     public PickUp pickUpExtraTimePrefab;
 
+    public LineRenderer lineRenderer;
+
     [Header("Audio")]
     public AudioSource oneShotSFXPrefab;
     public AudioMixer masterMixer;
@@ -128,6 +130,8 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
+        lineRenderer.positionCount = 0;
+
         if (isPlayerAlive && 0f < Time.timeScale)
         {
             WeaponSelectSystem.Update(ref playerCharacter.character);

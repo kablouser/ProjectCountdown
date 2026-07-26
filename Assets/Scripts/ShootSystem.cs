@@ -129,6 +129,24 @@ public static class ShootSystem
                             }
                         }
                     }
+                    // draw line for player
+                    if (character.id.type == IDType.Player)
+                    {
+                        LineRenderer lineRender = Main.Singleton.lineRenderer;
+                        lineRender.positionCount += 2;
+                        int count = lineRender.positionCount;
+                        Vector3 start = Main.Singleton.playerCharacter.character.gunBody.position;
+                        lineRender.SetPosition(count - 2, start);
+
+                        if (hitCount == 0)
+                        {
+                            lineRender.SetPosition(count - 1, start + Main.Singleton.playerCharacter.character.camera.forward * Main.Singleton.playerCharacter.character.ActiveGun.range);
+                        }
+                        else
+                        {
+                            lineRender.SetPosition(count - 1, raycastHitCache[hitCount - 1].point);
+                        }
+                    }
                 }
                 else
                 {
