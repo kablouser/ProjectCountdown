@@ -83,6 +83,7 @@ public static class LevelStateSystem
             {
                 default: break;
                 case LevelState.LevelCleared:
+                    main.playerTimeLeft = main.playerCharacter.character.currentHealth;
                     main.previouslySelectedWeapon = main.playerCharacter.character.currentSelectedWeapon;
                     break;
             }
@@ -130,7 +131,6 @@ public static class LevelStateSystem
                 break;
 
             case LevelState.LevelCleared:
-                main.playerTimeLeft = main.playerCharacter.character.currentHealth;
                 main.levelClearedCountdown = main.levelClearedDuration;
                 PlayerUI.Instance.levelClearedScreen.SetLevelClearedCountdown(main.levelClearedCountdown);
                 break;
