@@ -54,10 +54,16 @@ public static class DamageCharacter
                             changeIncrease = (1 - (main.playerTimeLeft / 30.0f)) * (1 - enemy.dropExtraTimeChance);
                         }
 
-                        if (Random.value <= (enemy.dropExtraTimeChance + changeIncrease))
+                        float randomValue = Random.value;
+                        if (randomValue <= (enemy.dropExtraTimeChance + changeIncrease))
                         {
                             PickUp pickup = GameObject.Instantiate(main.pickUpExtraTimePrefab, enemy.character.camera.position, Quaternion.identity);
                             pickup.extraTime = enemy.dropExtraTime;
+                            if (randomValue <= enemy.rareDropExtraTimeChance + changeIncrease)
+                            {
+                               pickup.extraTime = enemy.rareDropExtraTime;
+                               pickup.SetRare();
+                            }
                         }
                         // cannot use character audio source because it will be destroyed
                         main.PlayOneShotSFX(enemy.character.camera.position, main.enemyKilledSFXs.GetRandom());

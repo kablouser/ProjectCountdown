@@ -142,6 +142,7 @@ MonoBehaviour:
   visuals: {fileID: 4418482304054019485}
   lifeTime: 7
   fadeOutAnimationTime: 1
+  rareDropMaterial: {fileID: 2100000, guid: 6b99c4f941dcd9941967ed65844722ce, type: 2}
 --- !u!54 &9126079503322432138
 Rigidbody:
   m_ObjectHideFlags: 0
