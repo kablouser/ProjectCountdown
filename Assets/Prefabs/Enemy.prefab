@@ -352,7 +352,7 @@ MonoBehaviour:
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
       maxHealth: 3
-      moveSpeed: 1.5
+      moveSpeed: 3
       turnSpeed: 2
       invertLookY: 0
       jumpHeight: 1

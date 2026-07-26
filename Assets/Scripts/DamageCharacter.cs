@@ -42,11 +42,19 @@ public static class DamageCharacter
                         enemy.healthBar.SetRemainingTime(enemy.character, reason);
                     }
 
-                    PlayerUI.Instance.ShowHitMarker(); 
+                    PlayerUI.Instance.ShowHitMarker();
+
 
                     if (isDead)
                     {
-                        if (Random.value <= enemy.dropExtraTimeChance)
+                        float changeIncrease = 0.0f;
+                        bool increaseChance = main.playerTimeLeft < 30.0f;
+                        if (increaseChance)
+                        {
+                            changeIncrease = (1 - (main.playerTimeLeft / 30.0f)) * (1 - enemy.dropExtraTimeChance);
+                        }
+
+                        if (Random.value <= (enemy.dropExtraTimeChance + changeIncrease))
                         {
                             PickUp pickup = GameObject.Instantiate(main.pickUpExtraTimePrefab, enemy.character.camera.position, Quaternion.identity);
                             pickup.extraTime = enemy.dropExtraTime;
