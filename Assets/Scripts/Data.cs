@@ -199,9 +199,21 @@ public struct LevelStats
         double doubleEnemyCount = baseEnemyCount * Math.Pow(enemyIncreaseMultiplier, level);
         return (int)Math.Floor(doubleEnemyCount);
     }
+
+    public float GetEnemySpeed(int level)
+    {
+        float maxSpeed = Main.Singleton.playerCharacter.character.moveSpeed - 2;
+
+        double enemySpeed = baseEnemySpeed * Math.Pow(enemySpeedIncreaseMultiplier, level);
+        float actualSpeed = (float)Math.Min(maxSpeed, enemySpeed);
+        
+        return actualSpeed;
+    }
     
     [SerializeField] private int baseEnemyCount;
     [SerializeField] private float enemyIncreaseMultiplier;
+    [SerializeField] private float baseEnemySpeed;
+    [SerializeField] private float enemySpeedIncreaseMultiplier;
     [HideInInspector] public int enemiesRemaining;
     
     public float playerStartHealth;

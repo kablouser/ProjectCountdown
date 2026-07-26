@@ -136,10 +136,13 @@ MonoBehaviour:
   levelClearedCountdown: 0
   isLevelStateQueued: 0
   queueChangeLevelState: 0
+  previouslySelectedWeapon: 0
   enemyPool: {fileID: 0}
   levelStats:
     baseEnemyCount: 4
     enemyIncreaseMultiplier: 1.3
+    baseEnemySpeed: 3
+    enemySpeedIncreaseMultiplier: 1.3
     enemiesRemaining: 0
     playerStartHealth: 30
     timeBetweenEnemySpawning: 0

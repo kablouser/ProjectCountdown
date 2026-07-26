@@ -8,7 +8,9 @@ public class EnemyCharacterProxy : MonoBehaviour, IProxy
 
     private void OnEnable()
     {
-        enemyCharacter.character.id = Main.Singleton.AwakeEnemy(enemyCharacter);
+        Main main = Main.Singleton;
+        enemyCharacter.character.id = main.AwakeEnemy(enemyCharacter);
+        enemyCharacter.character.moveSpeed = main.levelStats.GetEnemySpeed(main.level);
     }
 
     private void OnDisable()
