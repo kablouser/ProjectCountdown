@@ -59,6 +59,13 @@ public static class LevelStateSystem
                 PlayerUI.Instance.SetUI_Screen(main.levelState, Time.timeScale != 0f);
             }
         }
+
+        if (!main.musicSource.isPlaying)
+        {
+            main.musicSource.clip = main.levelState == LevelState.MainMenu ? main.menuLoop : main.musicLoop;
+            main.musicSource.loop = true;
+            main.musicSource.Play();
+        }
     }
 
     public static void SetLevelState(Main main, LevelState state, bool isStart = false)
@@ -83,7 +90,17 @@ public static class LevelStateSystem
         switch (main.levelState)
         {
             default: break;
+            case LevelState.MainMenu:
+                main.musicSource.clip = main.menuIntro;
+                main.musicSource.loop = false;
+                main.musicSource.Play();
+                break;
+
             case LevelState.Playing:
+                main.musicSource.clip = main.musicIntro;
+                main.musicSource.loop = false;
+                main.musicSource.Play();
+
                 // Spawn enemies.
                 main.levelStats.enemiesRemaining = main.levelStats.GetEnemyCount(main.level);
                 for (int i = 0; i < main.levelStats.enemiesRemaining; i++)
@@ -106,10 +123,9 @@ public static class LevelStateSystem
                     enemy.transform.position = spawnTransform.position;
                     enemy.transform.rotation = spawnTransform.rotation;
                 }
-                
-                // TODO: Set up health here too.
                 main.accumulatedCountdown = 0f;
                 break;
+
             case LevelState.LevelCleared:
                 main.playerTimeLeft = main.playerCharacter.character.currentHealth;
                 main.levelClearedCountdown = main.levelClearedDuration;

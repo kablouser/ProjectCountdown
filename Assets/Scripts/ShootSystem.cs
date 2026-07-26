@@ -118,7 +118,7 @@ public static class ShootSystem
 
                             if (character.id.type == IDType.Player)
                             {
-                                character.audioSource.PlayOneShot(Main.Singleton.hitMarkerSFX, 4f);
+                                character.audioSource.PlayOneShot(Main.Singleton.hitMarkerSFX);
                             }
                         }
                     }

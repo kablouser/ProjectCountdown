@@ -45,6 +45,8 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public AudioSource musicSource;
     public AudioClip musicIntro;
     public AudioClip musicLoop;
+    public AudioClip menuIntro;
+    public AudioClip menuLoop;
     public AudioClip[] shootSFXs;
     public AudioClip[] enemyKilledSFXs;
     public AudioClip hitMarkerSFX;
@@ -110,11 +112,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     void Start()
     {
         ApplySettings();
-
-        musicSource.clip = musicIntro;
-        musicSource.loop = false;
-        musicSource.Play();
-
         LevelStateSystem.Start(this);
     }
 
@@ -136,10 +133,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
-        if (Time.timeScale == 0f)
-            return;
-
-        if (isPlayerAlive)
+        if (isPlayerAlive && 0f < Time.timeScale)
         {
             WeaponSelectSystem.Update(ref playerCharacter.character);
             PlayerUI.Instance.weaponUI.SetAmmo(playerCharacter.character.ActiveGun);
@@ -150,21 +144,15 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         // update countdown before enemies. so in case of simulatenous shoot out, player won't lose
         LevelStateSystem.Update(this);
 
-        foreach (ref EnemyCharacter enemy in enemyCharacters)
+        if (0f < Time.timeScale)
         {
-            EnemyAI_System.Update(ref enemy);
-            ShootSystem.Update(ref enemy.character, shootLayerMask, raycastHitCache);
-            GunAnimationSystem.Update(ref enemy.character);
-            WalkingSystem.Update(ref enemy.character);
-        }
-
-        if (!musicSource.isPlaying)
-        {
-            musicSource.clip = musicLoop;
-            musicSource.loop = true;
-            musicSource.Play();
-
-            musicIntro.UnloadAudioData();
+            foreach (ref EnemyCharacter enemy in enemyCharacters)
+            {
+                EnemyAI_System.Update(ref enemy);
+                ShootSystem.Update(ref enemy.character, shootLayerMask, raycastHitCache);
+                GunAnimationSystem.Update(ref enemy.character);
+                WalkingSystem.Update(ref enemy.character);
+            }
         }
     }
 
