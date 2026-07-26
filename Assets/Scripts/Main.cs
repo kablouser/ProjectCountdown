@@ -40,10 +40,19 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public PickUp pickUpExtraTimePrefab;
 
     [Header("Audio")]
+    public AudioSource oneShotSFXPrefab;
     public AudioMixer masterMixer;
     public AudioSource musicSource;
     public AudioClip musicIntro;
     public AudioClip musicLoop;
+    public AudioClip[] shootSFXs;
+    public AudioClip[] enemyKilledSFXs;
+    public AudioClip hitMarkerSFX;
+    public AudioClip buttonClickSFX;
+    public AudioClip[] playerDamageSFXs;
+    public AudioClip weaponReloadStartSFX;
+    public AudioClip weaponReloadEndSFX;
+    public AudioClip weaponSelectSFX;
 
     [Header("For Viewing Purposes")]
     public bool isPlayerAlive;
@@ -51,10 +60,14 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public PlayerCharacter playerCharacter = PlayerCharacter.Default;
     // saved when level is cleared. used as currency in shop
     public VersionedList<EnemyCharacter> enemyCharacters;
+    public List<AudioSource> oneShotSFXPool;
 
     // decimal part of the countdown. we only countdown in ints
     public float accumulatedCountdown;
     public float levelClearedCountdown;
+
+    public bool isLevelStateQueued;
+    public LevelState queueChangeLevelState;
 
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
@@ -71,7 +84,10 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         if (Singleton != null)
         {
             // use this levelState
-            LevelStateSystem.SetLevelState(Singleton, levelState);
+            // we can't SetLevelState immediately in Awake due to script ordering >:(
+            // LevelStateSystem.SetLevelState(Singleton, levelState);
+            Singleton.isLevelStateQueued = true;
+            Singleton.queueChangeLevelState = levelState;
             Destroy(gameObject);
             return;
         }
@@ -104,7 +120,10 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void OnEnable()
     {
-        inputSystem_Actions.Player.Enable();
+        if (inputSystem_Actions != null)
+        {
+            inputSystem_Actions.Player.Enable();
+        }
     }
 
     private void OnDisable()
@@ -117,6 +136,9 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void Update()
     {
+        if (Time.timeScale == 0f)
+            return;
+
         if (isPlayerAlive)
         {
             WeaponSelectSystem.Update(ref playerCharacter.character);
@@ -148,6 +170,12 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     void FixedUpdate()
     {
+        if (Time.timeScale == 0f)
+        {
+            ResetOneTimeInputs();
+            return;
+        }
+
         if (isPlayerAlive)
         {
             WalkingSystem.FixedUpdate(ref playerCharacter.character);
@@ -157,6 +185,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             WalkingSystem.FixedUpdate(ref enemy.character);
         }
+
         // place this in FixedUpdate because Update() will clear it before FixedUpdate() can read it
         ResetOneTimeInputs();
     }
@@ -314,10 +343,19 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         }
     }
 
+    public static float MapFastInSlowOut(float x)
+    {
+        //1-(x-1)^2
+        float term = (x - 1f);
+        return 1f - term * term;
+    }
+
     public void ApplySettings()
     {
-        masterMixer.SetFloat("MusicVolume", Mathf.Lerp(-80, -10, settings.music));
-        masterMixer.SetFloat("SFXVolume", Mathf.Lerp(-80, 0, settings.sfx));
+        // use more of the slider for the lower volume part
+        masterMixer.SetFloat("MusicVolume", Mathf.Lerp(-80, -10, MapFastInSlowOut(settings.music)));
+        masterMixer.SetFloat("SFXVolume", Mathf.Lerp(-80, 10, MapFastInSlowOut(settings.sfx)));
+        // use more of the slider for the higher sensitivity part
         playerCharacter.character.turnSpeed = Mathf.Lerp(0.1f, 100, settings.mouseSensitivity * settings.mouseSensitivity);
         playerCharacter.character.invertLookY = settings.invertLookY;
     }
@@ -345,5 +383,33 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         level += 1;
         SceneManager.LoadScene(playingSceneIndex);
+    }
+
+    public void PlayOneShotSFX(Vector3 position, AudioClip clip, float volumeScale = 1f)
+    {
+        AudioSource oneShotSFX = null;
+        for (int i = 0; i < oneShotSFXPool.Count; i++)
+        {
+            AudioSource pooled = oneShotSFXPool[i];
+            if (pooled == null)
+            {
+                oneShotSFXPool.RemoveAt(i);
+                i--;
+                continue;
+            }
+            if (!pooled.isPlaying)
+            {
+                oneShotSFX = pooled;
+                break;
+            }
+        }
+        if (oneShotSFX == null)
+        {
+            oneShotSFX = Instantiate(oneShotSFXPrefab);
+            oneShotSFXPool.Add(oneShotSFX);
+        }
+
+        oneShotSFX.transform.position = position;
+        oneShotSFX.PlayOneShot(clip, volumeScale);
     }
 }

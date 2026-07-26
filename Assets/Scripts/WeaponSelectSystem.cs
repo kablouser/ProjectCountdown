@@ -9,7 +9,7 @@ public static class WeaponSelectSystem
             // cannot switch weapons whilst shooting
             || 0 < character.shotCooldown
             // cannot switch if already switching.
-            || character.timeToSwapCountdown > 0f
+            // || character.timeToSwapCountdown > 0f
             // check index is in range
             || !(0 <= character.weaponSelectInput && character.weaponSelectInput < character.gunStats.Length)
             || !character.gunStats[character.weaponSelectInput].isUnlocked
@@ -22,5 +22,10 @@ public static class WeaponSelectSystem
         character.timeToSwapCountdown = Character.TimeToSwap;
 
         character.reloadCountdown = 0f;
+
+        if (character.id.type == IDType.Player)
+        {
+            character.audioSource.PlayOneShot(Main.Singleton.weaponSelectSFX);
+        }
     }
 }

@@ -27,6 +27,7 @@ public struct Character
     public Transform camera;
     public Transform gunMagazine;
     public Transform gunBody;
+    public AudioSource audioSource;
     [HideInInspector] public MeshRenderer gunMesh;
     [HideInInspector] public MeshFilter gunBodyMesh;
     [HideInInspector] public MeshFilter gunAmmoMesh;

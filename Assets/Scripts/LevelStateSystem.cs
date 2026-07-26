@@ -12,6 +12,12 @@ public static class LevelStateSystem
     {
         ref PlayerCharacter player = ref main.playerCharacter;
 
+        if (main.isLevelStateQueued)
+        {
+            main.isLevelStateQueued = false;
+            SetLevelState(main, main.queueChangeLevelState);
+        }
+
         bool canPause = false;
         switch (main.levelState)
         {
@@ -39,7 +45,6 @@ public static class LevelStateSystem
             case LevelState.GameOver:
                 break;
             case LevelState.Shop:
-                canPause = true;
                 break;
             default:
                 Debug.LogWarning("levelState not implemented " + main.levelState);

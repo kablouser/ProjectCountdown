@@ -24,6 +24,11 @@ public static class DamageCharacter
                     {
                         PlayerUI.Instance.gameOverScreen.SetGameOverReason(reason);
                     }
+
+                    if (reason == TimeAdjustmentReason.DAMAGE && 0f < damage)
+                    {
+                        main.playerCharacter.character.audioSource.PlayRandomOneShot(main.playerDamageSFXs);
+                    }
                     return isDead;
                 }
                 break;
@@ -46,6 +51,8 @@ public static class DamageCharacter
                             PickUp pickup = GameObject.Instantiate(main.pickUpExtraTimePrefab, enemy.character.camera.position, Quaternion.identity);
                             pickup.extraTime = enemy.dropExtraTime;
                         }
+                        // cannot use character audio source because it will be destroyed
+                        main.PlayOneShotSFX(enemy.character.camera.position, main.enemyKilledSFXs.GetRandom());
                     }
 
                     return isDead;

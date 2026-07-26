@@ -60,10 +60,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   pickUpExtraTimePrefab: {fileID: 8040921844680277244, guid: ee2095657ad9f09479d559eb450b7144, type: 3}
+  oneShotSFXPrefab: {fileID: 4629654488811506976, guid: 898eeaba760f5ae49a658dafe8103eef, type: 3}
   masterMixer: {fileID: 24100000, guid: 023c92fb02a6268459cbb4fa01bc3633, type: 2}
   musicSource: {fileID: 6441260904068122120}
   musicIntro: {fileID: 8300000, guid: ba7f47d63b9e8d94b893f344a3583ff0, type: 3}
   musicLoop: {fileID: 8300000, guid: 379e3b3d4a854564e8359c42c0a85dfa, type: 3}
+  shootSFXs:
+  - {fileID: 8300000, guid: c366007b7e28d4c40a6f10c7307a4a3b, type: 3}
+  - {fileID: 8300000, guid: aeb9158b8a364fe4b8721ab50843dd52, type: 3}
+  - {fileID: 8300000, guid: b9144a99840d3974eba1ffe62176a50c, type: 3}
+  enemyKilledSFXs:
+  - {fileID: 8300000, guid: f8af73c8864e5dc488477606c8c37b6f, type: 3}
+  - {fileID: 8300000, guid: b43e728b982ea4244a949124175fca73, type: 3}
+  - {fileID: 8300000, guid: 8cd653ff8b4b9554abca963792d39f66, type: 3}
+  hitMarkerSFX: {fileID: 8300000, guid: 7554881252d8e394c94bc483aa547423, type: 3}
+  buttonClickSFX: {fileID: 8300000, guid: 221d74c445f5f164692e1f3276c319ab, type: 3}
+  playerDamageSFXs:
+  - {fileID: 8300000, guid: 9228fb076fc26b042ade323d2d0db839, type: 3}
+  - {fileID: 8300000, guid: b87bd6efd0a32504ebafba2aed1cf9aa, type: 3}
+  weaponReloadStartSFX: {fileID: 8300000, guid: dad6d9d96757bff4db9db8f80913d68f, type: 3}
+  weaponReloadEndSFX: {fileID: 8300000, guid: cdac7f06c57f5434fb28a437b4aeeeae, type: 3}
+  weaponSelectSFX: {fileID: 8300000, guid: b2d003992216b7643b4797fa26226e65, type: 3}
   isPlayerAlive: 0
   playerTimeLeft: 100
   playerCharacter:
@@ -76,7 +93,10 @@ MonoBehaviour:
       camera: {fileID: 0}
       gunMagazine: {fileID: 0}
       gunBody: {fileID: 0}
+      audioSource: {fileID: 0}
       gunMesh: {fileID: 0}
+      gunBodyMesh: {fileID: 0}
+      gunAmmoMesh: {fileID: 0}
       transform: {fileID: 0}
       rigidbody: {fileID: 0}
       isStandingTracker: {fileID: 0}
@@ -111,6 +131,8 @@ MonoBehaviour:
     isUsing: 
   accumulatedCountdown: 0
   levelClearedCountdown: 0
+  isLevelStateQueued: 0
+  queueChangeLevelState: 0
   enemyPool: {fileID: 0}
   levelStats:
     baseEnemyCount: 4

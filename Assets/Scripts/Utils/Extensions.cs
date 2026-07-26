@@ -184,4 +184,16 @@ public static class Extensions
     public static bool GetButton(this InputAction action) => action.ReadValue<float>() > 0;
     public static bool GetButtonDown(this InputAction action) => action.triggered && action.ReadValue<float>() > 0;
     public static bool GetButtonUp(this InputAction action) => action.triggered && action.ReadValue<float>() == 0;
+
+    public static void PlayRandomOneShot(this AudioSource audioSource, AudioClip[] pool)
+    {
+        if (pool == null)
+        {
+            Debug.LogWarning("PlayRandomOneShot called with null");
+        }
+        else
+        {
+            audioSource.PlayOneShot(pool.GetRandom());
+        }
+    }
 }

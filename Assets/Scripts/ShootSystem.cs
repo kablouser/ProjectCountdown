@@ -30,6 +30,11 @@ public static class ShootSystem
                 character.reloadCountdown = 0;
                 character.ActiveGun.Reload();
                 character.shotCooldown = 0;
+
+                if (!character.ActiveGun.isMelee)
+                {
+                    character.audioSource.PlayOneShot(Main.Singleton.weaponReloadEndSFX);
+                }
             }
         }
         if (0 < character.shotCooldown)
@@ -50,6 +55,10 @@ public static class ShootSystem
                  && character.ActiveGun.currentAmmo < character.ActiveGun.ammoCapacity)
         {
             character.reloadCountdown = character.ActiveGun.reloadTime;
+            if (!character.ActiveGun.isMelee)
+            {
+                character.audioSource.PlayOneShot(Main.Singleton.weaponReloadStartSFX);
+            }
         }
         else if (character.shootInput)
         {
@@ -106,9 +115,16 @@ public static class ShootSystem
                         if (iproxy != null)
                         {
                             DamageCharacter.Damage(iproxy.GetID(), character.ActiveGun.damage, TimeAdjustmentReason.DAMAGE);
+
+                            if (character.id.type == IDType.Player)
+                            {
+                                character.audioSource.PlayOneShot(Main.Singleton.hitMarkerSFX, 4f);
+                            }
                         }
                     }
                 }
+
+                character.audioSource.PlayRandomOneShot(Main.Singleton.shootSFXs);
             }
             else
             {

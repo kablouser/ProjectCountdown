@@ -98,41 +98,29 @@ MonoBehaviour:
   shopWeaponUIParent: {fileID: 6123370283298224820}
   playerTimeLeftText: {fileID: 5813818600102947581}
   shopWeapons:
-  - unlockCost: 0
-    isUnlocked: 1
+  - isUnlockedInShop: 0
     gunData: {fileID: 11400000, guid: 3af49d5bead019440a09900dc1da538f, type: 2}
-    upgradables: -1
-    upgradeCost: 8
     addDamage: 0
     addAmmoCapacity: 0
     multiplyReloadSpeed: 1
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
-  - unlockCost: 10
-    isUnlocked: 0
+  - isUnlockedInShop: 0
     gunData: {fileID: 11400000, guid: 2b7126e1dbb353f48a5ac408b5a57d4c, type: 2}
-    upgradables: 20
-    upgradeCost: 7
     addDamage: 0
     addAmmoCapacity: 0
     multiplyReloadSpeed: 1
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
-  - unlockCost: 10
-    isUnlocked: 0
+  - isUnlockedInShop: 0
     gunData: {fileID: 11400000, guid: cdae043a3e78b0945b9d387c2c223f01, type: 2}
-    upgradables: 25
-    upgradeCost: 7
     addDamage: 0
     addAmmoCapacity: 0
     multiplyReloadSpeed: 1
     multiplyRoundsPerMinute: 1
     ui: {fileID: 0}
-  - unlockCost: 15
-    isUnlocked: 0
+  - isUnlockedInShop: 0
     gunData: {fileID: 11400000, guid: a838ba6282fe82b4c87dcc2aa5324b3d, type: 2}
-    upgradables: 5
-    upgradeCost: 7
     addDamage: 0
     addAmmoCapacity: 0
     multiplyReloadSpeed: 1
@@ -1193,7 +1181,7 @@ MonoBehaviour:
     humanity's great discovery.\r\n\r\nYou play as Rick Dickman, a time officer,
     and your duty is to eradicate these terries. You have limited time left to live.
     But you can turn their souls into time energy and power up your arsenal to protect
-    humanity."
+    humanity.\n\nTime to die!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1820,7 +1808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <Insert Game Name>
+  m_text: Time to Die
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
