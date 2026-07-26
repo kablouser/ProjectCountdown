@@ -414,6 +414,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         oneShotSFX.PlayOneShot(clip, volumeScale);
     }
 
+#if UNITY_EDITOR
     public TMP_FontAsset setFontForEverything;
     [ContextMenu("SetFontForEverything")]
     public void SetFontForEverything()
@@ -435,4 +436,5 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
             SetFontForEverythingRecursive(go.transform.GetChild(i).gameObject);
         }
     }
+#endif
 }
