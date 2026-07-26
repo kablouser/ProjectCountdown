@@ -101,6 +101,10 @@ public static class DamageCharacter
             }
             return true;
         }
+        else if (character.maxHealth < character.currentHealth)
+        {
+            character.maxHealth = character.currentHealth;
+        }
         return false;
     }
 }
