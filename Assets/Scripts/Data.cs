@@ -152,12 +152,16 @@ public struct EnemyCharacter
     public float dropExtraTimeChance;
     public bool isAvoidingObstacle;
     public bool chosenObstacleAvoidanceDirection;
+    public float rareDropExtraTime;
+    public float rareDropExtraTimeChance;
 
     public static EnemyCharacter Default => new()
     {
         character = Character.Default,
         dropExtraTime = 1f,
         dropExtraTimeChance = 0.5f,
+        rareDropExtraTime = 5.0f,
+        rareDropExtraTimeChance = 0.2f
     };
 
     public void Awake()

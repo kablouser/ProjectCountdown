@@ -8,6 +8,12 @@ public class PickUp : MonoBehaviour
     public Transform visuals;
     public float lifeTime = 5f;
     public float fadeOutAnimationTime = 1f;
+    [SerializeField] private Material rareDropMaterial;
+
+    public void SetRare()
+    {
+        visuals.gameObject.GetComponent<MeshRenderer>().material = rareDropMaterial;
+    }
 
     private void Update()
     {
