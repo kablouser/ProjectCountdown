@@ -3,6 +3,17 @@ using UnityEngine;
 
 public static class GunAnimationSystem
 {
+    public static void SetGunVisuals(in Character character, in GunStat gunStat)
+    {
+        character.gunBodyMesh.mesh = gunStat.weaponBodyMesh;
+        character.gunAmmoMesh.mesh = gunStat.weaponAmmoMesh;
+        if (gunStat.weaponMaterial != null)
+        {
+            character.gunMesh.sharedMaterial = gunStat.weaponMaterial;
+        }
+        character.gunBody.localScale = Vector3.one * gunStat.uniformWeaponScale;
+    }
+
     public static void Update(ref Character character)
     {
         if (character.timeToSwapCountdown > 0)
@@ -18,10 +29,7 @@ public static class GunAnimationSystem
 
             if (prevLerpTime < 0.5f && newLerpTime >= 0.5f)
             {
-                character.gunBodyMesh.mesh = character.ActiveGun.weaponBodyMesh;
-                character.gunAmmoMesh.mesh = character.ActiveGun.weaponAmmoMesh;
-                character.gunMesh.material = character.ActiveGun.weaponMaterial;
-                character.gunBody.localScale = Vector3.one * character.ActiveGun.uniformWeaponScale;
+                SetGunVisuals(character, character.ActiveGun);
             }
             
             return;

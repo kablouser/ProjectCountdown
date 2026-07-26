@@ -62,6 +62,7 @@ public static class ShootSystem
         }
         else if (character.shootInput)
         {
+            character.shootInput = false;
             if (0 < character.ActiveGun.currentAmmo)
             {
                 // is roundsPerMin exceeded?

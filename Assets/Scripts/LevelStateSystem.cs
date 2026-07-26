@@ -82,6 +82,9 @@ public static class LevelStateSystem
             switch (main.levelState)
             {
                 default: break;
+                case LevelState.LevelCleared:
+                    main.previouslySelectedWeapon = main.playerCharacter.character.currentSelectedWeapon;
+                    break;
             }
         }
 

@@ -71,6 +71,8 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public bool isLevelStateQueued;
     public LevelState queueChangeLevelState;
 
+    public int previouslySelectedWeapon;
+
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
 
@@ -261,6 +263,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         isPlayerAlive = true;
         player.character.currentHealth = player.character.maxHealth = playerTimeLeft;
+        player.character.currentSelectedWeapon = previouslySelectedWeapon;
         playerCharacter = player;
         playerCharacter.Awake();
         ApplySettings();

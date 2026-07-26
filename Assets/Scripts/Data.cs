@@ -95,6 +95,7 @@ public struct Character
         gunMesh = gunBody.gameObject.GetComponent<MeshRenderer>();
         gunBodyMesh = gunBody.gameObject.GetComponent<MeshFilter>();
         gunAmmoMesh = gunMagazine.gameObject.GetComponent<MeshFilter>();
+        weaponSelectInput = -1;
 
         // Start all guns with full ammo capacity
         for (int i = 0; i < gunStats.Length; i++)
@@ -102,10 +103,7 @@ public struct Character
             gunStats[i].Reload();
         }
 
-        if (ActiveGun.weaponMaterial)
-        {
-            gunMesh.sharedMaterial = ActiveGun.weaponMaterial;
-        }
+        GunAnimationSystem.SetGunVisuals(this, ActiveGun);
     }
 }
 
