@@ -26,8 +26,8 @@ MonoBehaviour:
     isMelee: 0
     currentAmmo: 0
     weaponMaterial: {fileID: 2100000, guid: c67f022d122e28b4cbeee84e1c4fa43f, type: 2}
-    weaponBodyMesh: {fileID: 2959467708922500008, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
-    weaponAmmoMesh: {fileID: 2534964839176971238, guid: 560b8e0d6303f7848a9dc04230489377, type: 3}
+    weaponBodyMesh: {fileID: 9032523282912362143, guid: 4ee1a2e9676bfc04685a3fb130b59dde, type: 3}
+    weaponAmmoMesh: {fileID: 4993655953670948669, guid: 4ee1a2e9676bfc04685a3fb130b59dde, type: 3}
     uniformWeaponScale: 20
     kickbackAmount: 0.5
   upgradables: 9
