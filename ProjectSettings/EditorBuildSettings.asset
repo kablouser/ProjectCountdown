@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: fb2bbb45b9384e147bc72509ed6ac52c
   - enabled: 1
-    path: Assets/Scenes/Dan TestBed.unity
+    path: Assets/Scenes/Playing.unity
     guid: cfc3601edd5dccd47b404817c61a2c43
   - enabled: 1
     path: Assets/Scenes/Shop.unity
