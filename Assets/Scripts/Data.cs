@@ -220,7 +220,14 @@ public struct LevelStats
     public int GetEnemyCount(int level)
     {
         double doubleEnemyCount = baseEnemyCount * Math.Pow(enemyIncreaseMultiplier, level);
-        return (int)Math.Floor(doubleEnemyCount);
+        int intEnemyCount = (int)doubleEnemyCount;
+        if (1f < enemyIncreaseMultiplier &&
+            intEnemyCount < baseEnemyCount)
+        {
+            // underflowed
+            intEnemyCount = int.MaxValue;
+        }
+        return intEnemyCount;
     }
 
     public float GetEnemySpeed(int level)

@@ -25,6 +25,7 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public PickUp pickUpExtraTimePrefab;
 
     public LineRenderer lineRenderer;
+    public EnemyPool enemyPool;
 
     [Header("Audio")]
     public AudioSource oneShotSFXPrefab;
@@ -63,9 +64,9 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
 
-    public EnemyPool enemyPool;
+    public EnemySpawnPoints enemySpawnPoints;
     public LevelStats levelStats;
-    [HideInInspector] public int level = 0;
+    public int level = 0;
 
     void Awake()
     {

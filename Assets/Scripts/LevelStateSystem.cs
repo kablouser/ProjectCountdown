@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -122,8 +123,8 @@ public static class LevelStateSystem
                         break;
                     }
 
-                    int spawnPointIndex = i % main.enemyPool.enemySpawnPoints.Count;
-                    Transform spawnTransform = main.enemyPool.enemySpawnPoints[spawnPointIndex];
+                    int spawnPointIndex = i % main.enemySpawnPoints.enemySpawnPoints.Count;
+                    Transform spawnTransform = main.enemySpawnPoints.enemySpawnPoints[spawnPointIndex];
                     enemy.transform.position = spawnTransform.position;
                     enemy.transform.rotation = spawnTransform.rotation;
                 }
@@ -160,8 +161,8 @@ public static class LevelStateSystem
             GameObject enemy;
             if (main.enemyPool.GetNext(out enemy, main.levelStats.GetRandomEnemyType(main.level)))
             {
-                int randomIndex = Random.Range(0, main.enemyPool.enemySpawnPoints.Count);     
-                Transform spawnTransform = main.enemyPool.enemySpawnPoints[randomIndex];
+                int randomIndex = Random.Range(0, main.enemySpawnPoints.enemySpawnPoints.Count);
+                Transform spawnTransform = main.enemySpawnPoints.enemySpawnPoints[randomIndex];
                 enemy.transform.position = spawnTransform.position;
                 enemy.transform.rotation = spawnTransform.rotation;
             }

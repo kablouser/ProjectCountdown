@@ -168,14 +168,17 @@ public class BarUI : MonoBehaviour
         }
 
         float targetWidth = GetWidthForTime(currTime, maxTime);
-        Vector2 sizeDelta = frontImage.rectTransform.sizeDelta;
-        sizeDelta.x = Mathf.Lerp(sizeDelta.x, targetWidth, moveSpeed * Time.deltaTime);
+        Vector2 currentSizeDelta = frontImage.rectTransform.sizeDelta;
+        float newSizeDeltaX = Mathf.Lerp(currentSizeDelta.x, targetWidth, moveSpeed * Time.deltaTime);
 
-        frontImage.rectTransform.sizeDelta = sizeDelta;
+        if (!Mathf.Approximately(currentSizeDelta.x, newSizeDeltaX))
+        {
+            frontImage.rectTransform.sizeDelta = new Vector2(newSizeDeltaX, currentSizeDelta.y);
+        }
 
         if (addedTimeVfxImage != null && addedTimeVfxImage.enabled)
         {
-            if (Mathf.Approximately(sizeDelta.x, targetWidth))
+            if (Mathf.Approximately(newSizeDeltaX, targetWidth))
             {
                 addedTimeVfxImage.enabled = false;
             }

@@ -12333,29 +12333,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3277282040949721789, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: m_fontSize
-      value: 41.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: enemyPool
-      value: 
-      objectReference: {fileID: 1050090805}
-    - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: levelState
+    - target: {fileID: 1968043140036624485, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: levelStats.baseEnemyCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: levelStats.enemyType1SpawnRate
-      value: 0.785
-      objectReference: {fileID: 0}
-    - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: levelStats.enemyIncreaseMultiplier
-      value: 1.5
+      propertyPath: levelState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6476195204812529406, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12400,10 +12384,6 @@ PrefabInstance:
     - target: {fileID: 7222421124179451156, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: m_Name
       value: Main
-      objectReference: {fileID: 0}
-    - target: {fileID: 8842756071993665275, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
-      propertyPath: shopWeapons.Array.data[1].upgradeCost
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15396,17 +15376,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7314400871455134997, guid: 54f537b24effe914eb0344cf9c1f6316, type: 3}
   m_PrefabInstance: {fileID: 1049526217}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1050090805 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8330112772322194453, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
-  m_PrefabInstance: {fileID: 2697146807301108593}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 318aa820ac7547a0b462fbd6fb07dddf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyPool
 --- !u!4 &1050090806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4921549423289196956, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
@@ -32746,12 +32715,52 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2198397910745598546, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
       propertyPath: m_Name
-      value: EnemyPool
+      value: EnemySpawnPoints
       objectReference: {fileID: 0}
     - target: {fileID: 2198397910745598546, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4394899973173484713}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7205230205865160590}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 7205230206750175691}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 7205230206004033605}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[4]'
+      value: 
+      objectReference: {fileID: 7205230206811871029}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[5]'
+      value: 
+      objectReference: {fileID: 7205230206263678872}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[6]'
+      value: 
+      objectReference: {fileID: 7205230207472291427}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[7]'
+      value: 
+      objectReference: {fileID: 7205230207525817371}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[8]'
+      value: 
+      objectReference: {fileID: 7205230207436383730}
+    - target: {fileID: 4317654913807130792, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: 'enemySpawnPoints.Array.data[9]'
+      value: 
+      objectReference: {fileID: 7205230206389061656}
     - target: {fileID: 4921549423289196956, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.04211
@@ -32791,6 +32800,10 @@ PrefabInstance:
     - target: {fileID: 4921549423289196956, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330112772322194453, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8330112772322194453, guid: 95e254f5021ba384e8e8802dc39432cc, type: 3}
       propertyPath: enemyTypes.Array.size

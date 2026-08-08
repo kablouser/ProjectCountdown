@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class EnemyPool : MonoBehaviour
 {
@@ -13,40 +16,52 @@ public class EnemyPool : MonoBehaviour
     }
 
     public EnemyType[] enemyTypes;
-    public List<Transform> enemySpawnPoints;
 
     private void Awake()
     {
-        foreach (ref EnemyType enemyType in enemyTypes.AsSpan())
-        {
-            for (int i = 0; i < enemyType.poolSize; i++)
-            {
-                GameObject enemy = Instantiate(enemyType.prefab);
-                enemy.SetActive(false);
-                enemyType.pool.Add(enemy);
-            }
-        }
-
-        Main.Singleton.enemyPool = this;
+        AllocatePool();
     }
 
-    private void OnDrawGizmos()
+    [ContextMenu("Allocate Pool")]
+    private void AllocatePool()
     {
-        if (enemySpawnPoints != null)
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
         {
-            foreach (Transform spawnPoint in enemySpawnPoints)
+            Undo.RecordObject(this, "Allocate EnemyPool");
+        }
+#endif
+
+        foreach (ref EnemyType enemyType in enemyTypes.AsSpan())
+        {
+            for (int i = enemyType.pool.Count; i < enemyType.poolSize; i++)
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(spawnPoint.position, 0.5f);
+                GameObject enemy = Instantiate(enemyType.prefab, transform);
+                enemy.SetActive(false);
+                enemyType.pool.Add(enemy);
 
-                Gizmos.color = Color.blue;
-                // Gizmos.DrawRay(transform.position, transform.forward * 2f);
-
-                GizmosMore.DrawArrow(spawnPoint.position, spawnPoint.position + (spawnPoint.forward * 2f));
-
-                Gizmos.color = new Color(1f, 0f, 0f, 0.3f);
-                Gizmos.DrawWireSphere(spawnPoint.position, 1f);
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                {
+                    Undo.RegisterCreatedObjectUndo(enemy, "Allocate EnemyPool");
+                }
+#endif
             }
+
+#if UNITY_EDITOR // remove excess
+            if (!Application.isPlaying &&
+                enemyType.poolSize < enemyType.pool.Count)
+            {
+                for (int i = enemyType.poolSize; i < enemyType.pool.Count; i++)
+                {
+                    if (enemyType.pool[i] != null)
+                    {
+                        Undo.DestroyObjectImmediate(enemyType.pool[i]);
+                    }
+                }
+                enemyType.pool.RemoveRange(enemyType.poolSize, enemyType.pool.Count - enemyType.poolSize);
+            }
+#endif
         }
     }
 

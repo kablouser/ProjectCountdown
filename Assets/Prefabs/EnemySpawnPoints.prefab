@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4921549423289196956}
-  - component: {fileID: 8330112772322194453}
+  - component: {fileID: 4317654913807130792}
   m_Layer: 0
-  m_Name: EnemyPool
+  m_Name: EnemySpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8330112772322194453
+--- !u!114 &4317654913807130792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +41,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2198397910745598546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 318aa820ac7547a0b462fbd6fb07dddf, type: 3}
+  m_Script: {fileID: 11500000, guid: 20368c1e2959e6244b52faefb9d62015, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyPool
-  enemyPrefab: {fileID: 4784804128120652204, guid: cde454fc143cb6846bf2ee59ff827c79, type: 3}
-  poolSize: 10
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnPoints
+  enemySpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
