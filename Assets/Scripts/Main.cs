@@ -6,13 +6,6 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-struct DrawArrowLifetime
-{
-    public Vector3 from;
-    public Vector3 to;
-    public float lifeEnd;
-}
-
 // menu doesn't include pause menu
 public enum LevelState { MainMenu, Playing, LevelCleared, GameOver, Shop };
 
@@ -70,8 +63,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     InputSystem_Actions inputSystem_Actions;
     RaycastHit[] raycastHitCache;
 
-    List<DrawArrowLifetime> drawArrows;
-
     public EnemyPool enemyPool;
     public LevelStats levelStats;
     [HideInInspector] public int level = 0;
@@ -101,7 +92,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
         {
             raycastHitCache = new RaycastHit[32];
         }
-        drawArrows = new List<DrawArrowLifetime>();
         enemyCharacters.type = IDType.Enemy;
     }
 
@@ -174,20 +164,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
         // place this in FixedUpdate because Update() will clear it before FixedUpdate() can read it
         ResetOneTimeInputs();
-    }
-    private void OnDrawGizmos()
-    {
-        if (drawArrows == null) return;
-        for (int i = 0; i < drawArrows.Count; i++)
-        {
-            if (Time.time < drawArrows[i].lifeEnd)
-            {
-                drawArrows.RemoveAt(i);
-                i--;
-                continue;
-            }
-            GizmosMore.DrawArrow(drawArrows[i].from, drawArrows[i].to);
-        }
     }
 
     void InputSystem_Actions.IPlayerActions.OnMove(InputAction.CallbackContext context)
@@ -286,11 +262,6 @@ public class Main : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public bool DestroyEnemy(ID id)
     {
         return enemyCharacters.Remove(id);
-    }
-
-    public void DrawArrowGizmo(Vector3 from, Vector3 to, float duration)
-    {
-        drawArrows.Add(new DrawArrowLifetime { from = from, to = to, lifeEnd = Time.time + duration });
     }
 
     private void ResetOneTimeInputs()

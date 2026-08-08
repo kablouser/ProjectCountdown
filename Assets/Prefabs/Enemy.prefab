@@ -279,6 +279,7 @@ Transform:
   - {fileID: 101126619725285002}
   - {fileID: 7281158375849023874}
   - {fileID: 1217136902996708644}
+  - {fileID: 29059612015700634}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6202535462886737771
@@ -376,6 +377,8 @@ MonoBehaviour:
         weaponAmmoMesh: {fileID: 0}
         uniformWeaponScale: 0
         kickbackAmount: 0
+        projectilePrefab: {fileID: 0}
+        isProjectileHoming: 0
       moveInput: {x: 0, y: 0}
       isUsingLookPositionInput: 0
       lookInput: {x: 0, y: 0}
@@ -396,6 +399,8 @@ MonoBehaviour:
     healthBar: {fileID: 4042526012965346862}
     dropExtraTime: 5
     dropExtraTimeChance: 0.5
+    isAvoidingObstacle: 0
+    chosenObstacleAvoidanceDirection: 0
     rareDropExtraTime: 10
     rareDropExtraTimeChance: 0.1
 --- !u!1 &5026794375487723810

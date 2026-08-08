@@ -787,6 +787,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
+      propertyPath: ss
+      value: 
+      objectReference: {fileID: 6418180475301049370, guid: 7f767c56603209c49b812c38eb1fe4fe, type: 2}
+    - target: {fileID: 5439010614343880144, guid: 0e49ae8f82c334a4aad667c221df3b54, type: 3}
       propertyPath: shootSFX
       value: 
       objectReference: {fileID: 8300000, guid: c366007b7e28d4c40a6f10c7307a4a3b, type: 3}

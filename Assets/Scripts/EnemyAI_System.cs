@@ -22,7 +22,7 @@ public static class EnemyAI_System
                 if (!enemy.isAvoidingObstacle)
                 {
                     enemy.isAvoidingObstacle = true;
-                    enemy.chosenObstacleAvoidanceDirection = Random.value < 0.5f;
+                    enemy.chosenObstacleAvoidanceDirection = 0f < Vector3.Dot(enemy.character.transform.right, hit.normal);
                 }
 
                 //Vector3 projection = Vector3.ProjectOnPlane(character.transform.forward, hit.normal).normalized;
